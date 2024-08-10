@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DayZ Wiki</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="https://i.imgur.com/3e22nFw.png" type="image/png">
+    <style>
+        .button-change-password :hover {
+            background-color: burlywood;
+            transform: scale(1.05);
+        }
+
+        .button-change-password:active {
+            background-color: burlywood;
+            transform: scale(0.95);
+        }
+
+        .button-logout :hover {
+            background-color: burlywood;
+            transform: scale(1.05);
+        }
+
+        .button-logout:active {
+            background-color: burlywood;
+            transform: scale(0.95);
+        }
+
+        body {
+            font-family: cursive;
+            background-image: url('https://i.imgur.com/hHgrtqT.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .menu-container button:active {
+            transform: scale(0.9);
+        }
+
+        .menu-container button:hover {
+            transform: scale(1.1);
+        }
+
+        .menu-container button {
+            margin: 0 6px;
+        }
+
+        .menu-container {
+            background-color: cornsilk;
+            border: 1px solid #8B4513;
+            border-radius: 15px;
+            padding: 5px;
+            text-align: center;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 450px;
+            height: 50px;
+        }
+
+        .logo-menu {
+            background: url('https://i.imgur.com/3e22nFw.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+        .open-auth {
+            background: url('https://i.imgur.com/XOvH3nb.png') no-repeat center center; /*'https://i.imgur.com/k35f6TB.png'*/
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-btn {
+            background: url('https://i.imgur.com/PXKOyQ5.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .post-btn {
+            background: url('https://i.imgur.com/Uq3Fkq0.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .bookmark-btn {
+            background: url('https://i.imgur.com/shB2igv.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .auth-image {
+            width: 30%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 0.5rem 0 0 0.5rem;
+        }
+
+        .auth-form {
+            border-radius: 0.6rem;
+            border: black 1px;
+            background-color: cornsilk;
+            width: 70%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: row;
+            border-radius: 0.6rem;
+            width: 100%;
+            margin: auto;
+            max-width: 700px;
+            max-height: 700px;
+        }
+
+        .modal-dialog {
+            max-width: none;
+            width: 80%;
+            margin: 5rem auto;
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 0;
+            position: relative;
+        }
+
+        .modal-header .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            border-radius: 30%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding-top: 2rem;
+        }
+
+        .form-control {
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+            color: black;
+            background-color: ivory;
+            border-top: none;
+        }
+
+        .form-control::placeholder {
+            color: bisque;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 2.5rem;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-check-label {
+            margin-left: 0.5rem;
+        }
+
+        .form-check-input {
+            display: none;
+        }
+
+        .form-check-input + .switch {
+            margin-top: 0.5rem;
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .form-check-input + .switch:before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: white;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .form-check-input:checked + .switch {
+            background-color: #8B4513;
+        }
+
+        .form-check-input:checked + .switch:before {
+            transform: translateX(20px);
+        }
+
+        .buttons {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .buttons .btn {
+            flex: 1;
+            margin: 0 0.2rem;
+        }
+
+        .buttons .btn-link {
+            flex: unset;
+        }
+
+        .popup-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            font-size: 0.8rem;
+            background-color: cornsilk;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            top: -35%;
+            width: 220px;
+            height: 120px;
+            z-index: 999;
+        }
+
+        .button-change-password, .button-logout {
+            font-size: 0.7rem;
+            display: block;
+            width: 100%;
+            height: 30px;
+            top: 25px;
+            margin: 5px 0;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: bisque;
+            color: #000;
+        }
+
+        .logout-icon {
+            width: 12px;
+            height: 12px;
+            margin-left: 5px;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 0.7em;
+            display: none;
+        }
+
+        input:invalid + .error-message {
+            display: block;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 120px;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #f8f5e6;
+            border: 1px solid #8B4513;
+            border-radius: 25px 25px 25px 25px;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 300px;
+            position: relative;
+        }
+
+        .search-box.active {
+            width: 400px;
+            background-color: cornsilk;
+            color: black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: text;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            transition: width 0.3s ease;
+            flex-grow: 1;
+            min-width: 0;
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .search-box.active .search-input {
+            pointer-events: auto;
+        }
+
+        .search-placeholder {
+            font-size: 16px;
+            margin-left: 14%;
+            color: #666;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: absolute;
+            left: 15px;
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .search-box.active .search-placeholder {
+            opacity: 0;
+            pointer-events: auto;
+        }
+
+        .search-input::placeholder {
+            color: transparent;
+            transition: color 0.3s ease;
+        }
+
+        .search-box.active .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .modal-section-menu a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .nav-btn {
+            margin: 1em;
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+        }
+
+        .nav-btn:after,
+        .nav-btn:before,
+        .nav-btn div {
+            background-color: #000000;
+            border-radius: 2px;
+            content: '';
+            display: block;
+            height: 3px;
+            margin: 6px 0;
+            transition: all .2s ease-in-out;
+        }
+
+        .nav-btn:hover:before {
+            transform: translateY(10px) rotate(135deg);
+        }
+
+        .nav-btn:hover:after {
+            transform: translateY(-10px) rotate(-135deg);
+        }
+
+        .nav-btn:hover div {
+            transform: scale(0);
+        }
+
+
+        .modal-menu {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .modal-content-menu {
+            background-color: cornsilk;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 55%;
+            height: 50%;
+            max-width: 1200px;
+            border-radius: 10px;
+        }
+
+        .close-menu {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-menu:hover,
+        .close-menu:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+        .modal-header-menu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .modal-logo-menu {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .modal-header-menu {
+            display: flex;
+            align-items: flex-start;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            justify-content: flex-start;
+        }
+
+
+        .modal-header-text h5,
+        .modal-header-text h3 {
+            margin: 0;
+        }
+
+        .modal-body-menu {
+            display: flex;
+            flex-wrap: wrap;
+            padding-top: 20px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .modal-section-menu {
+            flex: 1;
+            border: 1px solid #cccccc;
+            width: auto;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        .modal-section-menu h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .modal-section-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .modal-section-menu ul li {
+            margin: 5px 0;
+        }
+
+        .social-icons-menu a {
+            margin: 0 10px;
+        }
+
+        .social-icons-menu img {
+            height: 30px;
+        }
+
+        .modal-section-menu h3 {
+            font-size: 90%;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            display: inline-block;
+            width: 50%;
+        }
+
+        .modal-section-menu ul li {
+            font-size: 90%;
+        }
+
+        .result-item {
+            height: auto;
+            width: 230px;
+            background-color: rgba(252, 243, 207, 0.4);
+            border: 1px solid #8B4513;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 15px;
+            transition: background-color 0.3s, border-color 0.3s;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            margin: 5px;
+        }
+        .result-item:active {
+            transform: scale(0.95);
+        }
+        .result-item:hover {
+            background-color: rgba(250, 215, 160, 0.5);
+            border-color: #000000;
+            transform: scale(1.05);
+        }
+
+        .search-results-grid {
+            width: 80%;
+            margin: 0 11%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 24px;
+            color: beige;
+        }
+
+
+        #pagination-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 15%;
+        }
+
+        .pagination button {
+            background-color: beige;
+            color: #c0a16b;
+            border: #8B4513 1px;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background-color: #8B4513;
+            color: beige;
+            transform: scale(1.05);
+        }
+
+        .pagination button:active {
+            transform: scale(0.95);
+        }
+
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu-container">
+    <a href="/"><button id="buttons" class="logo-menu"></button></a>
+    <button class="nav-btn" id="navBtn"><div></div></button>
+    <button id="openModalBtn" class="open-auth"></button>
+    <button id="searchModal" class="search-btn"></button>
+    <button id="bookmarkModal" class="bookmark-btn"></button>
+    <a href="/posts"><button id="postModal" class="post-btn"></button></a>
+</div>
+
+<div id="myModalMenu" class="modal-menu">
+    <div class="modal-content-menu">
+        <span class="close-menu">&times;</span>
+        <div class="modal-header-menu">
+            <img src="https://i.imgur.com/3e22nFw.png" alt="Логотип" class="modal-logo-menu">
+            <div class="modal-header-text">
+                <h5>Онлайн справочник по DayZ</h5>
+                <h3>DayZ Wiki</h3>
+            </div>
+        </div>
+        <div class="modal-body-menu">
+            <div class="modal-section-menu">
+                <a href="/weapons"><h3>Weapons</h3></a>
+                <ul>
+                    <a href="/modules"><li>Modifications</li></a>
+                    <a href="/ammunition"><li>Ammunition</li></a>
+                    <a href="/explosives"><li>Explosives</li></a>
+                </ul>
+            </div>
+            <div class="modal-section-menu">
+                <h3>Medicine</h3>
+                <ul>
+                    <li>Immunity</li>
+                    <a href="/diseases"><li>Diseases</li></a>
+                    <a href="/medications"><li>Medications</li></a>
+                </ul>
+            </div>
+            <div class="modal-section-menu">
+                <h3>Various</h3>
+                <ul>
+                    <a href="/armors"><li>Armor & Clothing</li></a>
+                    <a href="/cars"><li>Cars</li></a>
+                    <a href="/foods"><li>Food</li></a>
+                </ul>
+            </div>
+            <div class="modal-section-menu">
+                <h3>Knowledge base</h3>
+                <ul>
+                    <li>Story</li>
+                    <li>World map</li>
+                    <li>Crafting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="search-container">
+    <div class="search-box" id="search-box">
+        <input type="text" id="search-input" class="search-input" placeholder="search...">
+        <div class="search-placeholder" id="search-placeholder">Click here to start search</div>
+    </div>
+</div>
+<br><br><br>
+<div class="search-results-grid" id="search-results-grid">
+    <div class="button-row" id="button-row"></div>
+</div>
+
+<div class="popup-container" id="popup-container" style="display: none;">
+    <div class="popup-content">
+        <p>Good morning! <span class="user-name" id="user-name"></span></p>
+        <button class="button-change-password" id="button-change-password">Change password</button>
+        <button class="button-logout" id="logout-button">
+            Exit
+            <img src="https://i.imgur.com/iU73ksd.png" alt="logout icon" class="logout-icon">
+        </button>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <img src="https://i.imgur.com/wo2HPAH.png" alt="Image" class="auth-image">
+            <div class="auth-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <br>
+                <div class="modal-body">
+                    <form id="loginForm" method="post" th:method="post" action="/api/v1/auth/signin">
+                        <h5 class="text-center mb-3">Sign in</h5>
+                        <input type="text" id="username" class="form-control" placeholder="Login or Email">
+                        <span class="error-message" id="username-error">Поле обязательно для заполнения</span>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" class="form-control" placeholder="Password">
+                            <span class="toggle-password" onclick="togglePassword('password')"><i id="password-icon" class="fas fa-eye"></i></span>
+                            <span class="error-message" id="password-error">Поле обязательно для заполнения</span>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="switch" for="rememberMe"></label>
+                            <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                        </div>
+                        <div class="buttons">
+                            <button type="button" class="btn btn-primary" onclick="login()">Login</button>
+                            <button type="button" class="btn btn-secondary" id="register-btn">Registration</button>
+                            <button type="button" class="btn btn-link" id="button-change-password_two">Forgot password?
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pagination-row" class="pagination"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    var modalMenu = document.getElementById("myModalMenu");
+    var btn = document.getElementById("navBtn");
+    var spanMenu = document.getElementsByClassName("close-menu")[0];
+    btn.onclick = function() {
+        modalMenu.style.display = "block";
+    }
+
+    spanMenu.onclick = function() {
+        modalMenu.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target === modalMenu) {
+            modalMenu.style.display = "none";
+        }
+    }
+
+    function validateForm() {
+        let isValid = true;
+
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const usernameError = document.getElementById('username-error');
+        const passwordError = document.getElementById('password-error');
+
+        if (username.value.trim() === '') {
+            usernameError.style.display = 'block';
+            isValid = false;
+        } else {
+            usernameError.style.display = 'none';
+        }
+
+        if (password.value.trim() === '') {
+            passwordError.style.display = 'block';
+            isValid = false;
+        } else {
+            passwordError.style.display = 'none';
+        }
+
+        return isValid;
+    }
+
+    async function login() {
+        if (!validateForm()) {
+            return;
+        }
+
+        const nameOrEmail = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+
+        const loginData = {
+            nameOrEmail: nameOrEmail,
+            password: password,
+            remember: rememberMe
+        };
+
+        try {
+            const response = await fetch('/api/v1/auth/signin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginData)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert('Login successful');
+
+                document.cookie = `accessToken=${result.accessToken};path=/;`;
+
+                const responseS = {
+                    accessToken: result.accessToken,
+                    tokenType: 'Bearer'
+                };
+
+                updateAuthButtonBackground();
+
+            } else {
+                console.error('Error logging in:', response.statusText);
+                alert('Error logging in');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        }
+    }
+
+    function getUsernameFromToken(token) {
+        const payload = token.split('.')[1];
+        const decodedPayload = atob(payload);
+        const payloadObj = JSON.parse(decodedPayload);
+        return payloadObj.sub;
+    }
+
+    function showGreetingModal(username) {
+        const popupContainer = document.getElementById('popup-container');
+        const userNameElement = document.getElementById('user-name');
+
+        userNameElement.textContent = username;
+        popupContainer.style.display = 'flex';
+
+        popupContainer.addEventListener('click', function (event) {
+            if (event.target === popupContainer) {
+                popupContainer.style.display = 'none';
+            }
+        });
+
+    }
+
+    function updateAuthButtonBackground() {
+        console.log(document.cookie.split('; '));
+
+        const token = document.cookie.split('; ').find(row => row.startsWith('dayzwiki_user_token='));
+        const authButton = document.querySelector('.open-auth');
+        if (token) {
+            const tokenValue = token.split('=')[1];
+
+            if (tokenValue) {
+                const username = getUsernameFromToken(tokenValue);
+
+                authButton.style.background = "url('https://i.imgur.com/k35f6TB.png') no-repeat center center";
+                authButton.style.backgroundSize = "contain";
+
+                authButton.onclick = function () {
+                    showGreetingModal(username);
+                };
+            } else {
+                authButton.style.background = "url('https://i.imgur.com/XOvH3nb.png') no-repeat center center";
+                authButton.style.backgroundSize = "contain";
+                authButton.onclick = function () {
+                    $('#myModal').modal('show');
+                };
+            }
+        } else {
+            authButton.style.background = "url('https://i.imgur.com/XOvH3nb.png') no-repeat center center";
+            authButton.style.backgroundSize = "contain";
+            authButton.onclick = function () {
+                $('#myModal').modal('show');
+            };
+        }
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateAuthButtonBackground();
+        const searchModal = document.getElementById('searchModal');
+        const searchBox = document.getElementById('search-box');
+        const buttonRow = document.getElementById('button-row');
+        const searchInput = document.getElementById('search-input');
+        const paginationRow = document.getElementById('pagination-row');
+
+        let currentPage = 0;
+        const pageSize = 20;
+
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                currentPage = 0;
+                search();
+            }
+        });
+
+        function search() {
+            const query = searchInput.value;
+
+            const requestData = {
+                search: {
+                    value: query,
+                    exact: false // или true, если вам нужна точная проверка
+                },
+                page: currentPage,
+                size: pageSize, // Количество элементов на странице
+                orders: [
+                    {
+                        field: 'section',
+                        direction: 'asc'
+                    }
+                ], // Список сортировок (если нужно)
+                type: ''
+            };
+
+            fetch('api/v1/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Ответ сервера:', data);
+                    buttonRow.innerHTML = '';
+                    paginationRow.innerHTML = '';
+
+                    if (data.items.length > 0) {
+                        data.items.forEach(item => {
+                            const button = document.createElement('button');
+                            button.classList.add('result-item');
+                            button.textContent = item.englishName;
+                            button.addEventListener('click', () => {
+                                console.log('Clicked on:', item);
+                            });
+                            buttonRow.appendChild(button);
+                        });
+
+                        if (currentPage > 0) {
+                            const prevButton = document.createElement('button');
+                            prevButton.innerHTML = '&#9664;'; // Left arrow
+                            prevButton.classList.add('pagination-button');
+                            prevButton.addEventListener('click', () => {
+                                currentPage--;
+                                search();
+                            });
+                            paginationRow.appendChild(prevButton);
+                        }
+
+                        if (data.items.length === pageSize) {
+                            fetchNextPage(query).then(nextPageData => {
+                                if (nextPageData.items.length > 0) {
+                                    const nextButton = document.createElement('button');
+                                    nextButton.innerHTML = '&#9654;'; // Right arrow
+                                    nextButton.classList.add('pagination-button');
+                                    nextButton.addEventListener('click', () => {
+                                        currentPage++;
+                                        search();
+                                    });
+                                    paginationRow.appendChild(nextButton);
+                                }
+                            });
+                        }
+                    } else {
+                        const noResultsMessage = document.createElement('div');
+                        noResultsMessage.classList.add('no-results');
+                        noResultsMessage.textContent = 'The gods have found no answer to your query';
+                        buttonRow.appendChild(noResultsMessage);
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                });
+        }
+
+        function fetchNextPage(query) {
+            const requestData = {
+                search: {
+                    value: query,
+                    exact: false
+                },
+                page: currentPage + 1,
+                size: pageSize,
+                orders: [
+                    {
+                        field: 'section',
+                        direction: 'asc'
+                    }
+                ],
+                type: ''
+            };
+
+            return fetch('api/v1/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            }).then(response => response.json());
+        }
+
+        document.addEventListener('click', function(event) {
+            if (!searchBox.contains(event.target) && !searchModal.contains(event.target) && searchInput.value.length === 0) {
+                searchBox.classList.remove('active');
+                buttonRow.innerHTML = '';
+                paginationRow.innerHTML = '';
+                searchInput.value = '';
+            }
+        });
+
+        searchBox.addEventListener('click', function() {
+            this.classList.add('active');
+            buttonRow.style.display = 'block';
+        });
+
+        searchBox.addEventListener('click', function() {
+            searchBox.classList.add('active');
+            searchInput.focus();
+        });
+
+        searchInput.addEventListener('blur', function() {
+            if (searchInput.value === '') {
+                searchBox.classList.remove('active');
+            }
+        });
+
+        searchModal.addEventListener('click', function () {
+            searchBox.classList.add('active');
+            searchInput.focus();
+        });
+
+        const logoutButton = document.getElementById('logout-button');
+        logoutButton.addEventListener('click', function () {
+            fetch('/api/v1/auth/signout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Logout successful');
+                        setInitialContent();
+                        updateAuthButtonBackground();
+                    } else {
+                        console.error('Sign out failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error: ', error);
+                });
+        });
+
+        const initialModalContent = `
+            <form id="loginForm" method="post" action="/api/v1/auth/signin">
+                <h5 class="text-center mb-3">Sign in</h5>
+                <input type="text" id="username" class="form-control" placeholder="Login or Email">
+                <span class="error-message" id="username-error">Поле обязательно для заполнения</span>
+                <div class="password-wrapper">
+                    <input type="password" id="password" class="form-control" placeholder="Password">
+                    <span class="toggle-password" onclick="togglePassword('password')"><i id="password-icon" class="fas fa-eye"></i></span>
+                    <span class="error-message" id="password-error">Поле обязательно для заполнения</span>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="switch" for="rememberMe"></label>
+                    <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="btn btn-primary" onclick="login()">Login</button>
+                    <button type="button" class="btn btn-secondary" id="register-btn">Registration</button>
+                    <button type="button" class="btn btn-link" id="button-change-password_two">Forgot password?</button>
+                </div>
+            </form>
+    `;
+        const registerModalContent = `
+            <h5 class="text-center mb-3">Registration</h5>
+            <input type="text" id="registerName" class="form-control" placeholder="Username">
+            <span class="error-message" id="username-error">This field is mandatory</span>
+            <input type="text" id="registerEmail" class="form-control" placeholder="Email">
+            <span class="error-message" id="username-error">This field is mandatory</span>
+             <div class="password-wrapper">
+                 <input type="password" id="RegisterPassword" class="form-control" placeholder="Password">
+                 <span class="toggle-password" onclick="togglePassword('RegisterPassword')"><i id="password-icon" class="fas fa-eye"></i></span>
+                <span class="error-message" id="password-error">This field is mandatory</span>
+            </div>
+              <div class="password-wrapper">
+                 <input type="password" id="RegisterPasswordTwo" class="form-control" placeholder="Repeat password">
+                <span class="toggle-password" onclick="togglePassword('RegisterPasswordTwo')"><i id="password-icon" class="fas fa-eye"></i></span>
+                <span class="error-message" id="password-errorTwo">This field is mandatory</span>
+              </div>
+
+              <div class="buttons">
+                <button type="button" class="btn btn-primary" id="register-submit">Registration</button>
+                <button type="button" class="btn btn-secondary" id="authorization-btn">Sign in</button>
+              </div>
+    `;
+
+        const changeButton = document.getElementById('button-change-password');
+        changeButton.addEventListener('click', function () {
+            $('#popup-container').modal('hide');
+            setChangePasswordContent();
+            $('#myModal').modal('show');
+        })/* через сменить пароль при авторизированном юзере*/
+
+        function setChangePasswordContent() {
+            const changePasswordContent = `
+            <h5 class="text-center mb-3">Password recovery</h5>
+            <input type="text" id="changeEmail" class="form-control" placeholder="Enter email">
+            <span class="error-message" id="username-error">Поле обязательно для заполнения</span>
+            <div class="buttons">
+                <button type="button" class="btn btn-primary" id="change-password-submit">Restore password</button>
+                <button type="button" class="btn btn-secondary" id="authorization-btn">Sign in</button>
+            </div>
+    `;
+            const modalBody = document.querySelector('.modal-body');
+            modalBody.innerHTML = changePasswordContent;
+            const changeButtonSubmit = document.getElementById('change-password-submit');
+            changeButtonSubmit.addEventListener('click', changePassword);
+            assignEventListeners();
+        }
+
+        function setInitialContent() {
+            const modalBody = document.querySelector('.modal-body');
+            modalBody.innerHTML = initialModalContent;
+            assignEventListeners();
+        }
+
+        function setRegisterModalContent() {
+            const modalBody = document.querySelector('.modal-body');
+            modalBody.innerHTML = registerModalContent;
+            assignEventListeners();
+            const registerSubmitButton = document.getElementById('register-submit');
+            if (registerSubmitButton) {
+                registerSubmitButton.addEventListener('click', register);
+            }
+        }
+
+        async function changePassword() {
+            const email = document.getElementById('changeEmail').value;
+            try {
+                const response = await fetch('api/v1/auth/change/password?email=' + encodeURIComponent(email), {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    console.log(response);
+                    const result = await response;
+                    console.log('Password change request successful', result);
+                    alert('Инструкции по смене пароля были отправлены на вашу электронную почту.');
+                } else {
+                    console.error('Password change request failed', response.statusText);
+                    alert('Не удалось отправить запрос на смену пароля.' + response.statusText);
+                }
+            } catch (error) {
+                console.error('Error occurred while changing password', error);
+                alert('Произошла ошибка при отправке запроса. ' + error);
+            }
+        }
+
+        async function register() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('RegisterPassword').value;
+            const passwordConfirm = document.getElementById('RegisterPasswordTwo').value;
+
+            if (password !== passwordConfirm) {
+                alert("Пароли не совпадают");
+                return;
+            }
+
+            const registerData = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            try {
+                const response = await fetch('/api/v1/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registerData)
+                });
+
+                if (response.ok) {
+                    const result = await response.text();
+                    alert(result);
+                    setInitialContent();
+                } else {
+                    const errorText = await response.text();
+                    alert('Ошибка регистрации: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Произошла ошибка. Пожалуйста, попробуйте позже.');
+            }
+        }
+
+        function assignEventListeners() {
+            const changeButtonTwo = document.getElementById('button-change-password_two');
+            if (changeButtonTwo) {
+                changeButtonTwo.addEventListener('click', setChangePasswordContent);
+            }
+
+            const authButton = document.getElementById('authorization-btn');
+            if (authButton) {
+                authButton.addEventListener('click', setInitialContent);
+            }
+
+            const registerButton = document.getElementById('register-btn');
+            if (registerButton) {
+                registerButton.addEventListener('click', setRegisterModalContent);
+            }
+        }
+
+        assignEventListeners();
+
+    });
+
+    function togglePassword(passwordInputName) {
+        var passwordInput = document.getElementById(passwordInputName);
+        var passwordIcon = document.getElementById('password-icon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordIcon.classList.remove('fa-eye');
+            passwordIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            passwordIcon.classList.remove('fa-eye-slash');
+            passwordIcon.classList.add('fa-eye');
+        }
+    }
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
