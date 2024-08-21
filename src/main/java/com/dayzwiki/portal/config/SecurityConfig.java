@@ -48,8 +48,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/", "/api/v1/auth/**", "/reset/password", "/error", "/confirm/email",
                                 "/api/v1/search/**", "/armors/**", "/weapons/**", "/medications/**", "/modules/**", "/foods/**", "/ammunition/**",
-                                "/search/**").permitAll()
-                        /*.requestMatchers("/armors/**").hasAnyRole("ADMIN")*/
+                                "/search/**", "/@**", "/profile/**").permitAll()
+                        /*.requestMatchers("/admin/**").hasAnyRole("ADMIN")*/
                         .anyRequest().authenticated())
                 .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

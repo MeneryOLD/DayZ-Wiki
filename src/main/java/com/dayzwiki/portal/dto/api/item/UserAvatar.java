@@ -21,7 +21,4 @@ public class UserAvatar {
     @Column(name = "avatar", nullable = false)
     private byte[] avatar;
 
-    @Column(name = "banner", nullable = false)
-    private byte[] banner;
-
 }

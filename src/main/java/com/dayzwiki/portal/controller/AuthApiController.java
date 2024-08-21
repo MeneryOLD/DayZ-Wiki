@@ -103,7 +103,7 @@ public class AuthApiController {
 
         userRepository.save(user);
         emailService.confirmRegistration(user);
-        return new ResponseEntity<>("Вы успешно зарегистрировались, перейдите по ссылке отправленной вам на почту чтоб закончить регистрацию", HttpStatus.OK);
+        return new ResponseEntity<>("Successful. Verify your email.", HttpStatus.OK);
     }
 
     @GetMapping("/change/password")

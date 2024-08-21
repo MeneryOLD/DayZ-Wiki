@@ -2,9 +2,12 @@ package com.dayzwiki.portal.service;
 
 import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.model.user.VerificationToken;
+import com.dayzwiki.portal.repository.user.UserRepository;
 import com.dayzwiki.portal.repository.user.VerificationTokenRepository;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

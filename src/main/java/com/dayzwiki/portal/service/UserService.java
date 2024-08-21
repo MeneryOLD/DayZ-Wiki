@@ -6,5 +6,4 @@ import jakarta.transaction.Transactional;
 public interface UserService {
     @Transactional
     void createVerificationToken(User user, String token, String type);
-
 }

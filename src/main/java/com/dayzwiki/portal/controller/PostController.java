@@ -1,4 +1,4 @@
-package com.dayzwiki.portal.controller.item;
+package com.dayzwiki.portal.controller;
 
 import com.dayzwiki.portal.model.item.Post;
 import com.dayzwiki.portal.repository.item.PostRepository;
@@ -28,7 +28,7 @@ public class PostController {
         Optional<Post> post = postRepository.findById(id);
         if (post.isPresent()) {
             model.addAttribute("post", post.get());
-            return "posts";
+            return "post";
         }
         return "error";
     }
