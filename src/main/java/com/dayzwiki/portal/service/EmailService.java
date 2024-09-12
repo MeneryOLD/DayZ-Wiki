@@ -16,7 +16,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Component
 public class EmailService {
-    private static final String resetText = "/reset/password?token=";
     private final UserService userService;
     private final ValueProvider valueProvider;
     private final JavaMailSender mailSender;
@@ -40,10 +39,22 @@ public class EmailService {
 
         String recipientAddress = user.getEmail();
         String subject = "Сброс пароля на dayzwiki.net";
-        String confirmationUrl = valueProvider.getDayzwikiUrl() + resetText + token;
+        String confirmationUrl = valueProvider.getDayzwikiUrl() + "/reset/password?token=" + token;
 
         String message = "Для сброса пароля перейдите по ссылке и введите новый пароль, но не ошибись токен для изменения пароля одноразовый:";
         sendEmail(recipientAddress, subject, message, confirmationUrl);
+    }
+
+    @Async
+    public void confirmEmail(User user, String newEmail) {
+        String token = UUID.randomUUID().toString();
+        userService.createVerificationToken(user, token, "EMAIL");
+
+        String subject = "Confirm email for DayZ-Wiki.net";
+        String confirmationUrl = valueProvider.getDayzwikiUrl() + "/api/v1/auth/confirm/email?token=" + token + "&email=" + newEmail;
+
+        String message = "Confirm the modified email for your DayZ-Wiki account:";
+        sendEmail(newEmail, subject, message, confirmationUrl);
     }
 
     private void sendEmail(String recipientAddress, String subject, String message, String url) {

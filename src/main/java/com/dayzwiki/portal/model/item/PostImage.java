@@ -22,10 +22,8 @@ public class PostImage {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    private String imageUrl;
-    private LocalDateTime createdAt;
+    @Column(name = "image", nullable = false)
+    private byte[] image;
 
-    public PostImage() {
-        this.createdAt = LocalDateTime.now();
-    }
+
 }

@@ -1,6 +1,5 @@
 package com.dayzwiki.portal.model.user;
 
-import com.dayzwiki.portal.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,14 +47,4 @@ public class VerificationToken {
         return new Date(cal.getTime().getTime());
     }
 
-    @Override
-    public String toString() {
-        return "VerificationToken{" +
-                "id=" + id +
-                ", token='" + token + '\'' +
-                ", user=" + user +
-                ", expiryDate=" + expiryDate +
-                ", type='" + type + '\'' +
-                '}';
-    }
 }

@@ -131,7 +131,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0,0,0,0.3);
         }
 
         .modal-content-menu {
@@ -378,6 +378,13 @@
         }
 
 
+
+
+
+
+
+
+
         .post-container {
             background-color: rgba(252, 243, 207, 0.8);
             border: 1px solid #8B4513;
@@ -404,6 +411,11 @@
             cursor: pointer;
         }
 
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         .post:active {
             transform: scale(1.05);
         }
@@ -436,8 +448,9 @@
             text-decoration: none;
         }
 
-        .post a:hover {
-            text-decoration: underline;
+        .btn-container {
+            display: flex;
+            gap: 5px;
         }
 
         #pagination-row {
@@ -471,6 +484,13 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
+
+
+
+
+
+
+
 
 
         .btn-add-post {
@@ -558,6 +578,14 @@
             text-align: center;
         }
 
+        #previewImages img {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
         .btn-secondary {
             background-color: #c0a16b;
             color: white;
@@ -607,24 +635,15 @@
         }
 
 
-
-        .img-thumbnail {
-            margin-top: 30px;
-            height: auto;
+        .btn {
+            font-size: 0.7rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
             cursor: pointer;
-            background-color: burlywood;
-            border: 1px solid #8B4513;
+            margin: 0 5px;
         }
 
-        .img-thumbnail:active {
-            transform: scale(0.95);
-            filter: brightness(0.9);
-        }
-
-        .img-thumbnail:hover {
-            transform: scale(1.05);
-            filter: brightness(0.9);
-        }
     </style>
 </head>
 
@@ -632,20 +651,12 @@
 <div class="notifications position-fixed top-0 end-0 p-3"></div>
 
 <div class="menu-container">
-    <a href="/">
-        <button id="buttons" class="logo-menu"></button>
-    </a>
-    <button class="nav-btn" id="navBtn">
-        <div></div>
-    </button>
+    <a href="/"><button id="buttons" class="logo-menu"></button></a>
+    <button class="nav-btn" id="navBtn"><div></div></button>
     <button id="openModalBtn" class="open-auth"></button>
-    <a href="/search">
-        <button id="searchModal" class="search-btn"></button>
-    </a>
+    <a href="/search"><button id="searchModal" class="search-btn"></button></a>
     <button id="bookmarkModal" class="bookmark-btn"></button>
-    <a href="/posts">
-        <button id="postModal" class="post-btn"></button>
-    </a>
+    <a href="/posts"><button id="postModal" class="post-btn"></button></a>
 </div>
 
 
@@ -663,41 +674,25 @@
             <div class="modal-section-menu">
                 <a href="/weapons"><h3>Weapons</h3></a>
                 <ul>
-                    <a href="/modules">
-                        <li>Modifications</li>
-                    </a>
-                    <a href="/ammunition">
-                        <li>Ammunition</li>
-                    </a>
-                    <a href="/explosives">
-                        <li>Explosives</li>
-                    </a>
+                    <a href="/modules"><li>Modifications</li></a>
+                    <a href="/ammunition"><li>Ammunition</li></a>
+                    <a href="/explosives"><li>Explosives</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
                 <h3>Medicine</h3>
                 <ul>
                     <li>Immunity</li>
-                    <a href="/diseases">
-                        <li>Diseases</li>
-                    </a>
-                    <a href="/medications">
-                        <li>Medications</li>
-                    </a>
+                    <a href="/diseases"><li>Diseases</li></a>
+                    <a href="/medications"><li>Medications</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
                 <h3>Various</h3>
                 <ul>
-                    <a href="/armors">
-                        <li>Armor & Clothing</li>
-                    </a>
-                    <a href="/cars">
-                        <li>Cars</li>
-                    </a>
-                    <a href="/foods">
-                        <li>Food</li>
-                    </a>
+                    <a href="/armors"><li>Armor & Clothing</li></a>
+                    <a href="/cars"><li>Cars</li></a>
+                    <a href="/foods"><li>Food</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
@@ -732,8 +727,7 @@
 
                         <div class="password-wrapper">
                             <input type="password" id="password" class="form-control" placeholder="Password">
-                            <span class="toggle-password" onclick="togglePassword('password', 'password-icon')"><i
-                                    id="password-icon" class="fas fa-eye"></i></span>
+                            <span class="toggle-password" onclick="togglePassword('password', 'password-icon')"><i id="password-icon" class="fas fa-eye"></i></span>
                             <span class="error-message" id="password-error">This field is mandatory</span>
                         </div>
                         <div style="margin-bottom: 20px;"></div>
@@ -772,31 +766,21 @@
                     <input type="hidden" id="authorName" name="authorName">
                     <div class="form-group">
                         <label for="postTitle">Title</label>
-                        <input type="text" id="postTitle" name="title" class="form-control"
-                               placeholder="Enter post title" required>
+                        <input type="text" id="postTitle" name="title" class="form-control" placeholder="Enter post title" required>
                     </div>
                     <div class="form-group">
                         <label for="postContent">Content</label>
-                        <textarea id="postContent" name="content" class="form-control" placeholder="Enter post content"
-                                  required></textarea>
+                        <textarea id="postContent" name="content" class="form-control" placeholder="Enter post content" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Add images</label>
                         <br>
-                        <input type="file" id="images" name="images" class="form-control-file d-none"
-                               accept="image/*" multiple onchange="previewNewImages(event)">
-                        <button type="button" class="btn btn-secondary btn-sm mt-2"
-                                onclick="document.getElementById('images').click();">
+                        <input type="file" id="postImages" name="images" class="form-control-file d-none" accept="image/*" multiple onchange>
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="document.getElementById('postImages').click();">
                             <i class="fas fa-upload"></i> Choose Images
                         </button>
-
-                        <div class="custom-current-images">
-                            <div class="post-images row" id="imageContainer"></div>
-                        </div>
                     </div>
-
-                    <!--<div id="previewImages"></div>-->
-                    <br>
+                    <div id="previewImages" class="d-flex justify-content-around"></div>
                     <div class="button-container">
                         <button type="button" class="btn btn-primary" id="submitPostBtn">Create Post</button>
                     </div>
@@ -807,14 +791,21 @@
 </div>
 
 
+
+
 <div class="post-container">
     <button class="btn-add-post" data-toggle="modal" data-target="#createPostModal">
         <i class="fas fa-plus"></i>
     </button>
-    <div th:each="post : ${posts}" class="post" th:data-post-id="${post.id}" onclick="openPost(this)">
+
+    <div th:each="post : ${posts}" class="post" th:data-post-id="${post.id}" onclick="openPost(this, event)">
         <div class="post-header">
             <h2 th:text="${post.title}">Post Title</h2>
             <p class="post-content" th:text="${#strings.abbreviate(post.content, 100)}">Post Content</p>
+            <div class="btn-container">
+                <button class="btn btn-success" onclick="approvePost(this)">Approve</button>
+                <button class="btn btn-danger" onclick="rejectPost(this)">Reject</button>
+            </div>
         </div>
         <div class="post-meta">
             <span class="post-author" th:text="${post.author.name}">Author</span> |
@@ -823,79 +814,65 @@
     </div>
 </div>
 
+
 <div id="pagination-row" class="pagination"></div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-    function previewNewImages(event) {
-        const files = event.target.files;
-        const imageContainer = document.getElementById('imageContainer');
-        const currentImagesCount = imageContainer.getElementsByTagName('img').length;
-
-        if (currentImagesCount + files.length > 3) {
-            showNotification("You can only add up to 3 images!", 'danger', 3000);
+    function openPost(element, event) {
+        if (event.target.classList.contains('btn-success') || event.target.classList.contains('btn-danger')) {
             return;
         }
 
-        Array.from(files).forEach(file => {
-            const fileType = file.type;
-
-            if (!fileType.startsWith('image/')) {
-                showNotification("Only image files are allowed!", 'danger', 3000);
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                const imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-                imgElement.classList.add('img-thumbnail');
-                imgElement.onclick = function () {
-                    deleteImage(this);
-                };
-
-                const colDiv = document.createElement('div');
-                colDiv.classList.add('col-md-4', 'image-wrapper');
-                colDiv.appendChild(imgElement);
-
-                imageContainer.appendChild(colDiv);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    }
-
-    document.getElementById('images').addEventListener('change', function (event) {
-        const files = event.target.files;
-
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-                imgElement.classList.add('img-thumbnail');
-                imgElement.style.maxWidth = '150px';
-                imgElement.style.marginTop = '10px';
-            }
-            reader.readAsDataURL(file);
-        });
-    });
-
-
-
-    function deleteImage(btn) {
-        const imageWrapper = btn.parentElement;
-        imageWrapper.remove();
-    }
-
-    function openPost(element) {
         var postId = element.getAttribute("data-post-id");
         if (postId) {
             window.location.href = '/posts/' + postId;
         }
+    }
+
+    function approvePost(button) {
+        const postId = button.closest('.post').getAttribute('data-post-id');
+        console.log(postId)
+        fetch(`/moder/posts/approve/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            if (response.ok) {
+                showNotification('Post successfully approved')
+                location.reload();
+            } else {
+                showNotification('Error approving post', 'danger', 3000);
+            }
+        }).catch(error => {
+            showNotification('Error approving post', 'danger', 3000);
+        });
+    }
+
+    function rejectPost(button) {
+        const postId = button.closest('.post').getAttribute('data-post-id');
+        fetch(`/moder/posts/reject/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            if (response.ok) {
+                showNotification('Post rejecting success', 'danger', 3000);
+                location.reload();
+            } else {
+                showNotification('Error rejecting post', 'danger', 3000);
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            showNotification('Error rejecting post', 'danger', 3000);
+        });
     }
 
     $(document).ready(function () {
@@ -919,7 +896,7 @@
             document.getElementById('authorName').value = getUsernameFromToken(tokenValue);
 
             var formData = new FormData(document.getElementById('createPostForm'));
-            console.log(formData);
+
             $.ajax({
                 url: '/posts/create',
                 type: 'POST',
@@ -929,6 +906,7 @@
                 success: function (response) {
                     showNotification('Post successfully created!', 'success', 3000);
                     $('#createPostModal').modal('hide');
+                    location.reload();
                 },
                 error: function () {
                     showNotification('There was an error when creating a post.', 'danger', 3000);
@@ -937,19 +915,48 @@
         });
     });
 
+    document.getElementById('postImages').onchange = function(event) {
+        const preview = document.getElementById('previewImages');
+        preview.innerHTML = ''; // Очистить предварительный просмотр
+        const files = event.target.files;
+
+        if (files.length > 3) {
+            showNotification('You can upload a maximum of 3 images.', 'danger', 3000);
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '50px';
+                    img.style.maxHeight = '50px';
+                    img.style.margin = '5px';
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                showNotification('Only images can be uploaded.', 'danger', 3000);
+            }
+        }
+    };
+
 
     var modalMenu = document.getElementById("myModalMenu");
     var btn = document.getElementById("navBtn");
     var spanMenu = document.getElementsByClassName("close-menu")[0];
-    btn.onclick = function () {
+    btn.onclick = function() {
         modalMenu.style.display = "block";
     }
 
-    spanMenu.onclick = function () {
+    spanMenu.onclick = function() {
         modalMenu.style.display = "none";
     }
 
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         if (event.target === modalMenu) {
             modalMenu.style.display = "none";
         }
@@ -1184,14 +1191,11 @@
                 });
 
                 if (response.ok) {
-                    console.log(response);
                     showNotification('Password change instructions have been sent to your email.', 'success', 4000);
                 } else {
-                    console.error('Password change request failed', response.statusText);
                     showNotification('Failed to send a password reset request.', 'danger', 3000);
                 }
             } catch (error) {
-                console.error('Error occurred while changing password', error);
                 showNotification('Произошла ошибка при отправке запроса.', 'danger', 3000);
             }
         }
@@ -1325,7 +1329,7 @@
         $('.notifications').append(notification);
 
         const progressBar = notification.find('.progress-bar');
-        progressBar.animate({width: '100%'}, duration, function () {
+        progressBar.animate({ width: '100%' }, duration, function () {
             notification.fadeOut(300, function () {
                 $(this).remove();
             });

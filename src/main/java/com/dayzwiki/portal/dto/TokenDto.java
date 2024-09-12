@@ -15,5 +15,5 @@ import lombok.ToString;
 public class TokenDto {
     private String token;
     private String tokenType;
-    private String password;
+    private String data;
 }

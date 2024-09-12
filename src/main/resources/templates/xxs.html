@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DayZ Wiki - Posts</title>
+    <title>DayZ Wiki</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="https://i.imgur.com/3e22nFw.png" type="image/png">
     <style>
+
         body {
             font-family: Cambria;
             background-image: url('https://i.imgur.com/hHgrtqT.jpg');
@@ -54,38 +55,6 @@
             cursor: pointer;
         }
 
-        .nav-btn {
-            margin: 1em;
-            width: 40px;
-            height: 40px;
-            background-color: transparent;
-            border: none;
-        }
-
-        .nav-btn:after,
-        .nav-btn:before,
-        .nav-btn div {
-            background-color: #000000;
-            border-radius: 2px;
-            content: '';
-            display: block;
-            height: 3px;
-            margin: 6px 0;
-            transition: all .2s ease-in-out;
-        }
-
-        .nav-btn:hover:before {
-            transform: translateY(10px) rotate(135deg);
-        }
-
-        .nav-btn:hover:after {
-            transform: translateY(-10px) rotate(-135deg);
-        }
-
-        .nav-btn:hover div {
-            transform: scale(0);
-        }
-
         .open-auth {
             background: url('https://i.imgur.com/XOvH3nb.png') no-repeat center center; /*'https://i.imgur.com/k35f6TB.png'*/
             background-size: contain;
@@ -122,122 +91,6 @@
             cursor: pointer;
         }
 
-        .modal-menu {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-content-menu {
-            background-color: cornsilk;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 55%;
-            height: 50%;
-            max-width: 1200px;
-            border-radius: 10px;
-        }
-
-        .close-menu {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close-menu:hover,
-        .close-menu:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-            transform: scale(1.1);
-        }
-
-        .close-menu:active {
-            transform: scale(0.95);
-        }
-
-        .modal-header-menu {
-            display: flex;
-            align-items: flex-start;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            justify-content: flex-start;
-        }
-
-        .modal-logo-menu {
-            height: 50px;
-            margin-right: 15px;
-        }
-
-        .modal-header-text h5,
-        .modal-header-text h3 {
-            margin: 0;
-        }
-
-        .modal-body-menu {
-            display: flex;
-            flex-wrap: wrap;
-            padding-top: 20px;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .modal-section-menu {
-            flex: 1;
-            border: 1px solid #cccccc;
-            width: auto;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px;
-        }
-
-        .modal-section-menu ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .modal-section-menu h3 {
-            font-size: 90%;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            display: inline-block;
-            width: 50%;
-        }
-
-        .modal-section-menu ul li {
-            font-size: 90%;
-        }
-
-        .modal-section-menu a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .modal-dialog {
-            max-width: none;
-            width: 80%;
-            margin: 5rem auto;
-        }
-
-        .modal-content {
-            display: flex;
-            flex-direction: row;
-            border-radius: 0.6rem;
-            width: 100%;
-            margin: auto;
-            max-width: 700px;
-            max-height: 700px;
-        }
-
         .auth-image {
             width: 30%;
             height: auto;
@@ -254,6 +107,22 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: row;
+            border-radius: 0.6rem;
+            width: 100%;
+            margin: auto;
+            max-width: 700px;
+            max-height: 700px;
+        }
+
+        .modal-dialog {
+            max-width: none;
+            width: 80%;
+            margin: 5rem auto;
         }
 
         .modal-header {
@@ -277,6 +146,14 @@
             justify-content: center;
         }
 
+        .close:hover {
+            transform: scale(1.05);
+        }
+
+        .close:active {
+            transform: scale(0.95);
+        }
+
         .modal-body {
             padding-top: 2rem;
         }
@@ -290,19 +167,6 @@
 
         .form-control::placeholder {
             color: bisque;
-        }
-
-        .error-message {
-            color: #ff0000;
-            font-size: 0.7em;
-            display: none;
-            margin-top: 2px;
-            z-index: 1;
-            clear: both;
-        }
-
-        input:invalid + .error-message {
-            display: block;
         }
 
         .toggle-password {
@@ -377,199 +241,150 @@
             flex: unset;
         }
 
-
-        .post-container {
-            background-color: rgba(252, 243, 207, 0.8);
-            border: 1px solid #8B4513;
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 80px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            overflow-y: auto;
-            height: 70vh;
+        .error-message {
+            color: #ff0000;
+            font-size: 0.7em;
+            display: none;
+            margin-top: 2px;
+            z-index: 1;
+            clear: both;
         }
 
-        .post {
-            padding: 10px;
-            background-color: #c0a16b;
-            color: cornsilk;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            font-size: 0.85rem;
-            transition: transform 0.3s ease;
-            cursor: pointer;
+        input:invalid + .error-message {
+            display: block;
         }
 
-        .post:active {
-            transform: scale(1.05);
-        }
-
-        .post h2 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .post p {
-            font-size: 0.85rem;
-            margin-bottom: 5px;
-        }
-
-        .post-meta {
-            color: white;
-            font-size: 0.75rem;
-        }
-
-        .post-author {
-            font-weight: bold;
-        }
-
-        .post-date {
-            font-style: italic;
-        }
-
-        .post a {
-            color: #8B4513;
+        .modal-section-menu a {
+            color: inherit;
             text-decoration: none;
         }
 
-        .post a:hover {
-            text-decoration: underline;
+        .nav-btn {
+            margin: 1em;
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
         }
 
-        #pagination-row {
-            display: flex;
-            justify-content: center;
-            margin-top: 12%;
+        .nav-btn:after,
+        .nav-btn:before,
+        .nav-btn div {
+            background-color: #000000;
+            border-radius: 2px;
+            content: '';
+            display: block;
+            height: 3px;
+            margin: 6px 0;
+            transition: all .2s ease-in-out;
         }
 
-        .pagination button {
-            background-color: beige;
-            color: #c0a16b;
-            border: #8B4513 1px;
-            padding: 10px 20px;
-            margin: 0 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .nav-btn:hover:before {
+            transform: translateY(10px) rotate(135deg);
         }
 
-        .pagination button:hover {
-            background-color: #8B4513;
-            color: beige;
-            transform: scale(1.05);
+        .nav-btn:hover:after {
+            transform: translateY(-10px) rotate(-135deg);
         }
 
-        .pagination button:active {
-            transform: scale(0.95);
-        }
-
-        .pagination button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
+        .nav-btn:hover div {
+            transform: scale(0);
         }
 
 
-        .btn-add-post {
-            background-color: #c0a16b;
-            color: white;
-            border: darkorange 1px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .btn-add-post:active {
-            transform: scale(0.95);
-        }
-
-        .btn-add-post:hover {
-            transform: scale(1.05);
-        }
-
-        #createPostModal .modal-content {
-            background-color: cornsilk;
-            border-radius: 10px;
-            border: 1px solid #8B4513;
-            padding: 20px;
-        }
-
-        #createPostModal .modal-header-post {
-            border-bottom: 1px solid #8B4513;
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #createPostModal .modal-title-wrapper {
-            width: 100%;
-            text-align: center;
-            position: absolute;
+        .modal-menu {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
             top: 0;
-            left: 50%;
-            transform: translate(-50%, 0);
-            padding-top: 10px;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.3);
         }
 
-        #createPostModal .modal-title {
-            font-size: 1.2rem;
-            color: #8B4513;
+        .modal-content-menu {
+            background-color: cornsilk;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 55%;
+            height: 50%;
+            max-width: 1200px;
+            border-radius: 10px;
         }
 
-        #createPostModal .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            height: 20px;
+        .close-menu {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-menu:hover,
+        .close-menu:focus {
             color: black;
-            border-radius: 30%;
+            text-decoration: none;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+        .close-menu:active {
+            transform: scale(0.95);
+        }
+
+        .modal-logo-menu {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .modal-header-menu {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            justify-content: flex-start;
+        }
+
+        .modal-header-text h5,
+        .modal-header-text h3 {
+            margin: 0;
+        }
+
+        .modal-body-menu {
+            display: flex;
+            flex-wrap: wrap;
+            padding-top: 20px;
             justify-content: center;
-        }
-
-        #createPostModal .form-control {
-            border-radius: 5px;
-            border: 1px solid #8B4513;
-            background-color: #FDF5E6;
-            color: #8B4513;
-        }
-
-        #createPostModal .form-control::placeholder {
-            color: #8B4513;
-        }
-
-        #createPostModal .btn-primary {
-            background-color: #c0a16b;
-            border: none;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-
-        #createPostModal .btn-primary:hover {
-            background-color: #A0522D;
-            color: white;
-        }
-
-        .button-container {
             text-align: center;
         }
 
-        .btn-secondary {
-            background-color: #c0a16b;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 16px;
+        .modal-section-menu {
+            flex: 1;
+            border: 1px solid #cccccc;
+            width: auto;
+            padding: 10px;
             border-radius: 5px;
-            cursor: pointer;
+            margin: 10px;
         }
 
-        .btn-secondary:hover {
-            background-color: #8B4513;
+        .modal-section-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .modal-section-menu h3 {
+            font-size: 90%;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            display: inline-block;
+            width: 50%;
+        }
+
+        .modal-section-menu ul li {
+            font-size: 90%;
         }
 
         .notifications {
@@ -606,47 +421,20 @@
             transition: width .3s linear;
         }
 
-
-
-        .img-thumbnail {
-            margin-top: 30px;
-            height: auto;
-            cursor: pointer;
-            background-color: burlywood;
-            border: 1px solid #8B4513;
-        }
-
-        .img-thumbnail:active {
-            transform: scale(0.95);
-            filter: brightness(0.9);
-        }
-
-        .img-thumbnail:hover {
-            transform: scale(1.05);
-            filter: brightness(0.9);
-        }
     </style>
 </head>
-
 <body>
 <div class="notifications position-fixed top-0 end-0 p-3"></div>
 
 <div class="menu-container">
-    <a href="/">
-        <button id="buttons" class="logo-menu"></button>
-    </a>
-    <button class="nav-btn" id="navBtn">
-        <div></div>
-    </button>
+    <a href="/"><button id="buttons" class="logo-menu"></button></a>
+    <button class="nav-btn" id="navBtn"><div></div></button>
     <button id="openModalBtn" class="open-auth"></button>
-    <a href="/search">
-        <button id="searchModal" class="search-btn"></button>
-    </a>
+    <button id="searchModal" class="search-btn"></button>
     <button id="bookmarkModal" class="bookmark-btn"></button>
-    <a href="/posts">
-        <button id="postModal" class="post-btn"></button>
-    </a>
+    <a href="/posts"><button id="postModal" class="post-btn"></button></a>
 </div>
+
 
 
 <div id="myModalMenu" class="modal-menu">
@@ -663,41 +451,25 @@
             <div class="modal-section-menu">
                 <a href="/weapons"><h3>Weapons</h3></a>
                 <ul>
-                    <a href="/modules">
-                        <li>Modifications</li>
-                    </a>
-                    <a href="/ammunition">
-                        <li>Ammunition</li>
-                    </a>
-                    <a href="/explosives">
-                        <li>Explosives</li>
-                    </a>
+                    <a href="/modules"><li>Modifications</li></a>
+                    <a href="/ammunition"><li>Ammunition</li></a>
+                    <a href="/explosives"><li>Explosives</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
                 <h3>Medicine</h3>
                 <ul>
                     <li>Immunity</li>
-                    <a href="/diseases">
-                        <li>Diseases</li>
-                    </a>
-                    <a href="/medications">
-                        <li>Medications</li>
-                    </a>
+                    <a href="/diseases"><li>Diseases</li></a>
+                    <a href="/medications"><li>Medications</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
                 <h3>Various</h3>
                 <ul>
-                    <a href="/armors">
-                        <li>Armor & Clothing</li>
-                    </a>
-                    <a href="/cars">
-                        <li>Cars</li>
-                    </a>
-                    <a href="/foods">
-                        <li>Food</li>
-                    </a>
+                    <a href="/armors"><li>Armor & Clothing</li></a>
+                    <a href="/cars"><li>Cars</li></a>
+                    <a href="/foods"><li>Food</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
@@ -732,8 +504,7 @@
 
                         <div class="password-wrapper">
                             <input type="password" id="password" class="form-control" placeholder="Password">
-                            <span class="toggle-password" onclick="togglePassword('password', 'password-icon')"><i
-                                    id="password-icon" class="fas fa-eye"></i></span>
+                            <span class="toggle-password" onclick="togglePassword('password', 'password-icon')"><i id="password-icon" class="fas fa-eye"></i></span>
                             <span class="error-message" id="password-error">This field is mandatory</span>
                         </div>
                         <div style="margin-bottom: 20px;"></div>
@@ -756,200 +527,21 @@
     </div>
 </div>
 
-<div id="createPostModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header-post">
-                <div class="modal-title-wrapper">
-                    <h5 class="modal-title">Create New Post</h5>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="createPostForm" action="/posts/create" method="post" enctype="multipart/form-data">
-                    <input type="hidden" id="authorName" name="authorName">
-                    <div class="form-group">
-                        <label for="postTitle">Title</label>
-                        <input type="text" id="postTitle" name="title" class="form-control"
-                               placeholder="Enter post title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="postContent">Content</label>
-                        <textarea id="postContent" name="content" class="form-control" placeholder="Enter post content"
-                                  required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Add images</label>
-                        <br>
-                        <input type="file" id="images" name="images" class="form-control-file d-none"
-                               accept="image/*" multiple onchange="previewNewImages(event)">
-                        <button type="button" class="btn btn-secondary btn-sm mt-2"
-                                onclick="document.getElementById('images').click();">
-                            <i class="fas fa-upload"></i> Choose Images
-                        </button>
-
-                        <div class="custom-current-images">
-                            <div class="post-images row" id="imageContainer"></div>
-                        </div>
-                    </div>
-
-                    <!--<div id="previewImages"></div>-->
-                    <br>
-                    <div class="button-container">
-                        <button type="button" class="btn btn-primary" id="submitPostBtn">Create Post</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post-container">
-    <button class="btn-add-post" data-toggle="modal" data-target="#createPostModal">
-        <i class="fas fa-plus"></i>
-    </button>
-    <div th:each="post : ${posts}" class="post" th:data-post-id="${post.id}" onclick="openPost(this)">
-        <div class="post-header">
-            <h2 th:text="${post.title}">Post Title</h2>
-            <p class="post-content" th:text="${#strings.abbreviate(post.content, 100)}">Post Content</p>
-        </div>
-        <div class="post-meta">
-            <span class="post-author" th:text="${post.author.name}">Author</span> |
-            <span class="post-date" th:text="${post.createdAt}">Date</span>
-        </div>
-    </div>
-</div>
-
-<div id="pagination-row" class="pagination"></div>
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
-    function previewNewImages(event) {
-        const files = event.target.files;
-        const imageContainer = document.getElementById('imageContainer');
-        const currentImagesCount = imageContainer.getElementsByTagName('img').length;
-
-        if (currentImagesCount + files.length > 3) {
-            showNotification("You can only add up to 3 images!", 'danger', 3000);
-            return;
-        }
-
-        Array.from(files).forEach(file => {
-            const fileType = file.type;
-
-            if (!fileType.startsWith('image/')) {
-                showNotification("Only image files are allowed!", 'danger', 3000);
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                const imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-                imgElement.classList.add('img-thumbnail');
-                imgElement.onclick = function () {
-                    deleteImage(this);
-                };
-
-                const colDiv = document.createElement('div');
-                colDiv.classList.add('col-md-4', 'image-wrapper');
-                colDiv.appendChild(imgElement);
-
-                imageContainer.appendChild(colDiv);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    }
-
-    document.getElementById('images').addEventListener('change', function (event) {
-        const files = event.target.files;
-
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-                imgElement.classList.add('img-thumbnail');
-                imgElement.style.maxWidth = '150px';
-                imgElement.style.marginTop = '10px';
-            }
-            reader.readAsDataURL(file);
-        });
-    });
-
-
-
-    function deleteImage(btn) {
-        const imageWrapper = btn.parentElement;
-        imageWrapper.remove();
-    }
-
-    function openPost(element) {
-        var postId = element.getAttribute("data-post-id");
-        if (postId) {
-            window.location.href = '/posts/' + postId;
-        }
-    }
-
-    $(document).ready(function () {
-        $('#createPostBtn').click(function () {
-            $('#createPostModal').modal('show');
-        });
-
-        $('#submitPostBtn').click(function (event) {
-            event.preventDefault();
-
-            const postTitle = $('#postTitle').val().trim();
-            const postContent = $('#postContent').val().trim();
-
-            if (postTitle === "" || postContent === "") {
-                showNotification('Title or Content cannot be empty.', 'danger', 3000);
-                return;
-            }
-
-            const token = document.cookie.split('; ').find(row => row.startsWith('dayzwiki_user_token='));
-            const tokenValue = token ? token.split('=')[1] : '';
-            document.getElementById('authorName').value = getUsernameFromToken(tokenValue);
-
-            var formData = new FormData(document.getElementById('createPostForm'));
-            console.log(formData);
-            $.ajax({
-                url: '/posts/create',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    showNotification('Post successfully created!', 'success', 3000);
-                    $('#createPostModal').modal('hide');
-                },
-                error: function () {
-                    showNotification('There was an error when creating a post.', 'danger', 3000);
-                }
-            });
-        });
-    });
-
 
     var modalMenu = document.getElementById("myModalMenu");
     var btn = document.getElementById("navBtn");
     var spanMenu = document.getElementsByClassName("close-menu")[0];
-    btn.onclick = function () {
+    btn.onclick = function() {
         modalMenu.style.display = "block";
     }
 
-    spanMenu.onclick = function () {
+    spanMenu.onclick = function() {
         modalMenu.style.display = "none";
     }
 
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         if (event.target === modalMenu) {
             modalMenu.style.display = "none";
         }
@@ -1325,7 +917,7 @@
         $('.notifications').append(notification);
 
         const progressBar = notification.find('.progress-bar');
-        progressBar.animate({width: '100%'}, duration, function () {
+        progressBar.animate({ width: '100%' }, duration, function () {
             notification.fadeOut(300, function () {
                 $(this).remove();
             });
