@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AmmunitionRepository extends JpaRepository<Ammunition, Integer>, JpaSpecificationExecutor<Ammunition> {
 
-    Ammunition getAmmunitionByEnglishName(String englishName);
-    List<Ammunition> getAmmunitionsByType(String type);
+    List<Ammunition> findAllByType(String type);
+    Ammunition findByEnglishNameIgnoreCase(String englishName);
 
 }

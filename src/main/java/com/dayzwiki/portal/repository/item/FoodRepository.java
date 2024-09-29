@@ -10,8 +10,7 @@ import java.util.List;
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Integer>, JpaSpecificationExecutor<Food> {
 
-    List<Food> getFoodsByType(String foodType);
-    Food getFoodByEnglishName(String englishName);
-
+    List<Food> findAllByType(String type);
+    Food findByEnglishNameIgnoreCase(String englishName);
 
 }

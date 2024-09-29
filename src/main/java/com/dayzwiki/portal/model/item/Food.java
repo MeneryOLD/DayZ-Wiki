@@ -24,7 +24,12 @@ public class Food {
     private int durability;
     private String size;
     private float weight;
+    private String source;
     private String description;
 
+    public String getUrlName() {
+        String formattedName = englishName.replace(" ", "_").toLowerCase();
+        return "http://localhost:8080/foods/" + formattedName; /*https://dayzwiki.net/foods/*/
+    }
 
 }

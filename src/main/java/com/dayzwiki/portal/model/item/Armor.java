@@ -22,6 +22,12 @@ public class Armor {
     private String insulation;
     private int capacity;
     private String additionalSlots;
+    private String source;
     private String description;
+
+    public String getUrlName() {
+        String formattedName = englishName.replace(" ", "_").toLowerCase();
+        return "http://localhost:8080/armors/" + formattedName; /*https://dayzwiki.net/armors/*/
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.dayzwiki.portal.repository.user;
 
-import com.dayzwiki.portal.model.item.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.dayzwiki.portal.model.user.User;

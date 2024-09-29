@@ -1,6 +1,5 @@
 package com.dayzwiki.portal.repository;
 
-
 import com.dayzwiki.portal.dto.api.Order;
 import com.dayzwiki.portal.dto.api.SearchApi;
 import com.dayzwiki.portal.dto.api.SourceApi;
@@ -104,4 +103,5 @@ public class SearchRepository {
         }
         return text;
     }
+
 }

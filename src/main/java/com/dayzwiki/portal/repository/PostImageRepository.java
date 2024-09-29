@@ -1,6 +1,6 @@
-package com.dayzwiki.portal.repository.item;
+package com.dayzwiki.portal.repository;
 
-import com.dayzwiki.portal.model.item.PostImage;
+import com.dayzwiki.portal.model.PostImage;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

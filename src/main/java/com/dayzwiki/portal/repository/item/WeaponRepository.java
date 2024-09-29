@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface WeaponRepository extends JpaRepository<Weapon, Integer>, JpaSpecificationExecutor<Weapon> {
 
-    List<Weapon> getWeaponsByType(String weaponsType);
-    Weapon getWeaponByEnglishName(String englishName);
+    List<Weapon> findAllByType(String type);
+    Weapon findByEnglishNameIgnoreCase(String englishName);
+
 }

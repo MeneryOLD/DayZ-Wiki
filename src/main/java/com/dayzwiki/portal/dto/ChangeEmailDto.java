@@ -1,6 +1,5 @@
 package com.dayzwiki.portal.dto;
 
-
 import lombok.Data;
 
 @Data

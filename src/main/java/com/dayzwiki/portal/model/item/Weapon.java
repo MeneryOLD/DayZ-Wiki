@@ -26,6 +26,12 @@ public class Weapon {
     private String tier;
     private int damage;
     private String description;
+    private String source;
     private int durability;
+
+    public String getUrlName() {
+        String formattedName = englishName.replace(" ", "_").toLowerCase();
+        return "http://localhost:8080/weapons/" + formattedName; /*https://dayzwiki.net/weapons/*/
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.dayzwiki.portal.service;
 
-
 import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.model.user.Role;
 import com.dayzwiki.portal.repository.user.UserRepository;

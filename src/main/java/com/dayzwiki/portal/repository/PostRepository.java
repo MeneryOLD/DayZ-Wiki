@@ -1,6 +1,6 @@
-package com.dayzwiki.portal.repository.item;
+package com.dayzwiki.portal.repository;
 
-import com.dayzwiki.portal.model.item.Post;
+import com.dayzwiki.portal.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,5 @@
 package com.dayzwiki.portal.model.item;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -24,6 +23,12 @@ public class Module {
     private String type;
     private float magnification;
     private int capacity;
+    private String source;
     private String description;
+
+    public String getUrlName() {
+        String formattedName = englishName.replace(" ", "_").toLowerCase();
+        return "http://localhost:8080/modules/" + formattedName; /*https://dayzwiki.net/modules/*/
+    }
 
 }

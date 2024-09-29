@@ -1,4 +1,5 @@
 package com.dayzwiki.portal.controller;
+
 import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.model.user.VerificationToken;
 import com.dayzwiki.portal.repository.user.UserRepository;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-
 
 @RequiredArgsConstructor
 @Controller

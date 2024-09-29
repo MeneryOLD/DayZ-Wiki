@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ArmorRepository extends JpaRepository<Armor, Integer>, JpaSpecificationExecutor<Armor> {
 
-    List<Armor> getArmorsByType(String armorsType);
-    Armor getArmorByEnglishName(String englishName);
+    List<Armor> findAllByType(String type);
+    Armor findByEnglishNameIgnoreCase(String englishName);
 
 }

@@ -1,9 +1,8 @@
 package com.dayzwiki.portal.controller;
 
-import com.dayzwiki.portal.model.item.Post;
-import com.dayzwiki.portal.model.item.PostImage;
-import com.dayzwiki.portal.repository.item.PostImageRepository;
-import com.dayzwiki.portal.repository.item.PostRepository;
+import com.dayzwiki.portal.model.Post;
+import com.dayzwiki.portal.repository.PostImageRepository;
+import com.dayzwiki.portal.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

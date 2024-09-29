@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ModuleRepository extends JpaRepository<Module, Integer>, JpaSpecificationExecutor<Module> {
 
-    List<Module> getModulesByType(String modulesType);
-    Module getModuleByEnglishName(String englishName);
+    List<Module> findAllByType(String type);
+    Module findByEnglishNameIgnoreCase(String englishName);
 
 }

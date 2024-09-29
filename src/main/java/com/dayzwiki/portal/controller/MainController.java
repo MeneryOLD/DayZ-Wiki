@@ -1,6 +1,5 @@
 package com.dayzwiki.portal.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -14,7 +13,7 @@ public class MainController {
 
     @GetMapping("/search")
     public String getSearchPage() {
-        return "search-page";
+        return "search_page";
     }
 
 }

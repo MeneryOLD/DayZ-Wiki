@@ -9,8 +9,7 @@ import java.util.List;
 
 @Repository
 public interface MedicationRepository extends JpaRepository<Medication, Integer>, JpaSpecificationExecutor<Medication> {
-
-    List<Medication> getMedicationsByType(String medicationsType);
-    Medication getMedicationByEnglishName(String englishName);
+    List<Medication> findAllByType(String type);
+    Medication findByEnglishNameIgnoreCase(String englishName);
 
 }

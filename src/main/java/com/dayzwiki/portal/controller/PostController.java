@@ -1,11 +1,11 @@
 package com.dayzwiki.portal.controller;
 
 import com.dayzwiki.portal.dto.PostDto;
-import com.dayzwiki.portal.model.item.Post;
-import com.dayzwiki.portal.model.item.PostImage;
+import com.dayzwiki.portal.model.Post;
+import com.dayzwiki.portal.model.PostImage;
 import com.dayzwiki.portal.model.user.User;
-import com.dayzwiki.portal.repository.item.PostImageRepository;
-import com.dayzwiki.portal.repository.item.PostRepository;
+import com.dayzwiki.portal.repository.PostImageRepository;
+import com.dayzwiki.portal.repository.PostRepository;
 import com.dayzwiki.portal.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -23,6 +23,12 @@ public class Ammunition {
     private String type;
     private String size;
     private String tier;
+    private String source;
     private String description;
+
+    public String getUrlName() {
+        String formattedName = englishName.replace(" ", "_").toLowerCase();
+        return "http://localhost:8080/ammunition/" + formattedName; /*https://dayzwiki.net/ammunitions/*/
+    }
 
 }

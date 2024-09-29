@@ -1,11 +1,9 @@
-package com.dayzwiki.portal.model.item;
+package com.dayzwiki.portal.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
 
 @Getter
 @Setter

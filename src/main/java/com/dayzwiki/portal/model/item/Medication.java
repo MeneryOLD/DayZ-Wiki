@@ -21,6 +21,12 @@ public class Medication {
     private String tier;
     private String size;
     private int durability;
+    private String source;
     private float weight;
+
+    public String getUrlName() {
+        String formattedName = englishName.replace(" ", "_").toLowerCase();
+        return "http://localhost:8080/medication/" + formattedName; /*https://dayzwiki.net/medication/*/
+    }
 
 }

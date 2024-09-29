@@ -6,7 +6,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "explosives")
 @Getter
-public class Explosives {
+public class Explosive {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,12 +16,16 @@ public class Explosives {
     private String englishName;
     private String altName;
 
-    private String type;
     private String size;
     private float weight;
     private int durability;
     private String tier;
+    private String source;
     private String description;
 
+    public String getUrlName() {
+        String formattedName = englishName.replace(" ", "_").toLowerCase();
+        return "http://localhost:8080/explosives/" + formattedName; /*https://dayzwiki.net/explosives/*/
+    }
 
 }
