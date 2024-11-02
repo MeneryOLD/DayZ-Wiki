@@ -24,7 +24,7 @@ public class PostModerationController {
     @GetMapping()
     public String getAllUnapprovedPost(Model model) {
         model.addAttribute("posts", postRepository.findAllByApproved(false));
-        return "moder-posts";
+        return "post/moder_posts";
     }
 
     @PostMapping("/approve/{id}")

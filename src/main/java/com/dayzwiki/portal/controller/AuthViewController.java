@@ -22,7 +22,7 @@ public class AuthViewController {
         if (verificationToken.isEmpty() || !verificationToken.get().getType().equals("CHANGE")) {
             return "redirect:/error";
         }
-        return "change-password";
+        return "profile/change_password";
     }
 
     @GetMapping("/confirm/email")

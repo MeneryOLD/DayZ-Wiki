@@ -26,7 +26,7 @@ public class UserController {
             model.addAttribute("user", user.get());
             model.addAttribute("isOwner", isOwner);
 
-            return "user-profile";
+            return "profile/user_profile";
         }
         return "error";
     }

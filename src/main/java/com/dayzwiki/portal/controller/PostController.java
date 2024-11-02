@@ -34,7 +34,7 @@ public class PostController {
     @GetMapping
     public String getAllApprovedPost(Model model) {
         model.addAttribute("posts", postRepository.findAllByApproved(true));
-        return "posts";
+        return "post/posts";
     }
 
     @GetMapping("/{id}")
@@ -52,7 +52,7 @@ public class PostController {
             model.addAttribute("post", post.get());
             model.addAttribute("postImages", encodedImages);
             model.addAttribute("isOwner", isOwner);
-            return "post";
+            return "post/post";
         }
         return "error";
     }

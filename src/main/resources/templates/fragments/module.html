@@ -413,7 +413,7 @@
 
 
 
-        .settings-button, .search-button {
+        .search-button {
             background-color: #000000;
             border: 2px solid beige;
             border-radius: 50%;
@@ -429,41 +429,19 @@
             z-index: 150;
         }
 
-        .settings-button:hover, .search-button:hover {
+        .search-button:hover {
             border: 2px solid #8B4513;
             background-color: #ffffff;
             color: #000000;
             transform: scale(1.05);
         }
 
-        .settings-button i, .search-button i {
+        .search-button i {
             transition: transform 0.3s ease;
         }
 
-        .settings-button:hover i, .search-button:hover i {
+        .search-button:hover i {
             transform: rotate(360deg);
-        }
-
-        .filter-apply-btn {
-            background-color: #c0a16b;
-            border: 2px solid #000000;
-            border-radius: 10px;
-            margin-top: 15px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 250px;
-            height: 30px;
-            font-size: 12px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 150;
-        }
-
-        .filter-apply-btn:hover, .filter-apply-btn:hover {
-            background-color: #ffffff;
-            color: #000000;
-            transform: scale(1.1);
         }
 
         .container {
@@ -626,27 +604,6 @@
         .modal-description {
             font-size: 14px;
             line-height: 1.7;
-        }
-
-        /* Filter Modal Styles */
-        .filter-modal-content {
-            background-color: rgba(255, 244, 196, 1);
-            padding: 20px;
-            border: 2px solid rgba(160, 82, 45, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            width: 60%;
-            max-width: 600px;
-            animation: modalOpen 0.3s ease-out;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .filter-range input[type="range"] {
-            flex: 1;
-            margin: 0 10px;
         }
 
         input[type="range"] {
@@ -999,7 +956,7 @@
 <div class="notifications position-fixed top-0 end-0 p-3"></div>
 
 <div class="menu-container">
-    <a href="/static"><button id="buttons" class="logo-menu"></button></a>
+    <a href="/"><button id="buttons" class="logo-menu"></button></a>
     <button class="nav-btn" id="navBtn"><div></div></button>
     <button id="openModalBtn" class="open-auth"></button>
     <a href="/search"><button id="searchModal" class="search-btn"></button></a>
@@ -1117,9 +1074,6 @@
                 <input type="text" class="search-input" id="searchInput" placeholder="Search...">
             </div>
             <h1 class="title" id="item-title">Default Title</h1>
-            <button class="settings-button" id="filterModalButton">
-                <i class="fas fa-cog"></i>
-            </button>
         </div>
         <button class="nav-button" id="next-button">▶</button>
     </div>
@@ -1130,67 +1084,6 @@
 <div id="itemModal" class="modal">
     <div class="modal-content-item">
         <div id="item-modal-description" class="modal-description"></div>
-    </div>
-</div>
-
-
-<!-- Filter Modal -->
-<div id="filterModal" class="modal">
-    <div class="filter-modal-content">
-        <h2 class="filter-modal-title">Filter Options</h2>
-        <div class="filter-group">
-            <label for="damageRange">Damage</label>
-            <label class="switch">
-                <input type="checkbox" id="damageSwitch" checked>
-                <span class="slider round"></span>
-            </label>
-            <div class="range-container" id="damageRangeContainer">
-                <div class="range-value" id="damageValue">0</div>
-                <input type="range" class="range-input" id="damageRange" name="damage" min="0" max="150" step="1">
-            </div>
-        </div>
-        <div class="filter-group">
-            <label for="durabilityRange">Durability</label>
-            <label class="switch">
-                <input type="checkbox" id="durabilitySwitch" checked>
-                <span class="slider round"></span>
-            </label>
-            <div class="range-container" id="durabilityRangeContainer">
-                <div class="range-value" id="durabilityValue">0</div>
-                <input type="range" class="range-input" id="durabilityRange" name="durability" min="0" max="500" step="1">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="TierLevel">Tier</label>
-            <div class="checkbox-group" id="TierLevel">
-                <label>
-                    <input type="checkbox" value="1">
-                    <span class="checkmark"></span>
-                    <div>1</div>
-                </label>
-                <label>
-                    <input type="checkbox" value="2">
-                    <span class="checkmark"></span>
-                    <div>2</div>
-                </label>
-                <label>
-                    <input type="checkbox" value="3">
-                    <span class="checkmark"></span>
-                    <div>3</div>
-                </label>
-                <label>
-                    <input type="checkbox" value="4">
-                    <span class="checkmark"></span>
-                    <div>4</div>
-                </label>
-                <label>
-                    <input type="checkbox" value="Crafted">
-                    <span class="checkmark"></span>
-                    <div>Crafted</div>
-                </label>
-            </div>
-        </div>
-        <button id="applyFilters" class="filter-apply-btn">Apply</button>
     </div>
 </div>
 
@@ -1559,8 +1452,6 @@
         const searchModalMenu = document.getElementById('searchModalMenu');
         const searchContainer = document.querySelector('.search-container');
         const searchInput = document.getElementById('searchInput');
-        const filterModalButton = document.getElementById('filterModalButton');
-        const filterModal = document.getElementById('filterModal');
         const applyFilters = document.getElementById('applyFilters');
 
         searchModalMenu.addEventListener('click', function (event) {
@@ -1961,64 +1852,6 @@
             }
         });
 
-// Filter modal logic
-        filterModalButton.addEventListener('click', function () {
-            filterModal.classList.add('show');
-            updateAllRangeValues();
-        });
-
-        const damageSwitch = document.getElementById('damageSwitch');
-        const durabilitySwitch = document.getElementById('durabilitySwitch');
-        const damageRangeContainer = document.getElementById('damageRangeContainer');
-        const durabilityRangeContainer = document.getElementById('durabilityRangeContainer');
-
-        applyFilters.addEventListener('click', function () {
-            const data = {};
-
-            if (damageSwitch.checked) {
-                data.damage = parseInt(document.getElementById('damageValue').textContent, 10);
-            }
-
-            if (durabilitySwitch.checked) {
-                data.durability = parseInt(document.getElementById('durabilityValue').textContent);
-            }
-
-            data.type = itemTypes[currentIndex];
-
-            const tierCheckboxes = document.querySelectorAll('#TierLevel input[type="checkbox"]');
-            data.tier = [];
-            tierCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    data.tier.push(checkbox.value);
-                }
-            });
-            fetch('/modules/api/filter', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => response.json())
-                .then(result => {
-                    itemsGrid.innerHTML = '';
-                    if (result.length === 0) {
-                        itemsGrid.innerHTML = '<p>Sorting result not found</p>';
-                        return;
-                    }
-                    result.forEach(item => addArmorButton(item));
-                })
-
-            filterModal.classList.remove('show');
-        });
-
-
-
-        window.addEventListener('click', function (event) {
-            if (event.target === filterModal) {
-                filterModal.classList.remove('show');
-            }
-        });
 
 // Set initial range values to the middle
         function setInitialRangeValues() {
@@ -2071,30 +1904,6 @@
                 }
             });
         });
-
-        damageSwitch.addEventListener('change', function () {
-            if (damageSwitch.checked) {
-                damageRangeContainer.classList.remove('disabled');
-            } else {
-                damageRangeContainer.classList.add('disabled');
-            }
-        });
-
-        durabilitySwitch.addEventListener('change', function () {
-            if (durabilitySwitch.checked) {
-                durabilityRangeContainer.classList.remove('disabled');
-            } else {
-                durabilityRangeContainer.classList.add('disabled');
-            }
-        });
-
-        function addArmorButton(item) {
-            const button = document.createElement('button');
-            button.classList.add('item-button');
-            button.textContent = item.englishName;
-            button.addEventListener('click', () => showItemDetails(item));
-            itemsGrid.appendChild(button);
-        }
 
         updateTitle();
         loadArmors(itemTypes[currentIndex]);

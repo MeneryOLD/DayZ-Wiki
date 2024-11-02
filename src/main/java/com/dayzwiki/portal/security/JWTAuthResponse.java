@@ -12,5 +12,4 @@ public class JWTAuthResponse {
     public JWTAuthResponse(String accessToken) {
         this.accessToken = accessToken;
     }
-
 }

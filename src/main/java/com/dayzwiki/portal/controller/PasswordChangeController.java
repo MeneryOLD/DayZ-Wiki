@@ -6,7 +6,7 @@ import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.model.user.VerificationToken;
 import com.dayzwiki.portal.repository.user.UserRepository;
 import com.dayzwiki.portal.repository.user.VerificationTokenRepository;
-import com.dayzwiki.portal.service.EmailService;
+import com.dayzwiki.portal.service.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public class PasswordChangeController {
 
     private final UserRepository userRepository;
-    private final EmailService emailService;
+    private final EmailServiceImpl emailServiceImpl;
     private final VerificationTokenRepository verificationTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -30,7 +30,7 @@ public class PasswordChangeController {
     public ResponseEntity<?> changePasswordToken(@RequestParam("email") String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
-            emailService.changePassword(user.get());
+            emailServiceImpl.changePassword(user.get());
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");

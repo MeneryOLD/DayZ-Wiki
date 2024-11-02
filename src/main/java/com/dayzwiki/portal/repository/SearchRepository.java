@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class SearchRepository {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     public List<SearchApi> search(String searchText, String type, Integer page, Integer size, List<Order> orders) {
         StringBuilder queryStr = new StringBuilder(

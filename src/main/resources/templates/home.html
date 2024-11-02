@@ -852,13 +852,13 @@
 
 <div class="container">
     <div class="button-row">
-        <button class="custom-button">Ammunition</button>
+        <a href="/ammunition"><button class="custom-button">Ammunition</button></a>
         <a href="/armors"><button class="custom-button">Armors</button></a>
-        <button class="custom-button">Cars</button>
-        <button class="custom-button">Diseases</button>
+        <a href="/cars"><button class="custom-button">Cars</button></a>
+        <a href="/diseases"><button class="custom-button">Diseases</button></a>
     </div>
     <div class="button-row">
-        <button class="custom-button">Explosives</button>
+        <a href="/explosives"><button class="custom-button">Explosives</button></a>
         <a href="/foods"><button class="custom-button">Foods</button></a>
         <a href="/medications"><button class="custom-button">Medications</button></a>
         <a href="/weapons"><button class="custom-button">Weapons</button></a>
@@ -1358,7 +1358,6 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log('Ответ сервера:', data);
                         searchResultsWrapper.innerHTML = '';
 
                         if (data.items.length > 0) {
@@ -1368,7 +1367,16 @@
                                 div.classList.add('result-item');
                                 div.textContent = item.englishName;
                                 div.addEventListener('click', () => {
-                                    console.log('Clicked on:', item);
+                                    fetch(item.url, {
+                                        method: 'GET',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(armorData => {
+                                        showItemDetails(armorData);
+                                    })
                                 });
                                 searchResultsWrapper.appendChild(div);
                             });

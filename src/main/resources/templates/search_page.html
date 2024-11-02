@@ -1280,7 +1280,6 @@
                 authButton.style.backgroundSize = "contain";
 
                 authButton.onclick = function () {
-                    console.log('Show profile ' + username);
                     showGreetingModal(username);
                 };
             } else {
@@ -1347,7 +1346,6 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Ответ сервера:', data);
                     buttonRow.innerHTML = '';
                     paginationRow.innerHTML = '';
 
@@ -1357,7 +1355,16 @@
                             button.classList.add('result-item');
                             button.textContent = item.englishName;
                             button.addEventListener('click', () => {
-                                console.log('Clicked on:', item);
+                                fetch(item.url, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(armorData => {
+                                    showItemDetails(armorData);
+                                })
                             });
                             buttonRow.appendChild(button);
                         });
