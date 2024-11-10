@@ -1,4 +1,4 @@
-package com.dayzwiki.portal.service;
+package com.dayzwiki.portal.service.user;
 
 import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.model.user.Role;
@@ -18,15 +18,15 @@ import java.util.Collection;
 @Service
 @Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository usersRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userNameOrEmail) throws UsernameNotFoundException {
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
-        User user = usersRepository.findByEmailOrName(userNameOrEmail, userNameOrEmail).orElseThrow(() ->
-                new UsernameNotFoundException("Не найден пользователь с таким именем или email: " + userNameOrEmail));
+        User user = userRepository.findByEmailOrName(userNameOrEmail, userNameOrEmail).orElseThrow(() ->
+                new UsernameNotFoundException("No user with this name or email was found: " + userNameOrEmail));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),

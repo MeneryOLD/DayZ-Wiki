@@ -1,8 +1,6 @@
 package com.dayzwiki.portal.controller;
 
-import com.dayzwiki.portal.model.Post;
-import com.dayzwiki.portal.repository.PostImageRepository;
-import com.dayzwiki.portal.repository.PostRepository;
+import com.dayzwiki.portal.service.PostModerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,41 +9,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/moder/posts")
 public class PostModerationController {
 
-    private final PostRepository postRepository;
-    private final PostImageRepository postImageRepository;
+    private final PostModerationService postModerationService;
 
     @GetMapping()
     public String getAllUnapprovedPost(Model model) {
-        model.addAttribute("posts", postRepository.findAllByApproved(false));
+        model.addAttribute("posts", postModerationService.getAllUnapprovedPost());
         return "post/moder_posts";
     }
 
     @PostMapping("/approve/{id}")
-    public String approvePost(@PathVariable("id") Integer id) {
-        Optional<Post> postOptional = postRepository.findById(id);
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-            post.setApproved(true);
-            postRepository.save(post);
-        }
+    public String approvePost(@PathVariable Integer id) {
+        postModerationService.approvePost(id);
         return "redirect:/moder/posts";
     }
 
     @PostMapping("/reject/{id}")
-    public String rejectPost(@PathVariable("id") Integer id) {
-        Optional<Post> postOptional = postRepository.findById(id);
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-            postImageRepository.deleteAllByPostId(post.getId());
-            postRepository.delete(post);
-        }
+    public String rejectPost(@PathVariable Integer id) {
+        postModerationService.rejectPost(id);
         return "redirect:/moder/posts";
     }
 

@@ -1,14 +1,14 @@
-package com.dayzwiki.portal.service;
+package com.dayzwiki.portal.service.user;
 
 import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.model.user.VerificationToken;
 import com.dayzwiki.portal.repository.user.VerificationTokenRepository;
-import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+@RequiredArgsConstructor
+public class VerificationServiceImpl implements VerificationService {
     private final VerificationTokenRepository tokenRepository;
 
     @Override

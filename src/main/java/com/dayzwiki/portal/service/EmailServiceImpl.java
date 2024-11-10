@@ -3,6 +3,9 @@ package com.dayzwiki.portal.service;
 import com.dayzwiki.portal.config.ValueProvider;
 import com.dayzwiki.portal.exception.ApiException;
 import com.dayzwiki.portal.model.user.User;
+import com.dayzwiki.portal.repository.user.VerificationTokenRepository;
+import com.dayzwiki.portal.service.user.VerificationService;
+import com.dayzwiki.portal.service.user.VerificationServiceImpl;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Component
 public class EmailServiceImpl implements EmailService {
-    private final UserService userService;
+    private final VerificationService verificationService;
     private final ValueProvider valueProvider;
     private final JavaMailSender mailSender;
 
@@ -24,12 +27,12 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void confirmRegistration(User user) {
         String token = UUID.randomUUID().toString();
-        userService.createVerificationToken(user, token, "REGISTRATION");
+        verificationService.createVerificationToken(user, token, "REGISTRATION");
 
         String recipientAddress = user.getEmail();
-        String subject = "Подтверждение регистрации";
+        String subject = "Confirmation of registration";
         String confirmationUrl = valueProvider.getDayzwikiUrl() + "/confirm/email?token=" + token;
-        String message = "Подтвердите ваш email адрес, перейдя по ссылке: ";
+        String message = "Confirm your email address by clicking the link: ";
         sendEmail(recipientAddress, subject, message, confirmationUrl);
     }
 
@@ -37,13 +40,13 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void changePassword(User user) {
         String token = UUID.randomUUID().toString();
-        userService.createVerificationToken(user, token, "CHANGE");
+        verificationService.createVerificationToken(user, token, "CHANGE");
 
         String recipientAddress = user.getEmail();
-        String subject = "Сброс пароля на dayzwiki.net";
+        String subject = "Resetting the password to dayzwiki.net";
         String confirmationUrl = valueProvider.getDayzwikiUrl() + "/reset/password?token=" + token;
 
-        String message = "Для сброса пароля перейдите по ссылке и введите новый пароль, но не ошибись токен для изменения пароля одноразовый:";
+        String message = "To reset your password, follow the link and enter a new password: ";
         sendEmail(recipientAddress, subject, message, confirmationUrl);
     }
 
@@ -51,7 +54,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void confirmEmail(User user, String newEmail) {
         String token = UUID.randomUUID().toString();
-        userService.createVerificationToken(user, token, "EMAIL");
+        verificationService.createVerificationToken(user, token, "EMAIL");
 
         String subject = "Confirm email for DayZ-Wiki.net";
         String confirmationUrl = valueProvider.getDayzwikiUrl() + "/api/v1/auth/confirm/email?token=" + token + "&email=" + newEmail;
@@ -60,7 +63,8 @@ public class EmailServiceImpl implements EmailService {
         sendEmail(newEmail, subject, message, confirmationUrl);
     }
 
-    private void sendEmail(String recipientAddress, String subject, String message, String url) {
+    @Async
+    protected void sendEmail(String recipientAddress, String subject, String message, String url) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setFrom("support@dayzwiki.net");

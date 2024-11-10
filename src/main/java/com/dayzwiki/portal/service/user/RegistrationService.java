@@ -1,4 +1,4 @@
-package com.dayzwiki.portal.controller;
+package com.dayzwiki.portal.service.user;
 
 import com.dayzwiki.portal.dto.SignUpDto;
 import com.dayzwiki.portal.model.user.Role;
@@ -10,31 +10,25 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.List;
 
+@Service
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/api/v1/auth")
-public class UserRegistrationController {
+public class RegistrationService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto) {
+    public ResponseEntity<?> registrationUser(SignUpDto signUpDto) {
         if (userRepository.existsByName(signUpDto.getName())) {
-            return new ResponseEntity<>("Name is already taken!", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body("Username already taken!");
         }
-
         if (userRepository.existsByEmail(signUpDto.getEmail())) {
-            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body("Email already taken!");
         }
 
         User user = new User();
@@ -44,10 +38,11 @@ public class UserRegistrationController {
         user.setEnabled(Boolean.FALSE);
 
         Role roles = roleRepository.findByName("USER").get();
-        user.setRoles(Collections.singletonList(roles));
+        user.setRoles(List.of(roles));
 
         userRepository.save(user);
         emailService.confirmRegistration(user);
         return new ResponseEntity<>("Successful. Verify your email.", HttpStatus.OK);
     }
+
 }

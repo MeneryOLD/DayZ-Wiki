@@ -97,7 +97,6 @@
 
     .section {
         width: 48%;
-        background-color: Ivory;
         border-radius: 8px;
         padding: 15px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
@@ -113,7 +112,7 @@
     }
 
     .post-btn {
-        background-color: #f8f5e6;
+        background-color: #d2b48c;
         width: 100%;
         height: 40px;
         border-radius: 8px;
@@ -146,7 +145,7 @@
     }
 
     table thead {
-        background-color: cornsilk;
+        background-color: #d2b48c;
         color: black;
     }
 
@@ -1543,10 +1542,10 @@
             if (response.ok) {
                 showNotification(`${item.englishName} added to bookmarks!`, 'success', 3000);
             } else {
-                showNotification('Failed to add bookmark. Log in and try again.', 'error', 3000);
+                showNotification('Failed to add bookmark. Log in and try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while adding bookmark.', 'error', 3000);
+            showNotification('Error occurred while adding bookmark.', 'danger', 3000);
         }
     }
 
@@ -1560,7 +1559,7 @@
             });
 
             if (!response.ok) {
-                showNotification('Failed to load bookmarks. Log in and try again.', 'error', 3000);
+                showNotification('Failed to load bookmarks. Log in and try again.', 'danger', 3000);
                 return;
             }
 
@@ -1623,7 +1622,7 @@
 
             bookmarksModal.style.display = 'flex';
         } catch (error) {
-            showNotification('Error occurred while loading bookmarks.', 'error', 3000);
+            showNotification('Error occurred while loading bookmarks.', 'danger', 3000);
         }
     }
 
@@ -1637,10 +1636,10 @@
             if (response.ok) {
                 showNotification('Bookmark deleted.', 'success', 3000);
             } else {
-                showNotification('Failed to delete bookmark. Try again.', 'error', 3000);
+                showNotification('Failed to delete bookmark. Try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while deleting bookmark.', 'error', 3000);
+            showNotification('Error occurred while deleting bookmark.', 'danger', 3000);
         }
     }
 
@@ -1668,6 +1667,9 @@
         }
     });
 
+    document.querySelector('#twoFactorSection .enable-button').addEventListener('click', () => {
+        showNotification('This function is temporarily not working', 'danger', 3000);
+    });
 
     function showSection(sectionId) {
         const sections = document.querySelectorAll('.settings-section');
@@ -1774,7 +1776,7 @@
     const exitButton = document.getElementById('signout-button');
     if (exitButton) {
         exitButton.addEventListener('click', function () {
-            fetch('/api/v1/auth/signout', {
+            fetch('/api/v1/auth/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1784,7 +1786,7 @@
                 .then(response => {
                     if (response.ok) {
                         updateAuthButtonBackground();
-                        window.location.reload();
+                        window.location.href = "/";
                         showNotification('Exit successful', 'success', 3000);
                     } else {
                         showNotification('Error when logging out of the account', 'danger', 3000);
