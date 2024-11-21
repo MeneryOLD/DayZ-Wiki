@@ -46,11 +46,12 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/", "/api/v1/auth/**", "/reset/password", "/confirm/email", "/error",
-                                "/api/v1/search", "/search/**", "/profile/**", "/api/v1/bookmarks/**",
-                                "/armors/**", "/weapons/**", "/medication/**", "/modules/**", "/foods/**",
-                                "/ammunition/**", "/cars/**", "/diseases/**", "/explosives/**").permitAll()
+                        .requestMatchers("/", "/reset/password", "/confirm/email", "/error",
+                                "/search/**", "/profile/**", "/api/v1/**", "/armors/**", "/weapons/**",
+                                "/medication/**", "/modules/**", "/foods/**", "/ammunition/**", "/cars/**",
+                                "/diseases/**", "/explosives/**").permitAll()
                         .requestMatchers("/moder/**").hasAnyRole("MODER", "ADMIN")
+                        .requestMatchers("/api/v1/youtube/**").hasAnyRole("MODER", "ADMIN")
                         .anyRequest().authenticated())
                 .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

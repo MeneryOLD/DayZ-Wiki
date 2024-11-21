@@ -40,10 +40,9 @@ class UserAvatarServiceTest {
         existingAvatar.setUserId(userId);
         when(userAvatarRepository.findByUserId(userId)).thenReturn(existingAvatar);
 
-        String result = userAvatarService.uploadAvatar(file, userId);
-
-        assertEquals("Avatar successfully uploaded!", result);
+        userAvatarService.uploadAvatar(file, userId);
         verify(userAvatarRepository, times(1)).save(any(UserAvatar.class));
+        verify(file, times(1)).getInputStream();
     }
 
 

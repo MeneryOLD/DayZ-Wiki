@@ -6,10 +6,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @JsonInclude(Include.NON_NULL)
-@ToString
 
 @NoArgsConstructor
 @Getter

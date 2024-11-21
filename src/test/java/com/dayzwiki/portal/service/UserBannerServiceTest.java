@@ -40,10 +40,10 @@ class UserBannerServiceTest {
         existingBanner.setUserId(userId);
         when(userBannerRepository.findByUserId(userId)).thenReturn(existingBanner);
 
-        String result = userBannerService.uploadBanner(file, userId);
+        userBannerService.uploadBanner(file, userId);
 
-        assertEquals("Banner successfully uploaded!", result);
         verify(userBannerRepository, times(1)).save(any(UserBanner.class));
+        verify(file, times(1)).getInputStream();
     }
 
     @Test

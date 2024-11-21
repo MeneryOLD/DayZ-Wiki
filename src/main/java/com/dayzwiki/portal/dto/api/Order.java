@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -16,7 +15,7 @@ public class Order {
     private String direction;
 
     public Order(String pair) {
-        List<String> strings = Arrays.stream(pair.split(" ")).collect(Collectors.toList());
+        List<String> strings = Arrays.stream(pair.split(" ")).toList();
         this.field = strings.get(0);
         this.direction = strings.get(1);
     }

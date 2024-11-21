@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/profile")
 public class UserPersonalizationController {
 
     private final UserAvatarService userAvatarService;
@@ -23,14 +23,15 @@ public class UserPersonalizationController {
     @ResponseBody
     public ResponseEntity<String> uploadAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("user_id") long userId) {
         try {
-            return ResponseEntity.ok(userAvatarService.uploadAvatar(file, userId));
+            userAvatarService.uploadAvatar(file, userId);
+            return ResponseEntity.ok("Avatar successfully uploaded!");
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error loading avatar.");
         }
     }
 
-    @GetMapping("/profile/get-avatar")
+    @GetMapping("/get-avatar")
     @ResponseBody
     public ResponseEntity<byte[]> getAvatar(@RequestParam("user_id") long userId) {
         byte[] avatar = userAvatarService.getAvatar(userId);
@@ -41,14 +42,15 @@ public class UserPersonalizationController {
     @ResponseBody
     public ResponseEntity<String> uploadBanner(@RequestParam("banner") MultipartFile file, @RequestParam("user_id") long userId) {
         try {
-            return ResponseEntity.ok(userBannerService.uploadBanner(file, userId));
+            userBannerService.uploadBanner(file, userId);
+            return ResponseEntity.ok("User banner successfully uploaded.");
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error loading banner.");
         }
     }
 
-    @GetMapping("/profile/get-banner")
+    @GetMapping("/get-banner")
     @ResponseBody
     public ResponseEntity<byte[]> getBanner(@RequestParam("user_id") long userId) {
         byte[] banner = userBannerService.getBanner(userId);

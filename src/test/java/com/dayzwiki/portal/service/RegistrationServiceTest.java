@@ -8,9 +8,9 @@ import com.dayzwiki.portal.repository.user.UserRepository;
 import com.dayzwiki.portal.service.user.RegistrationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -22,64 +22,83 @@ class RegistrationServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
     @Mock
     private RoleRepository roleRepository;
+
     @Mock
     private PasswordEncoder passwordEncoder;
+
     @Mock
     private EmailService emailService;
 
+    @InjectMocks
     private RegistrationService registrationService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        registrationService = new RegistrationService(userRepository, roleRepository, passwordEncoder, emailService);
     }
 
     @Test
-    void testRegisterUserSuccess() {
+    void shouldRegisterUserSuccessfully() {
         SignUpDto signUpDto = new SignUpDto("testUser", "test@example.com", "password");
-        Role userRole = new Role("USER");
 
-        when(userRepository.existsByNameOrEmail(signUpDto.getName(), signUpDto.getEmail())).thenReturn(false);
-        when(roleRepository.findByName("USER")).thenReturn(Optional.of(userRole));
+        when(userRepository.existsByName(signUpDto.getName())).thenReturn(false);
+        when(userRepository.existsByEmail(signUpDto.getEmail())).thenReturn(false);
         when(passwordEncoder.encode(signUpDto.getPassword())).thenReturn("encodedPassword");
 
-        ResponseEntity<?> response = registrationService.registrationUser(signUpDto);
+        Role userRole = new Role("USER");
+        when(roleRepository.findByName("USER")).thenReturn(Optional.of(userRole));
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("Successful. Verify your email.", response.getBody());
-        verify(userRepository, times(1)).save(any(User.class));
-        verify(emailService, times(1)).confirmRegistration(any(User.class));
+        registrationService.registrationUser(signUpDto);
+
+        verify(userRepository).save(any(User.class));
+        verify(emailService).confirmRegistration(any(User.class));
     }
 
     @Test
-    void testRegisterUserUsernameAlreadyTaken() {
+    void shouldThrowExceptionWhenUsernameAlreadyExists() {
         SignUpDto signUpDto = new SignUpDto("existingUser", "new@example.com", "password");
 
         when(userRepository.existsByName(signUpDto.getName())).thenReturn(true);
 
-        ResponseEntity<?> response = registrationService.registrationUser(signUpDto);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            registrationService.registrationUser(signUpDto);
+        });
 
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Username already taken!", response.getBody());
+        assertEquals("Username already taken!", exception.getMessage());
         verify(userRepository, never()).save(any(User.class));
-        verify(emailService, never()).confirmRegistration(any(User.class));
     }
 
     @Test
-    void testRegisterUserEmailAlreadyTaken() {
+    void shouldThrowExceptionWhenEmailAlreadyExists() {
         SignUpDto signUpDto = new SignUpDto("newUser", "existing@example.com", "password");
 
+        when(userRepository.existsByName(signUpDto.getName())).thenReturn(false);
         when(userRepository.existsByEmail(signUpDto.getEmail())).thenReturn(true);
 
-        ResponseEntity<?> response = registrationService.registrationUser(signUpDto);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            registrationService.registrationUser(signUpDto);
+        });
 
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Email already taken!", response.getBody());
+        assertEquals("Email already taken!", exception.getMessage());
         verify(userRepository, never()).save(any(User.class));
-        verify(emailService, never()).confirmRegistration(any(User.class));
     }
 
+    @Test
+    void shouldThrowExceptionWhenRoleNotFound() {
+        SignUpDto signUpDto = new SignUpDto("newUser", "new@example.com", "password");
+
+        when(userRepository.existsByName(signUpDto.getName())).thenReturn(false);
+        when(userRepository.existsByEmail(signUpDto.getEmail())).thenReturn(false);
+        when(roleRepository.findByName("USER")).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            registrationService.registrationUser(signUpDto);
+        });
+
+        assertEquals("Role 'USER' not found", exception.getMessage());
+        verify(userRepository, never()).save(any(User.class));
+    }
 }
