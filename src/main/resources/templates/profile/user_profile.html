@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -239,7 +239,7 @@
         top: 10px;
         left: 50%;
         transform: translateX(-50%);
-        width: 450px;
+        width: 500px;
         height: 50px;
     }
 
@@ -320,6 +320,15 @@
         cursor: pointer;
     }
 
+    .youtube-video-btn {
+        background: url('https://i.imgur.com/tefKkRp_d.webp?maxwidth=760&fidelity=grand') no-repeat center center;
+        background-size: contain;
+        width: 40px;
+        height: 40px;
+        border: none;
+        cursor: pointer;
+    }
+
     .auth-image {
         width: 30%;
         height: auto;
@@ -360,45 +369,44 @@
         padding: 20px;
         border: 1px solid #888;
         width: 55%;
-        height: 50%;
+        height: auto;
         max-width: 1200px;
         border-radius: 10px;
     }
 
     .close-menu {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
     }
 
-    .close-menu:hover,
-    .close-menu:focus {
-        color: black;
+    .close-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .close-icon:hover,
+    .close-icon:focus {
         text-decoration: none;
         cursor: pointer;
         transform: scale(1.1);
     }
 
-    .close-menu:active {
-        transform: scale(0.95);
-    }
-
     .modal-logo-menu {
-        height: 50px;
+        height: 40px;
         margin-right: 15px;
     }
 
     .modal-header-menu {
         display: flex;
-        align-items: flex-start;
-        border-bottom: 1px solid #ddd;
+        align-items: center;
+        border-bottom: 1px solid #8B4513;
         padding-bottom: 10px;
-        justify-content: flex-start;
+        justify-content: space-between;
     }
 
-    .modal-header-text h5,
-    .modal-header-text h3 {
+    .modal-header-text h4 {
         margin: 0;
     }
 
@@ -412,7 +420,7 @@
 
     .modal-section-menu {
         flex: 1;
-        border: 1px solid #cccccc;
+        border: 1px solid #8B4513;
         width: auto;
         padding: 10px;
         border-radius: 5px;
@@ -1099,6 +1107,9 @@
     <a href="/posts">
         <button id="postModal" class="post-btn-menu"></button>
     </a>
+    <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" href="/moder/youtube/videos">
+        <button class="youtube-video-btn"></button>
+    </a>
 </div>
 
 <div id="bookmarksModal" class="bookmark-modal">
@@ -1162,61 +1173,39 @@
 
 <div id="myModalMenu" class="modal-menu">
     <div class="modal-content-menu">
-        <span class="close-menu">&times;</span>
+
         <div class="modal-header-menu">
             <img src="https://i.imgur.com/3e22nFw.png" alt="Логотип" class="modal-logo-menu">
             <div class="modal-header-text">
-                <h5>Онлайн справочник по DayZ</h5>
-                <h3>DayZ Wiki</h3>
+                <h4>DayZ Online Guide</h4>
             </div>
+            <button class="close-menu">
+                <img src="https://i.imgur.com/mcKF0t8_d.webp?maxwidth=760&fidelity=grand" alt="Закрыть" class="close-icon">
+            </button>
         </div>
+
         <div class="modal-body-menu">
             <div class="modal-section-menu">
                 <a href="/weapons"><h3>Weapons</h3></a>
                 <ul>
-                    <a href="/modules">
-                        <li>Modifications</li>
-                    </a>
-                    <a href="/ammunition">
-                        <li>Ammunition</li>
-                    </a>
-                    <a href="/explosives">
-                        <li>Explosives</li>
-                    </a>
+                    <a href="/modules"><li>Modifications</li></a>
+                    <a href="/ammunition"><li>Ammunition</li></a>
+                    <a href="/explosives"><li>Explosives</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
-                <h3>Medicine</h3>
+                <h3>Survival & Health</h3>
                 <ul>
-                    <li>Immunity</li>
-                    <a href="/diseases">
-                        <li>Diseases</li>
-                    </a>
-                    <a href="/medication">
-                        <li>Medications</li>
-                    </a>
+                    <a href="/foods"><li>Foods</li></a>
+                    <a href="/medication"><li>Medications</li></a>
+                    <a href="/diseases"><li>Diseases</li></a>
                 </ul>
             </div>
             <div class="modal-section-menu">
-                <h3>Various</h3>
+                <h3>Various & Armor</h3>
                 <ul>
-                    <a href="/armors">
-                        <li>Armor & Clothing</li>
-                    </a>
-                    <a href="/cars">
-                        <li>Cars</li>
-                    </a>
-                    <a href="/foods">
-                        <li>Food</li>
-                    </a>
-                </ul>
-            </div>
-            <div class="modal-section-menu">
-                <h3>Knowledge base</h3>
-                <ul>
-                    <li>Story</li>
-                    <li>World map</li>
-                    <li>Crafting</li>
+                    <a href="/armors"><li>Armor & Clothing</li></a>
+                    <a href="/cars"><li>Cars</li></a>
                 </ul>
             </div>
         </div>
@@ -1230,7 +1219,7 @@
              alt="User Banner" onerror="this.onerror=null; this.src='https://i.imgur.com/BszDvTO.jpg';"
         >
 
-        <form th:if="${isOwner}" id="banner-form" action="/upload-banner" method="POST" enctype="multipart/form-data"
+        <form th:if="${isOwner}" id="banner-form" action="/profile/upload-banner" method="POST" enctype="multipart/form-data"
               style="display: none;">
             <input type="hidden" name="user_id" th:value="${user.id}"/>
             <input type="file" id="banner-input" name="banner" accept="image/*" onchange="submitBannerForm()">
@@ -1328,7 +1317,7 @@
                 <img th:src="@{/profile/get-avatar(user_id=${user.id})}" alt="User Avatar" onerror="this.onerror=null; this.src='https://i.imgur.com/3yY0Kbz.png';">
             </div>
 
-            <form th:if="${isOwner}" id="avatar-form" action="/upload-avatar" method="POST"
+            <form th:if="${isOwner}" id="avatar-form" action="/profile/upload-avatar" method="POST"
                   enctype="multipart/form-data" style="display: none;">
                 <input type="hidden" name="user_id" th:value="${user.id}"/>
                 <input type="file" id="avatar-input" name="avatar" accept="image/*" onchange="submitAvatarForm()">

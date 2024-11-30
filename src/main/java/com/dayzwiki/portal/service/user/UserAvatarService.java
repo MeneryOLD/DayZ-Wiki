@@ -17,7 +17,7 @@ public class UserAvatarService {
 
     private final UserAvatarRepository userAvatarRepository;
 
-    public String uploadAvatar(MultipartFile file, long userId) throws IOException {
+    public void uploadAvatar(MultipartFile file, long userId) throws IOException {
         InputStream inputStream = file.getInputStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -36,8 +36,6 @@ public class UserAvatarService {
         }
         userAvatar.setAvatar(imageBytes);
         userAvatarRepository.save(userAvatar);
-
-        return "Avatar successfully uploaded!";
     }
 
     public byte[] getAvatar(long userId) {

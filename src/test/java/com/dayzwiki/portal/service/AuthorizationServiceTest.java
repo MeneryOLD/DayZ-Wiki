@@ -9,12 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,59 +23,56 @@ class AuthorizationServiceTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
+
     @Mock
     private JwtTokenProvider tokenProvider;
-    @Mock
-    private HttpServletResponse httpServletResponse;
-    @Mock
-    private HttpSession httpSession;
-    @Mock
-    private Authentication authentication;
 
+    @InjectMocks
     private AuthorizationService authorizationService;
+
+    @Mock
+    private HttpServletResponse response;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        authorizationService = new AuthorizationService(authenticationManager, tokenProvider);
     }
 
     @Test
-    void testSignInSuccess() {
-        LoginDto loginDto = new LoginDto("testUser", "password", true);
+    void shouldSignInSuccessfully() {
+        LoginDto loginDto = new LoginDto("user", "password", true);
+        Authentication authentication = mock(Authentication.class);
+        String token = "generatedToken";
 
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(authentication);
-        when(tokenProvider.generateToken(authentication)).thenReturn("mockToken");
+        when(authenticationManager.authenticate(any())).thenReturn(authentication);
+        when(tokenProvider.generateToken(authentication)).thenReturn(token);
 
-        ResponseEntity<JWTAuthResponse> responseEntity = authorizationService.signIn(loginDto, httpServletResponse);
+        JWTAuthResponse authResponse = authorizationService.signIn(loginDto, response);
 
-        assertEquals(200, responseEntity.getStatusCodeValue());
-        assertNotNull(responseEntity.getBody());
-        assertEquals("mockToken", responseEntity.getBody().getAccessToken());
-        verify(httpServletResponse, times(1)).addCookie(any(Cookie.class));
+        assertNotNull(authResponse);
+        assertEquals(token, authResponse.getAccessToken());
+        verify(response).addCookie(any(Cookie.class));
     }
 
     @Test
-    void testSignInFailureIncorrectData() {
-        LoginDto loginDto = new LoginDto("testUser", "wrongPassword", true);
+    void shouldReturnNullWhenBadCredentials() {
+        LoginDto loginDto = new LoginDto("user", "wrongPassword", true);
 
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenThrow(new BadCredentialsException("Incorrect data"));
+        when(authenticationManager.authenticate(any())).thenThrow(new BadCredentialsException("Bad credentials"));
 
-        ResponseEntity<JWTAuthResponse> responseEntity = authorizationService.signIn(loginDto, httpServletResponse);
+        JWTAuthResponse authResponse = authorizationService.signIn(loginDto, response);
 
-        assertEquals(401, responseEntity.getStatusCodeValue());
+        assertNull(authResponse);
     }
 
     @Test
-    void testLogOut() {
-        when(httpSession.getId()).thenReturn("sessionId");
+    void shouldLogoutSuccessfully() {
+        HttpSession session = mock(HttpSession.class);
 
-        ResponseEntity<?> responseEntity = authorizationService.logOut(httpSession, httpServletResponse);
+        authorizationService.logOut(session, response);
 
-        assertEquals(200, responseEntity.getStatusCodeValue());
-        verify(httpServletResponse, times(1)).addCookie(any(Cookie.class));
-        verify(httpSession, times(1)).invalidate();
+        verify(session).invalidate();
+        verify(response).addCookie(argThat(cookie ->
+                "dayzwiki_user_token".equals(cookie.getName()) && cookie.getMaxAge() == -1));
     }
 }

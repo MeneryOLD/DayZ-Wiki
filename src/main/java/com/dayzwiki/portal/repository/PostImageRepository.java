@@ -13,7 +13,6 @@ public interface PostImageRepository extends JpaRepository<PostImage, Integer>, 
 
     @Transactional
     void deleteAllByPostId(Integer postId);
-
     List<PostImage> findAllByPostId(Integer postId);
 
 }

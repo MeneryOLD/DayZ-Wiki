@@ -17,7 +17,7 @@ public class UserBannerService {
 
     private final UserBannerRepository userBannerRepository;
 
-    public String uploadBanner(MultipartFile file, long userId) throws IOException {
+    public void uploadBanner(MultipartFile file, long userId) throws IOException {
         InputStream inputStream = file.getInputStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -37,8 +37,6 @@ public class UserBannerService {
         }
         userBanner.setBanner(imageBytes);
         userBannerRepository.save(userBanner);
-
-        return "Banner successfully uploaded!";
     }
 
     public byte[] getBanner(long userId) {

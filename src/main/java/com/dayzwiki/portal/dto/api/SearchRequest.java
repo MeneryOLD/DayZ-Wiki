@@ -2,7 +2,6 @@ package com.dayzwiki.portal.dto.api;
 
 import lombok.*;
 
-@ToString
 
 @Getter
 @Setter

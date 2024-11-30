@@ -29,9 +29,4 @@ public class PaginatedResponseApi<T> {
         this.size = size > -1 ? size : null;
         this.pages = size > -1 ? (int) Math.ceil((double) total / Math.abs(size)) : null;
     }
-
-    public PaginatedResponseApi(Collection<T> items, long total) {
-        this.items = items;
-        this.total = total;
-    }
 }
