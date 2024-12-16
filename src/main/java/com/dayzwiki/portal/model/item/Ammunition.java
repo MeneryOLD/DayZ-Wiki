@@ -28,7 +28,7 @@ public class Ammunition {
 
     public String getUrlName() {
         String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "http://localhost:8080/ammunition/" + formattedName; /*https://dayzwiki.net/ammunitions/*/
+        return "https://dayzwiki.org/ammunition/" + formattedName;
     }
 
 }

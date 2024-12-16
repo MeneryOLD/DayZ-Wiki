@@ -1276,7 +1276,6 @@
                 <h3>Account management</h3>
                 <button class="settings-button" onclick="showSection('emailSection')">Email management</button>
                 <button class="settings-button" onclick="showSection('passwordSection')">Password management</button>
-                <button class="settings-button" onclick="showSection('twoFactorSection')">Two-factor authentication</button>
             </div>
             <div class="modal-right">
 
@@ -1297,12 +1296,6 @@
                     <input type="password" id="newPassword" placeholder="New password" class="input-field">
                     <input type="password" id="repeatNewPassword" placeholder="Repeat new password" class="input-field">
                     <button id="confirmPasswordButton" class="confirm-button">Confirm</button>
-                </div>
-
-                <div id="twoFactorSection" class="settings-section" style="display: none;">
-                    <h4>Two-Factor Authentication</h4>
-                    <p>To further protect your account from unauthorized access, you can enable two-factor authentication. This is the best way to secure your DayZ-Wiki account.</p>
-                    <button class="enable-button">Enable Two-Factor Authentication</button>
                 </div>
 
             </div>
@@ -1562,11 +1555,9 @@
                 bookmarks.forEach((bookmark, index) => {
                     const bookmarkItem = document.createElement('li');
 
-                    // Доступ к полям объекта
                     const description = bookmark.description ? bookmark.description : 'No description';
                     const truncatedDescription = description.length > 50 ? description.substring(0, 50) + '...' : description;
 
-                    // Создаем кликабельный элемент с классом bookmark-item
                     bookmarkItem.innerHTML = `
             <div class="bookmark-item" data-index="${index}">
                 <span class="bookmark-title">${bookmark.englishName}</span>
@@ -1580,17 +1571,15 @@
                 });
             }
 
-            // Добавляем функционал для кнопок удаления закладок
             document.querySelectorAll('.delete-bookmark-btn').forEach(button => {
                 button.addEventListener('click', async function (event) {
-                    event.stopPropagation(); // Предотвращаем всплытие события
+                    event.stopPropagation();
                     const bookmarkId = this.getAttribute('data-id');
                     await deleteBookmark(bookmarkId);
-                    showBookmarks(); // Перерисовываем список после удаления
+                    showBookmarks();
                 });
             });
 
-            // Обработчик для элементов закладок, если требуется
             document.querySelectorAll('.bookmark-item').forEach(item => {
                 item.addEventListener('click', function () {
                     const index = this.getAttribute('data-index');
@@ -1632,18 +1621,14 @@
         }
     }
 
-
-    // Открытие модального окна при нажатии на кнопку
     const bookmarkModalButton = document.getElementById('bookmarkModal');
     bookmarkModalButton.addEventListener('click', showBookmarks);
 
-    // Закрытие модального окна при нажатии на кнопку закрытия
     const closeBtn = document.getElementById('closeBookmarksModal');
     closeBtn.addEventListener('click', function () {
         bookmarksModal.style.display = 'none';
     });
 
-    // Закрытие модального окна при клике вне его области
     window.addEventListener('click', function (event) {
         if (event.target === bookmarksModal) {
             bookmarksModal.style.display = 'none';
@@ -1654,10 +1639,6 @@
         if (event.target === itemModal) {
             itemModal.classList.remove('show');
         }
-    });
-
-    document.querySelector('#twoFactorSection .enable-button').addEventListener('click', () => {
-        showNotification('This function is temporarily not working', 'danger', 3000);
     });
 
     function showSection(sectionId) {
@@ -1913,14 +1894,14 @@
         const btnSettings = document.getElementById("settingsButtonSettings");
         const spanSettings = document.getElementsByClassName("closeSettings")[0];
 
-        if (btnSettings) {  // Проверяем, существует ли элемент
+        if (btnSettings) {
             btnSettings.onclick = function () {
                 modalSettings.style.display = "block";
                 window.addEventListener("click", closeModalOnClick);
             };
         }
 
-        if (spanSettings) {  // Проверяем, существует ли элемент
+        if (spanSettings) {
             spanSettings.onclick = function () {
                 modalSettings.style.display = "none";
                 window.removeEventListener("click", closeModalOnClick);

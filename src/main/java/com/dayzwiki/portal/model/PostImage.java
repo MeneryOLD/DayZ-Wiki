@@ -23,5 +23,4 @@ public class PostImage {
     @Column(name = "image", nullable = false)
     private byte[] image;
 
-
 }

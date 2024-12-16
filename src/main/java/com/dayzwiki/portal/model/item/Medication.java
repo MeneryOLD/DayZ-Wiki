@@ -26,7 +26,7 @@ public class Medication {
 
     public String getUrlName() {
         String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "http://localhost:8080/medication/" + formattedName; /*https://dayzwiki.net/medication/*/
+        return "https://dayzwiki.org/medication/" + formattedName;
     }
 
 }

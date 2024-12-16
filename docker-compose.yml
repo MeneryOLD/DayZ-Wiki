@@ -1,0 +1,40 @@
+services:
+  db:
+    env_file: /.env
+    image: mysql:8.0
+    container_name: db
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_TCP_PORT: ${DB_PORT}
+    command: --port=${DB_PORT}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    env_file: /.env
+    depends_on:
+      db:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: java-container
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD}
+volumes:
+  db_data:

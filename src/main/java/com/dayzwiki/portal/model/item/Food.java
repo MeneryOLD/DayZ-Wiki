@@ -29,7 +29,7 @@ public class Food {
 
     public String getUrlName() {
         String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "http://localhost:8080/foods/" + formattedName; /*https://dayzwiki.net/foods/*/
+        return "https://dayzwiki.org/foods/" + formattedName;
     }
 
 }

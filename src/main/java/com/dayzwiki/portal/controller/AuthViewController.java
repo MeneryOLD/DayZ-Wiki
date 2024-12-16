@@ -2,6 +2,7 @@ package com.dayzwiki.portal.controller;
 
 import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.model.user.VerificationToken;
+import com.dayzwiki.portal.repository.user.UserRepository;
 import com.dayzwiki.portal.repository.user.VerificationTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthViewController {
     private final VerificationTokenRepository verificationTokenRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/reset/password")
     public String resetPassword(@RequestParam("token") String token) {
@@ -34,9 +36,10 @@ public class AuthViewController {
 
         VerificationToken verificationToken = verificationTokenOptional.get();
         User user = verificationToken.getUser();
-
         user.setEnabled(Boolean.TRUE);
+
         verificationTokenRepository.delete(verificationToken);
+        userRepository.save(user);
         return "redirect:/";
     }
 

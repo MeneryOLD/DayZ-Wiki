@@ -29,11 +29,11 @@ public class PostCrudController {
 
     @PostMapping("/create")
     public String createPost(@ModelAttribute Post post,
-                             @RequestParam("images") MultipartFile[] images,
+                             @RequestParam(value = "images", required = false) MultipartFile[] images,
                              Principal principal) {
 
         post.setApproved(false);
-        Optional<User> user = userRepository.findByName(principal.getName());
+        Optional<User> user = userRepository.findByEmailOrName(principal.getName(), principal.getName());
 
         if (user.isPresent()) {
             post.setAuthor(user.get());
@@ -82,14 +82,16 @@ public class PostCrudController {
 
             postImageRepository.deleteAllByPostId(id);
 
-            for (MultipartFile file : postDto.getImages()) {
-                try {
-                    PostImage postImage = new PostImage();
-                    postImage.setImage(file.getBytes());
-                    postImage.setPost(post);
-                    post.getPostImages().add(postImage);
-                } catch (IOException e) {
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            if (postDto.getImages() != null) {
+                for (MultipartFile file : postDto.getImages()) {
+                    try {
+                        PostImage postImage = new PostImage();
+                        postImage.setImage(file.getBytes());
+                        postImage.setPost(post);
+                        post.getPostImages().add(postImage);
+                    } catch (IOException e) {
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                    }
                 }
             }
 

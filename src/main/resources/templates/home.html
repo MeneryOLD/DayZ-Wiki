@@ -818,7 +818,7 @@
     <button id="openModalBtn" class="open-auth"></button>
     <button id="searchModal" class="search-btn"></button>
     <button id="bookmarkModal" class="bookmark-btn"></button>
-    <a href="/posts"><button id="postModal" class="post-btn"></button></a>
+    <button id="postModal" class="post-btn"></button>
     <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" href="/moder/youtube/videos">
         <button class="youtube-video-btn"></button>
     </a>
@@ -885,7 +885,7 @@
 
 <div class="search-container">
     <div class="search-box" id="search-box">
-        <input type="text" id="search-input" class="search-input"  placeholder="search...">
+        <input type="text" id="search-input" class="search-input"  placeholder="Click enter...">
         <div class="search-placeholder" id="search-placeholder">Click here to start search</div>
     </div>
     <div class="search-results" id="search-results">
@@ -903,7 +903,7 @@
     <div class="button-row">
         <a href="/explosives"><button class="custom-button">Explosives</button></a>
         <a href="/foods"><button class="custom-button">Foods</button></a>
-        <a href="/medications"><button class="custom-button">Medications</button></a>
+        <a href="/medication"><button class="custom-button">Medications</button></a>
         <a href="/weapons"><button class="custom-button">Weapons</button></a>
     </div>
 </div>
@@ -971,7 +971,6 @@
             document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${video.id}`;
 
         } else {
-            console.error("Видео не найдено");
             document.getElementById('videoTitle').textContent = "Видео не найдено";
         }
     }
@@ -1128,10 +1127,10 @@
             if (response.ok) {
                 showNotification(`${item.englishName} added to bookmarks!`, 'success', 3000);
             } else {
-                showNotification('Failed to add bookmark. Log in and try again.', 'error', 3000);
+                showNotification('Failed to add bookmark. Log in and try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while adding bookmark.', 'error', 3000);
+            showNotification('Error occurred while adding bookmark.', 'danger', 3000);
         }
     }
 
@@ -1145,7 +1144,7 @@
             });
 
             if (!response.ok) {
-                showNotification('Failed to load bookmarks. Log in and try again.', 'error', 3000);
+                showNotification('Failed to load bookmarks. Log in and try again.', 'danger', 3000);
                 return;
             }
 
@@ -1159,11 +1158,9 @@
                 bookmarks.forEach((bookmark, index) => {
                     const bookmarkItem = document.createElement('li');
 
-                    // Доступ к полям объекта
                     const description = bookmark.description ? bookmark.description : 'No description';
                     const truncatedDescription = description.length > 50 ? description.substring(0, 50) + '...' : description;
 
-                    // Создаем кликабельный элемент с классом bookmark-item
                     bookmarkItem.innerHTML = `
             <div class="bookmark-item" data-index="${index}">
                 <span class="bookmark-title">${bookmark.englishName}</span>
@@ -1177,17 +1174,15 @@
                 });
             }
 
-            // Добавляем функционал для кнопок удаления закладок
             document.querySelectorAll('.delete-bookmark-btn').forEach(button => {
                 button.addEventListener('click', async function (event) {
-                    event.stopPropagation(); // Предотвращаем всплытие события
+                    event.stopPropagation();
                     const bookmarkId = this.getAttribute('data-id');
                     await deleteBookmark(bookmarkId);
-                    showBookmarks(); // Перерисовываем список после удаления
+                    showBookmarks();
                 });
             });
 
-            // Обработчик для элементов закладок, если требуется
             document.querySelectorAll('.bookmark-item').forEach(item => {
                 item.addEventListener('click', function () {
                     const index = this.getAttribute('data-index');
@@ -1207,7 +1202,7 @@
 
             bookmarksModal.style.display = 'flex';
         } catch (error) {
-            showNotification('Error occurred while loading bookmarks.', 'error', 3000);
+            showNotification('Error occurred while loading bookmarks.', 'danger', 3000);
         }
     }
 
@@ -1221,25 +1216,21 @@
             if (response.ok) {
                 showNotification('Bookmark deleted.', 'success', 3000);
             } else {
-                showNotification('Failed to delete bookmark. Try again.', 'error', 3000);
+                showNotification('Failed to delete bookmark. Try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while deleting bookmark.', 'error', 3000);
+            showNotification('Error occurred while deleting bookmark.', 'danger', 3000);
         }
     }
 
-
-    // Открытие модального окна при нажатии на кнопку
     const bookmarkModalButton = document.getElementById('bookmarkModal');
     bookmarkModalButton.addEventListener('click', showBookmarks);
 
-    // Закрытие модального окна при нажатии на кнопку закрытия
     const closeBtn = document.getElementById('closeBookmarksModal');
     closeBtn.addEventListener('click', function () {
         bookmarksModal.style.display = 'none';
     });
 
-    // Закрытие модального окна при клике вне его области
     window.addEventListener('click', function (event) {
         if (event.target === bookmarksModal) {
             bookmarksModal.style.display = 'none';
@@ -1252,6 +1243,21 @@
         }
     });
 
+
+    const postButton = document.getElementById('postModal');
+    postButton.addEventListener('click', async (event) => {
+        try {
+            const response = await fetch('/posts', { method: 'GET' });
+
+            if (response.ok) {
+                window.location.href = '/posts';
+            } else {
+                showNotification('Failed to open posts. Log in and try again.', 'danger', 3000);
+            }
+        } catch (error) {
+            showNotification('An unexpected error occurred. Please try again later.', 'danger', 3000);
+        }
+    });
 
 
 
@@ -1326,11 +1332,10 @@
                 window.location.reload();
                 showNotification('Login successful!', 'success', 3000);
             } else {
-                console.error('Error logging in:', response.statusText);
                 showNotification('Error logging in', 'danger', 3000);
             }
         } catch (error) {
-            console.error('Error:', error);
+            error('Error:', error);
             showNotification('An error occurred. Please try again later.', 'danger', 3000);
         }
     }
@@ -1354,7 +1359,7 @@
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                error('Error:', error);
                 alert('User not found');
             });
     }
@@ -1412,8 +1417,8 @@
                     },
                     page: 0,
                     size: 5, // Количество элементов на странице
-                    orders: [], // Список сортировок (если нужно)
-                    type: '' // Тип (если требуется фильтрация по типу)
+                    orders: [], // Список сортировок
+                    type: '' // Тип
                 };
 
                 fetch('api/v1/search', {
@@ -1465,9 +1470,6 @@
                             searchResults.style.display = 'block';
                         }
                     })
-                    .catch(error => {
-                        console.error('Ошибка:', error);
-                    });
             }
         });
 
@@ -1614,14 +1616,11 @@
                 });
 
                 if (response.ok) {
-                    console.log(response);
                     showNotification('Password change instructions have been sent to your email.', 'success', 4000);
                 } else {
-                    console.error('Password change request failed', response.statusText);
                     showNotification('Failed to send a password reset request.', 'danger', 3000);
                 }
             } catch (error) {
-                console.error('Error occurred while changing password', error);
                 showNotification('Произошла ошибка при отправке запроса.', 'danger', 3000);
             }
         }

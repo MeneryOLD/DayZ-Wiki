@@ -50,7 +50,7 @@ class PostCrudControllerTest {
         user.setEmail("test@example.com");
 
         when(principal.getName()).thenReturn("testUser");
-        when(userRepository.findByName("testUser")).thenReturn(Optional.of(user));
+        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.of(user));
 
         String response = postManagementController.createPost(post, images, principal);
 

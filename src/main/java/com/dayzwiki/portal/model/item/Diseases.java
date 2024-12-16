@@ -23,7 +23,7 @@ public class Diseases {
 
     public String getUrlName() {
         String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "http://localhost:8080/diseases/" + formattedName; /*https://dayzwiki.net/diseases/*/
+        return "https://dayzwiki.org/diseases/" + formattedName;
     }
 
 }

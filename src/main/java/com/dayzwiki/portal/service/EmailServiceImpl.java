@@ -41,7 +41,7 @@ public class EmailServiceImpl implements EmailService {
         verificationService.createVerificationToken(user, token, "CHANGE");
 
         String recipientAddress = user.getEmail();
-        String subject = "Resetting the password to dayzwiki.net";
+        String subject = "Resetting the password to dayzwiki.org";
         String confirmationUrl = valueProvider.getDayzwikiUrl() + "/reset/password?token=" + token;
 
         String message = "To reset your password, follow the link and enter a new password: ";
@@ -54,7 +54,7 @@ public class EmailServiceImpl implements EmailService {
         String token = UUID.randomUUID().toString();
         verificationService.createVerificationToken(user, token, "EMAIL");
 
-        String subject = "Confirm email for DayZ-Wiki.net";
+        String subject = "Confirm email for DayZ-Wiki.org";
         String confirmationUrl = valueProvider.getDayzwikiUrl() + "/api/v1/auth/confirm/email?token=" + token + "&email=" + newEmail;
 
         String message = "Confirm the modified email for your DayZ-Wiki account:";
@@ -65,7 +65,7 @@ public class EmailServiceImpl implements EmailService {
     protected void sendEmail(String recipientAddress, String subject, String message, String url) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
-        email.setFrom("support@dayzwiki.net");
+        email.setFrom("no-reply@dayzwiki.org");
         email.setSubject(subject);
         email.setText(String.format("%s %s", message, url));
         try {

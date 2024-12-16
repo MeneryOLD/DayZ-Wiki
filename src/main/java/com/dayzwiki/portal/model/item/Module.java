@@ -28,7 +28,7 @@ public class Module {
 
     public String getUrlName() {
         String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "http://localhost:8080/modules/" + formattedName; /*https://dayzwiki.net/modules/*/
+        return "https://dayzwiki.org/modules/" + formattedName;
     }
 
 }

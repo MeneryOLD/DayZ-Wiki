@@ -1710,10 +1710,10 @@
                 if (response.ok) {
                     showNotification(`${item.englishName} added to bookmarks!`, 'success', 3000);
                 } else {
-                    showNotification('Failed to add bookmark.', 'error', 3000);
+                    showNotification('Failed to add bookmark.', 'danger', 3000);
                 }
             } catch (error) {
-                showNotification('Error occurred while adding bookmark.', 'error', 3000);
+                showNotification('Error occurred while adding bookmark.', 'danger', 3000);
             }
         }
 
@@ -1727,7 +1727,7 @@
                 });
 
                 if (!response.ok) {
-                    showNotification('Failed to load bookmarks. Log in and try again.', 'error', 3000);
+                    showNotification('Failed to load bookmarks. Log in and try again.', 'danger', 3000);
                     return;
                 }
 
@@ -1741,11 +1741,9 @@
                     bookmarks.forEach((bookmark, index) => {
                         const bookmarkItem = document.createElement('li');
 
-                        // Доступ к полям объекта
                         const description = bookmark.description ? bookmark.description : 'No description';
                         const truncatedDescription = description.length > 50 ? description.substring(0, 50) + '...' : description;
 
-                        // Создаем кликабельный элемент с классом bookmark-item
                         bookmarkItem.innerHTML = `
             <div class="bookmark-item" data-index="${index}">
                 <span class="bookmark-title">${bookmark.englishName}</span>
@@ -1759,17 +1757,15 @@
                     });
                 }
 
-                // Добавляем функционал для кнопок удаления закладок
                 document.querySelectorAll('.delete-bookmark-btn').forEach(button => {
                     button.addEventListener('click', async function (event) {
-                        event.stopPropagation(); // Предотвращаем всплытие события
+                        event.stopPropagation();
                         const bookmarkId = this.getAttribute('data-id');
                         await deleteBookmark(bookmarkId);
-                        showBookmarks(); // Перерисовываем список после удаления
+                        showBookmarks();
                     });
                 });
 
-                // Обработчик для элементов закладок, если требуется
                 document.querySelectorAll('.bookmark-item').forEach(item => {
                     item.addEventListener('click', function () {
                         const index = this.getAttribute('data-index');
@@ -1789,7 +1785,7 @@
 
                 bookmarksModal.style.display = 'flex';
             } catch (error) {
-                showNotification('Error occurred while loading bookmarks.', 'error', 3000);
+                showNotification('Error occurred while loading bookmarks.', 'danger', 3000);
             }
         }
 
@@ -1803,25 +1799,21 @@
                 if (response.ok) {
                     showNotification('Bookmark deleted.', 'success', 3000);
                 } else {
-                    showNotification('Failed to delete bookmark. Try again.', 'error', 3000);
+                    showNotification('Failed to delete bookmark. Try again.', 'danger', 3000);
                 }
             } catch (error) {
-                showNotification('Error occurred while deleting bookmark.', 'error', 3000);
+                showNotification('Error occurred while deleting bookmark.', 'danger', 3000);
             }
         }
 
-
-        // Открытие модального окна при нажатии на кнопку
         const bookmarkModalButton = document.getElementById('bookmarkModal');
         bookmarkModalButton.addEventListener('click', showBookmarks);
 
-        // Закрытие модального окна при нажатии на кнопку закрытия
         const closeBtn = document.getElementById('closeBookmarksModal');
         closeBtn.addEventListener('click', function () {
             bookmarksModal.style.display = 'none';
         });
 
-        // Закрытие модального окна при клике вне его области
         window.addEventListener('click', function (event) {
             if (event.target === bookmarksModal) {
                 bookmarksModal.style.display = 'none';
@@ -1853,7 +1845,6 @@
             }
         });
 
-// Set initial range values to the middle
         function setInitialRangeValues() {
             const ranges = document.querySelectorAll('.range-input');
             ranges.forEach(range => {
@@ -1865,9 +1856,8 @@
             });
         }
 
-// Update range value display
         function updateRangeValue(range, valueDisplay) {
-            const thumbWidth = 20; // Width of the slider thumb
+            const thumbWidth = 20;
             const rangeWidth = range.offsetWidth;
             const valueWidth = valueDisplay.offsetWidth;
             const percentage = (range.value - range.min) / (range.max - range.min);
@@ -1877,7 +1867,6 @@
             valueDisplay.textContent = range.value;
         }
 
-// Update all range values and their displays
         function updateAllRangeValues() {
             const ranges = document.querySelectorAll('.range-input');
             ranges.forEach(range => {
@@ -1886,7 +1875,6 @@
             });
         }
 
-// Initialize the position of the value display on input event
         const ranges = document.querySelectorAll('.range-input');
         ranges.forEach(range => {
             const valueDisplay = range.previousElementSibling;

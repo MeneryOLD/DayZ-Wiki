@@ -87,7 +87,7 @@
         }
 
         .open-auth {
-            background: url('https://i.imgur.com/XOvH3nb.png') no-repeat center center; /*'https://i.imgur.com/k35f6TB.png'*/
+            background: url('https://i.imgur.com/XOvH3nb.png') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -393,7 +393,7 @@
 
 
         .post-container {
-            background-color: rgba(252, 243, 207, 0.8);
+            background-color: rgba(255, 248, 220, 0.8);
             border: 1px solid #8B4513;
             border-radius: 15px;
             padding: 20px;
@@ -403,13 +403,14 @@
             margin-right: auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             overflow-y: auto;
-            height: 70vh;
+            height: 80vh;
         }
 
         .post {
             padding: 10px;
-            background-color: #c0a16b;
+            background-color: burlywood;
             color: cornsilk;
+            border: 1px solid #8B4513;
             border-radius: 10px;
             margin-bottom: 10px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -826,6 +827,24 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        .img-thumbnail {
+            margin-top: 30px;
+            height: auto;
+            cursor: pointer;
+            background-color: burlywood;
+            border: 1px solid #8B4513;
+        }
+
+        .img-thumbnail:active {
+            transform: scale(0.95);
+            filter: brightness(0.9);
+        }
+
+        .img-thumbnail:hover {
+            transform: scale(1.05);
+            filter: brightness(0.9);
+        }
     </style>
 </head>
 
@@ -959,21 +978,31 @@
                     <input type="hidden" id="authorName" name="authorName">
                     <div class="form-group">
                         <label for="postTitle">Title</label>
-                        <input type="text" id="postTitle" name="title" class="form-control" placeholder="Enter post title" required>
+                        <input type="text" id="postTitle" name="title" class="form-control"
+                               placeholder="Enter post title" required>
                     </div>
                     <div class="form-group">
                         <label for="postContent">Content</label>
                         <textarea id="postContent" name="content" class="form-control" placeholder="Enter post content" required></textarea>
+                        <small class="form-text text-muted">
+                            Note: Your post will not appear immediately on the site. It will be reviewed by moderators first.
+                        </small>
                     </div>
                     <div class="form-group">
                         <label>Add images</label>
                         <br>
-                        <input type="file" id="postImages" name="images" class="form-control-file d-none" accept="image/*" multiple onchange>
-                        <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="document.getElementById('postImages').click();">
+                        <input type="file" id="images" name="images" class="form-control-file d-none"
+                               accept="image/*" multiple onchange="previewNewImages(event)">
+                        <button type="button" class="btn btn-secondary btn-sm mt-2"
+                                onclick="document.getElementById('images').click();">
                             <i class="fas fa-upload"></i> Choose Images
                         </button>
+
+                        <div class="custom-current-images">
+                            <div class="post-images row" id="imageContainer"></div>
+                        </div>
                     </div>
-                    <div id="previewImages" class="d-flex justify-content-around"></div>
+                    <br>
                     <div class="button-container">
                         <button type="button" class="btn btn-primary" id="submitPostBtn">Create Post</button>
                     </div>
@@ -1012,7 +1041,7 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https: code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
     const itemModal = document.getElementById('itemModal');
@@ -1165,10 +1194,10 @@
             if (response.ok) {
                 showNotification(`${item.englishName} added to bookmarks!`, 'success', 3000);
             } else {
-                showNotification('Failed to add bookmark. Log in and try again.', 'error', 3000);
+                showNotification('Failed to add bookmark. Log in and try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while adding bookmark.', 'error', 3000);
+            showNotification('Error occurred while adding bookmark.', 'danger', 3000);
         }
     }
 
@@ -1182,7 +1211,7 @@
             });
 
             if (!response.ok) {
-                showNotification('Failed to load bookmarks. Log in and try again.', 'error', 3000);
+                showNotification('Failed to load bookmarks. Log in and try again.', 'danger', 3000);
                 return;
             }
 
@@ -1196,11 +1225,9 @@
                 bookmarks.forEach((bookmark, index) => {
                     const bookmarkItem = document.createElement('li');
 
-                    // Доступ к полям объекта
                     const description = bookmark.description ? bookmark.description : 'No description';
                     const truncatedDescription = description.length > 50 ? description.substring(0, 50) + '...' : description;
 
-                    // Создаем кликабельный элемент с классом bookmark-item
                     bookmarkItem.innerHTML = `
             <div class="bookmark-item" data-index="${index}">
                 <span class="bookmark-title">${bookmark.englishName}</span>
@@ -1214,17 +1241,15 @@
                 });
             }
 
-            // Добавляем функционал для кнопок удаления закладок
             document.querySelectorAll('.delete-bookmark-btn').forEach(button => {
                 button.addEventListener('click', async function (event) {
-                    event.stopPropagation(); // Предотвращаем всплытие события
+                    event.stopPropagation();
                     const bookmarkId = this.getAttribute('data-id');
                     await deleteBookmark(bookmarkId);
-                    showBookmarks(); // Перерисовываем список после удаления
+                    showBookmarks();
                 });
             });
 
-            // Обработчик для элементов закладок, если требуется
             document.querySelectorAll('.bookmark-item').forEach(item => {
                 item.addEventListener('click', function () {
                     const index = this.getAttribute('data-index');
@@ -1245,7 +1270,7 @@
 
             bookmarksModal.style.display = 'flex';
         } catch (error) {
-            showNotification('Error occurred while loading bookmarks.', 'error', 3000);
+            showNotification('Error occurred while loading bookmarks.', 'danger', 3000);
         }
     }
 
@@ -1259,25 +1284,22 @@
             if (response.ok) {
                 showNotification('Bookmark deleted.', 'success', 3000);
             } else {
-                showNotification('Failed to delete bookmark. Try again.', 'error', 3000);
+                showNotification('Failed to delete bookmark. Try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while deleting bookmark.', 'error', 3000);
+            showNotification('Error occurred while deleting bookmark.', 'danger', 3000);
         }
     }
 
 
-    // Открытие модального окна при нажатии на кнопку
     const bookmarkModalButton = document.getElementById('bookmarkModal');
     bookmarkModalButton.addEventListener('click', showBookmarks);
 
-    // Закрытие модального окна при нажатии на кнопку закрытия
     const closeBtn = document.getElementById('closeBookmarksModal');
     closeBtn.addEventListener('click', function () {
         bookmarksModal.style.display = 'none';
     });
 
-    // Закрытие модального окна при клике вне его области
     window.addEventListener('click', function (event) {
         if (event.target === bookmarksModal) {
             bookmarksModal.style.display = 'none';
@@ -1304,7 +1326,6 @@
 
     function approvePost(button) {
         const postId = button.closest('.post').getAttribute('data-post-id');
-        console.log(postId)
         fetch(`/moder/posts/approve/${postId}`, {
             method: 'POST',
             headers: {
@@ -1333,7 +1354,7 @@
             }
         }).then(response => {
             if (response.ok) {
-                showNotification('Post rejecting success', 'danger', 3000);
+                showNotification('Post rejecting success', 'success', 3000);
                 location.reload();
             } else {
                 showNotification('Error rejecting post', 'danger', 3000);
@@ -1364,8 +1385,14 @@
             const tokenValue = token ? token.split('=')[1] : '';
             document.getElementById('authorName').value = getUsernameFromToken(tokenValue);
 
-            var formData = new FormData(document.getElementById('createPostForm'));
+            const imagesInput = document.getElementById('images');
+            if (imagesInput.files.length === 0) {
+                imagesInput.removeAttribute('name');
+            } else {
+                imagesInput.setAttribute('name', 'images');
+            }
 
+            var formData = new FormData(document.getElementById('createPostForm'));
             $.ajax({
                 url: '/posts/create',
                 type: 'POST',
@@ -1375,7 +1402,6 @@
                 success: function (response) {
                     showNotification('Post successfully created!', 'success', 3000);
                     $('#createPostModal').modal('hide');
-                    location.reload();
                 },
                 error: function () {
                     showNotification('There was an error when creating a post.', 'danger', 3000);
@@ -1384,35 +1410,65 @@
         });
     });
 
-    document.getElementById('postImages').onchange = function(event) {
-        const preview = document.getElementById('previewImages');
-        preview.innerHTML = ''; // Очистить предварительный просмотр
+    function previewNewImages(event) {
         const files = event.target.files;
+        const imageContainer = document.getElementById('imageContainer');
+        const currentImagesCount = imageContainer.getElementsByTagName('img').length;
 
-        if (files.length > 3) {
-            showNotification('You can upload a maximum of 3 images.', 'danger', 3000);
+        if (currentImagesCount + files.length > 3) {
+            showNotification("You can only add up to 3 images!", 'danger', 3000);
             return;
         }
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.maxWidth = '50px';
-                    img.style.maxHeight = '50px';
-                    img.style.margin = '5px';
-                    preview.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                showNotification('Only images can be uploaded.', 'danger', 3000);
-            }
-        }
-    };
+        Array.from(files).forEach(file => {
+            const fileType = file.type;
 
+            if (!fileType.startsWith('image/')) {
+                showNotification("Only image files are allowed!", 'danger', 3000);
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.classList.add('img-thumbnail');
+                imgElement.onclick = function () {
+                    deleteImage(this);
+                };
+
+                const colDiv = document.createElement('div');
+                colDiv.classList.add('col-md-4', 'image-wrapper');
+                colDiv.appendChild(imgElement);
+
+                imageContainer.appendChild(colDiv);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    document.getElementById('images').addEventListener('change', function (event) {
+        const files = event.target.files;
+
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.classList.add('img-thumbnail');
+                imgElement.style.maxWidth = '150px';
+                imgElement.style.marginTop = '10px';
+            }
+            reader.readAsDataURL(file);
+        });
+    });
+
+    function deleteImage(btn) {
+        const imageWrapper = btn.parentElement;
+        imageWrapper.remove();
+    }
 
     var modalMenu = document.getElementById("myModalMenu");
     var btn = document.getElementById("navBtn");

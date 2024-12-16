@@ -27,7 +27,7 @@ public class Armor {
 
     public String getUrlName() {
         String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "http://localhost:8080/armors/" + formattedName; /*https://dayzwiki.net/armors/*/
+        return "https://dayzwiki.org/armors/" + formattedName;
     }
 
 }

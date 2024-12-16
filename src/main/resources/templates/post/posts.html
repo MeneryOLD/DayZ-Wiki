@@ -386,7 +386,7 @@
 
 
         .post-container {
-            background-color: rgba(252, 243, 207, 0.8);
+            background-color: rgba(255, 248, 220, 0.8);
             border: 1px solid #8B4513;
             border-radius: 15px;
             padding: 20px;
@@ -396,13 +396,14 @@
             margin-right: auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             overflow-y: auto;
-            height: 70vh;
+            height: 80vh;
         }
 
         .post {
             padding: 10px;
-            background-color: #663919;
+            background-color: burlywood;
             color: cornsilk;
+            border: 1px solid #8B4513;
             border-radius: 10px;
             margin-bottom: 10px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -973,8 +974,10 @@
                     </div>
                     <div class="form-group">
                         <label for="postContent">Content</label>
-                        <textarea id="postContent" name="content" class="form-control" placeholder="Enter post content"
-                                  required></textarea>
+                        <textarea id="postContent" name="content" class="form-control" placeholder="Enter post content" required></textarea>
+                        <small class="form-text text-muted">
+                            Note: Your post will not appear immediately on the site. It will be reviewed by moderators first.
+                        </small>
                     </div>
                     <div class="form-group">
                         <label>Add images</label>
@@ -990,8 +993,6 @@
                             <div class="post-images row" id="imageContainer"></div>
                         </div>
                     </div>
-
-                    <!--<div id="previewImages"></div>-->
                     <br>
                     <div class="button-container">
                         <button type="button" class="btn btn-primary" id="submitPostBtn">Create Post</button>
@@ -1178,10 +1179,10 @@
             if (response.ok) {
                 showNotification(`${item.englishName} added to bookmarks!`, 'success', 3000);
             } else {
-                showNotification('Failed to add bookmark. Log in and try again.', 'error', 3000);
+                showNotification('Failed to add bookmark. Log in and try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while adding bookmark.', 'error', 3000);
+            showNotification('Error occurred while adding bookmark.', 'danger', 3000);
         }
     }
 
@@ -1195,7 +1196,7 @@
             });
 
             if (!response.ok) {
-                showNotification('Failed to load bookmarks. Log in and try again.', 'error', 3000);
+                showNotification('Failed to load bookmarks. Log in and try again.', 'danger', 3000);
                 return;
             }
 
@@ -1209,11 +1210,9 @@
                 bookmarks.forEach((bookmark, index) => {
                     const bookmarkItem = document.createElement('li');
 
-                    // Доступ к полям объекта
                     const description = bookmark.description ? bookmark.description : 'No description';
                     const truncatedDescription = description.length > 50 ? description.substring(0, 50) + '...' : description;
 
-                    // Создаем кликабельный элемент с классом bookmark-item
                     bookmarkItem.innerHTML = `
             <div class="bookmark-item" data-index="${index}">
                 <span class="bookmark-title">${bookmark.englishName}</span>
@@ -1227,17 +1226,15 @@
                 });
             }
 
-            // Добавляем функционал для кнопок удаления закладок
             document.querySelectorAll('.delete-bookmark-btn').forEach(button => {
                 button.addEventListener('click', async function (event) {
-                    event.stopPropagation(); // Предотвращаем всплытие события
+                    event.stopPropagation();
                     const bookmarkId = this.getAttribute('data-id');
                     await deleteBookmark(bookmarkId);
-                    showBookmarks(); // Перерисовываем список после удаления
+                    showBookmarks();
                 });
             });
 
-            // Обработчик для элементов закладок, если требуется
             document.querySelectorAll('.bookmark-item').forEach(item => {
                 item.addEventListener('click', function () {
                     const index = this.getAttribute('data-index');
@@ -1258,7 +1255,7 @@
 
             bookmarksModal.style.display = 'flex';
         } catch (error) {
-            showNotification('Error occurred while loading bookmarks.', 'error', 3000);
+            showNotification('Error occurred while loading bookmarks.', 'danger', 3000);
         }
     }
 
@@ -1272,25 +1269,21 @@
             if (response.ok) {
                 showNotification('Bookmark deleted.', 'success', 3000);
             } else {
-                showNotification('Failed to delete bookmark. Try again.', 'error', 3000);
+                showNotification('Failed to delete bookmark. Try again.', 'danger', 3000);
             }
         } catch (error) {
-            showNotification('Error occurred while deleting bookmark.', 'error', 3000);
+            showNotification('Error occurred while deleting bookmark.', 'danger', 3000);
         }
     }
 
-
-    // Открытие модального окна при нажатии на кнопку
     const bookmarkModalButton = document.getElementById('bookmarkModal');
     bookmarkModalButton.addEventListener('click', showBookmarks);
 
-    // Закрытие модального окна при нажатии на кнопку закрытия
     const closeBtn = document.getElementById('closeBookmarksModal');
     closeBtn.addEventListener('click', function () {
         bookmarksModal.style.display = 'none';
     });
 
-    // Закрытие модального окна при клике вне его области
     window.addEventListener('click', function (event) {
         if (event.target === bookmarksModal) {
             bookmarksModal.style.display = 'none';
@@ -1394,8 +1387,14 @@
             const tokenValue = token ? token.split('=')[1] : '';
             document.getElementById('authorName').value = getUsernameFromToken(tokenValue);
 
+            const imagesInput = document.getElementById('images');
+            if (imagesInput.files.length === 0) {
+                imagesInput.removeAttribute('name');
+            } else {
+                imagesInput.setAttribute('name', 'images');
+            }
+
             var formData = new FormData(document.getElementById('createPostForm'));
-            console.log(formData);
             $.ajax({
                 url: '/posts/create',
                 type: 'POST',
@@ -1412,7 +1411,6 @@
             });
         });
     });
-
 
 
     var modalMenu = document.getElementById("myModalMenu");
@@ -1661,7 +1659,6 @@
                 });
 
                 if (response.ok) {
-                    console.log(response);
                     showNotification('Password change instructions have been sent to your email.', 'success', 4000);
                 } else {
                     console.error('Password change request failed', response.statusText);

@@ -26,7 +26,7 @@ public class Car {
 
     public String getUrlName() {
         String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "http://localhost:8080/cars/" + formattedName; /*https://dayzwiki.net/cars/*/
+        return "https://dayzwiki.org/cars/" + formattedName;
     }
 
 }
