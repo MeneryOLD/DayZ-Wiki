@@ -927,7 +927,7 @@
     .modal-content-item {
         background-color: rgba(255, 244, 196, 1);
         padding: 20px;
-        border: 2px solid rgba(160, 82, 45, 0.9);
+        border: 1px solid rgba(160, 82, 45, 0.9);
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         width: 60%;
@@ -949,7 +949,7 @@
     }
 
     .bookmark-modal-content {
-        background-color: cornsilk;
+        background-color: rgba(255, 248, 220, 0.9);
         margin: 7% auto;
         padding: 20px;
         border-radius: 10px;
@@ -964,19 +964,23 @@
     }
 
     .bookmark-close-btn {
-        color: #8B4513;
-        float: right;
-        font-size: 24px;
-        font-weight: bold;
-        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
         position: absolute;
         top: 10px;
+        width: 20px;
+        height: 20px;
         right: 15px;
     }
 
-    .bookmark-close-btn:hover,
+    .bookmark-close-btn:hover {
+        transform: scale(1.05);
+        text-decoration: none;
+    }
+
     .bookmark-close-btn:focus {
-        color: #000;
+        transform: scale(0.95);
         text-decoration: none;
     }
 
@@ -1012,10 +1016,6 @@
         transform: scale(1.1);
     }
 
-
-
-
-    /* Стили для элемента закладки */
     .bookmark-item {
         display: flex;
         justify-content: space-between;
@@ -1024,7 +1024,7 @@
         margin: 10px auto;
         border: 1px solid #8B4513;
         border-radius: 5px;
-        background-color: burlywood;
+        background-color: rgba(255, 248, 220, 0.8);
         color: black;
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -1036,7 +1036,6 @@
         background-color: #f8f5e6;
     }
 
-    /* Стили для названия и описания закладки */
     .bookmark-title {
         font-weight: bold;
         font-size: 16px;
@@ -1047,7 +1046,6 @@
         margin-left: 10px;
     }
 
-    /* Стили для кнопки удаления */
     .delete-bookmark-btn {
         background-color: transparent;
         border: none;
@@ -1081,11 +1079,10 @@
         font-size: 24px;
         text-transform: uppercase;
         letter-spacing: 3px;
-        font-weight: bold;
         text-align: center;
         margin-bottom: 20px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        background: linear-gradient(90deg, #f39c12, #8B4513);
+        background: black;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -1113,8 +1110,10 @@
 </div>
 
 <div id="bookmarksModal" class="bookmark-modal">
-    <div class="bookmark-modal-content">
-        <span id="closeBookmarksModal" class="bookmark-close-btn">&times;</span>
+    <div class="bookmark-modal-content" id="closeBookmarksModal">
+        <button class="bookmark-close-btn">
+            <img src="https://i.imgur.com/mcKF0t8_d.webp?maxwidth=760&fidelity=grand" alt="Закрыть" class="close-icon">
+        </button>
         <h3>Bookmarks</h3>
         <ul id="bookmarksList"></ul>
     </div>
