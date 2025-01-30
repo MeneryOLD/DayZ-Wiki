@@ -28,7 +28,8 @@ public class PostCrudController {
     private final UserRepository userRepository;
 
     @PostMapping("/create")
-    public String createPost(@ModelAttribute Post post,
+    @ResponseBody
+    public ResponseEntity<?> createPost(@ModelAttribute Post post,
                              @RequestParam(value = "images", required = false) MultipartFile[] images,
                              Principal principal) {
 
@@ -38,7 +39,7 @@ public class PostCrudController {
         if (user.isPresent()) {
             post.setAuthor(user.get());
         } else {
-            return "redirect:/error";
+            return ResponseEntity.ok("Error created post");
         }
 
         if (images != null) {
@@ -57,7 +58,7 @@ public class PostCrudController {
         }
 
         postRepository.save(post);
-        return "redirect:/posts";
+        return ResponseEntity.ok("Post successfully created!");
     }
 
     @DeleteMapping("/{id}")

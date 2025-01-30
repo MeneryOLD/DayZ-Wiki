@@ -45,30 +45,76 @@ class PostCrudControllerTest {
     @Test
     void testCreatePostSuccess() throws Exception {
         Post post = new Post();
-        MultipartFile[] images = {new MockMultipartFile("image", "image.jpg", "image/jpeg", "test image content".getBytes())};
+        MultipartFile[] images = {
+                new MockMultipartFile("images", "image.jpg", "image/jpeg", "test image content".getBytes())
+        };
         User user = new User();
         user.setEmail("test@example.com");
 
         when(principal.getName()).thenReturn("testUser");
         when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.of(user));
 
-        String response = postManagementController.createPost(post, images, principal);
+        ResponseEntity<?> response = postManagementController.createPost(post, images, principal);
 
-        assertEquals("redirect:/posts", response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Post successfully created!", response.getBody());
         assertEquals(user, post.getAuthor());
+        assertEquals(1, post.getPostImages().size());
+        assertArrayEquals("test image content".getBytes(), post.getPostImages().get(0).getImage());
+        verify(postRepository, times(1)).save(post);
+    }
+
+    @Test
+    void testCreatePostWithoutImages() throws Exception {
+        Post post = new Post();
+        User user = new User();
+        user.setEmail("test@example.com");
+
+        when(principal.getName()).thenReturn("testUser");
+        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.of(user));
+
+        ResponseEntity<?> response = postManagementController.createPost(post, null, principal);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Post successfully created!", response.getBody());
+        assertEquals(user, post.getAuthor());
+        assertTrue(post.getPostImages().isEmpty());
         verify(postRepository, times(1)).save(post);
     }
 
     @Test
     void testCreatePostUserNotFound() {
         Post post = new Post();
+
         when(principal.getName()).thenReturn("testUser");
-        when(userRepository.findByName("testUser")).thenReturn(Optional.empty());
+        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.empty());
 
-        String response = postManagementController.createPost(post, null, principal);
+        ResponseEntity<?> response = postManagementController.createPost(post, null, principal);
 
-        assertEquals("redirect:/error", response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Error created post", response.getBody());
         verify(postRepository, never()).save(post);
+    }
+
+    @Test
+    void testCreatePostImageProcessingError() throws Exception {
+        Post post = new Post();
+        MultipartFile[] images = {
+                new MockMultipartFile("images", "image.jpg", "image/jpeg", (byte[]) null)
+        };
+        User user = new User();
+        user.setEmail("test@example.com");
+
+        when(principal.getName()).thenReturn("testUser");
+        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.of(user));
+
+        ResponseEntity<?> response = postManagementController.createPost(post, images, principal);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Post successfully created!", response.getBody());
+        assertEquals(user, post.getAuthor());
+        assertTrue(post.getPostImages().isEmpty()); // No images added due to processing error
+        verify(postRepository, times(1)).save(post);
     }
 
     @Test

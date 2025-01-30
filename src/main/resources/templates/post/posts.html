@@ -1367,33 +1367,34 @@
     }
 
     $(document).ready(function () {
-        $('#createPostBtn').click(function () {
+        $('#createPostBtn').on('click', function () {
             $('#createPostModal').modal('show');
         });
 
-        $('#submitPostBtn').click(function (event) {
+        $('#submitPostBtn').on('click', function (event) {
             event.preventDefault();
 
             const postTitle = $('#postTitle').val().trim();
             const postContent = $('#postContent').val().trim();
 
-            if (postTitle === "" || postContent === "") {
+            if (!postTitle || !postContent) {
                 showNotification('Title or Content cannot be empty.', 'danger', 3000);
                 return;
             }
 
             const token = document.cookie.split('; ').find(row => row.startsWith('dayzwiki_user_token='));
             const tokenValue = token ? token.split('=')[1] : '';
-            document.getElementById('authorName').value = getUsernameFromToken(tokenValue);
+            $('#authorName').val(getUsernameFromToken(tokenValue));
 
-            const imagesInput = document.getElementById('images');
+            const imagesInput = $('#images')[0];
             if (imagesInput.files.length === 0) {
-                imagesInput.removeAttribute('name');
+                $(imagesInput).removeAttr('name');
             } else {
-                imagesInput.setAttribute('name', 'images');
+                $(imagesInput).attr('name', 'images');
             }
 
-            var formData = new FormData(document.getElementById('createPostForm'));
+            const formData = new FormData($('#createPostForm')[0]);
+
             $.ajax({
                 url: '/posts/create',
                 type: 'POST',
@@ -1403,6 +1404,7 @@
                 success: function (response) {
                     showNotification('Post successfully created!', 'success', 3000);
                     $('#createPostModal').modal('hide');
+                    $('#createPostForm')[0].reset();
                 },
                 error: function () {
                     showNotification('There was an error when creating a post.', 'danger', 3000);
