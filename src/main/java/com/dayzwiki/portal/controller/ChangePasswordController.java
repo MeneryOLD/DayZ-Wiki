@@ -17,35 +17,32 @@ public class ChangePasswordController {
     private final ChangePasswordService changePasswordService;
 
     @GetMapping("/password")
-    public ResponseEntity<?> changePasswordByEmail(@RequestParam("email") String email) {
+    public ResponseEntity<String> changePasswordByEmail(@RequestParam("email") String email) {
         try {
             changePasswordService.changePasswordByEmail(email);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(e instanceof ResponseStatusException ?
-                    ((ResponseStatusException) e).getStatusCode() : HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping("/password")
-    public ResponseEntity<?> changePasswordByToken(@RequestBody TokenDto tokenDto) {
+    public ResponseEntity<String> changePasswordByToken(@RequestBody TokenDto tokenDto) {
         try {
             changePasswordService.changePasswordByToken(tokenDto);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(e instanceof ResponseStatusException ?
-                    ((ResponseStatusException) e).getStatusCode() : HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping("/password/by-username")
-    public ResponseEntity<?> changePasswordByUsername(@RequestBody ChangePasswordDto changePasswordDto) {
+    public ResponseEntity<String> changePasswordByUsername(@RequestBody ChangePasswordDto changePasswordDto) {
         try {
             changePasswordService.changePasswordByUsername(changePasswordDto);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(e instanceof ResponseStatusException ?
-                    ((ResponseStatusException) e).getStatusCode() : HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
