@@ -6,11 +6,11 @@
     <title>DayZ Wiki - Posts</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="icon" href="https://i.imgur.com/3e22nFw.png" type="image/png">
-    <style>
-        body {
-            font-family: Cambria;
-            background-image: url('https://i.imgur.com/hHgrtqT.jpg');
+    <link rel="icon" href="/img/icon.png" type="image/png">
+<style>
+    body {
+        font-family: Cambria;
+        background-image: url('/img/back-img.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -46,7 +46,52 @@
         }
 
         .logo-menu {
-            background: url('https://i.imgur.com/3e22nFw.png') no-repeat center center;
+            background: url('/img/icon.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .open-auth {
+            background: url('/img/default-user.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-btn {
+            background: url('/img/search.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .post-btn {
+            background: url('/img/posts.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .bookmark-btn {
+            background: url('/img/bookmark.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .youtube-video-btn {
+            background: url('/img/youtube-logo.png') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -84,51 +129,6 @@
 
         .nav-btn:hover div {
             transform: scale(0);
-        }
-
-        .open-auth {
-            background: url('https://i.imgur.com/XOvH3nb.png') no-repeat center center; /*'https://i.imgur.com/k35f6TB.png'*/
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .search-btn {
-            background: url('https://i.imgur.com/PXKOyQ5.png') no-repeat center center;
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .post-btn {
-            background: url('https://i.imgur.com/Uq3Fkq0.png') no-repeat center center;
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .bookmark-btn {
-            background: url('https://i.imgur.com/shB2igv.png') no-repeat center center;
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .youtube-video-btn {
-            background: url('https://i.imgur.com/tefKkRp_d.webp?maxwidth=760&fidelity=grand') no-repeat center center;
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
         }
 
         .modal-menu {
@@ -390,7 +390,7 @@
             border: 1px solid #8B4513;
             border-radius: 15px;
             padding: 20px;
-            margin-top: 80px;
+            margin-top: 120px;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
@@ -482,28 +482,40 @@
 
 
         .btn-add-post {
-            background-color: #c0a16b;
-            color: white;
-            border: darkorange 1px;
-            border-radius: 5px;
+            background: none;
+            border: none;
+            padding: 0;
             margin-bottom: 20px;
             height: 30px;
             width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
 
-        .btn-add-post:active {
+        .btn-add-post img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .btn-add-post:active img {
             transform: scale(0.95);
         }
 
-        .btn-add-post:hover {
+        .btn-add-post:hover img {
             transform: scale(1.05);
         }
 
         .moder-posts-btn {
-            background-color: #c0a16b;
-            color: white;
-            border: none;
             border-radius: 5px;
+            background-color: rgba(255, 248, 220, 0.8);
+            color: black;
+            border: 1px solid #8B4513;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             margin-left: 20px;
         }
 
@@ -560,24 +572,27 @@
         #createPostModal .form-control {
             border-radius: 5px;
             border: 1px solid #8B4513;
-            background-color: #FDF5E6;
             color: #8B4513;
         }
 
         #createPostModal .form-control::placeholder {
-            color: #8B4513;
+            color: #999999;
         }
 
         #createPostModal .btn-primary {
-            background-color: #c0a16b;
-            border: none;
-            color: white;
+            color: black;
+            border: 1px solid #8B4513;
+            border-radius: 5px;
+            background-color: rgba(255, 248, 220, 0.8);
             transition: background-color 0.3s ease;
         }
 
         #createPostModal .btn-primary:hover {
-            background-color: #A0522D;
-            color: white;
+            transform: scale(1.05);
+        }
+
+        #createPostModal .btn-primary:active {
+            transform: scale(0.95);
         }
 
         .button-container {
@@ -823,7 +838,42 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-    </style>
+
+        .btn-add-images {
+            color: black;
+            padding: 5px 10px;
+            font-size: 16px;
+            border: 1px solid #8B4513;
+            border-radius: 5px;
+            background-color: rgba(255, 248, 220, 0.8);
+        }
+
+        .btn-add-images:active {
+            transform: scale(0.95);
+        }
+
+        .btn-add-images:hover {
+            transform: scale(1.05);
+        }
+
+        .post-header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .post-title {
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+</style>
 </head>
 
 <body>
@@ -852,7 +902,7 @@
 <div id="bookmarksModal" class="bookmark-modal">
     <div class="bookmark-modal-content" id="closeBookmarksModal">
         <button class="bookmark-close-btn">
-            <img src="https://i.imgur.com/mcKF0t8_d.webp?maxwidth=760&fidelity=grand" alt="Закрыть" class="close-icon">
+            <img src="/img/close.png" alt="Закрыть" class="close-icon">
         </button>
         <h3>Bookmarks</h3>
         <ul id="bookmarksList"></ul>
@@ -871,12 +921,12 @@
     <div class="modal-content-menu">
 
         <div class="modal-header-menu">
-            <img src="https://i.imgur.com/3e22nFw.png" alt="Логотип" class="modal-logo-menu">
+            <img src="/img/icon.png" alt="Логотип" class="modal-logo-menu">
             <div class="modal-header-text">
                 <h4>DayZ Online Guide</h4>
             </div>
             <button class="close-menu">
-                <img src="https://i.imgur.com/mcKF0t8_d.webp?maxwidth=760&fidelity=grand" alt="Закрыть" class="close-icon">
+                <img src="/img/close.png" alt="Закрыть" class="close-icon">
             </button>
         </div>
 
@@ -911,7 +961,7 @@
 <div id="myModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <img src="https://i.imgur.com/wo2HPAH.png" alt="Image" class="auth-image">
+            <img src="/img/singin.png" alt="Image" class="auth-image">
             <div class="auth-form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -957,7 +1007,7 @@
         <div class="modal-content">
             <div class="modal-header-post">
                 <div class="modal-title-wrapper">
-                    <h5 class="modal-title">Create New Post</h5>
+                    <h5 class="modal-title">Create post</h5>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -983,7 +1033,7 @@
                         <br>
                         <input type="file" id="images" name="images" class="form-control-file d-none"
                                accept="image/*" multiple onchange="previewNewImages(event)">
-                        <button type="button" class="btn btn-secondary btn-sm mt-2"
+                        <button type="button" class="btn-add-images"
                                 onclick="document.getElementById('images').click();">
                             <i class="fas fa-upload"></i> Choose Images
                         </button>
@@ -994,7 +1044,7 @@
                     </div>
                     <br>
                     <div class="button-container">
-                        <button type="button" class="btn btn-primary" id="submitPostBtn">Create Post</button>
+                        <button type="button" class="btn btn-primary" id="submitPostBtn">Create post</button>
                     </div>
                 </form>
             </div>
@@ -1004,12 +1054,16 @@
 
 
 <div class="post-container">
-    <button class="btn-add-post" data-toggle="modal" data-target="#createPostModal">
-        <i class="fas fa-plus"></i>
-    </button>
-    <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" href="/moder/posts">
-        <button class="moder-posts-btn">For moder</button>
-    </a>
+    <div class="post-header-container">
+        <button class="btn-add-post" data-toggle="modal" data-target="#createPostModal">
+            <img src="/img/plus_post.png" alt="Добавить пост" class="close-icon">
+        </button>
+        <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" href="/moder/posts">
+            <button class="moder-posts-btn">For moder</button>
+        </a>
+        <h2 class="post-title">Posts</h2>
+    </div>
+
     <div th:each="post : ${posts}" class="post" th:data-post-id="${post.id}" onclick="openPost(this)">
         <div class="post-header">
             <h2 th:text="${post.title}">Post Title</h2>
@@ -1528,21 +1582,21 @@
             if (tokenValue) {
                 const username = getUsernameFromToken(tokenValue);
 
-                authButton.style.background = "url('https://i.imgur.com/k35f6TB.png') no-repeat center center";
+                authButton.style.background = "url('/img/auth-user.png') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
 
                 authButton.onclick = function () {
                     showGreetingModal(username);
                 };
             } else {
-                authButton.style.background = "url('https://i.imgur.com/XOvH3nb.png') no-repeat center center";
+                authButton.style.background = "url('/img/default-user.png') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
                 authButton.onclick = function () {
                     $('#myModal').modal('show');
                 };
             }
         } else {
-            authButton.style.background = "url('https://i.imgur.com/XOvH3nb.png') no-repeat center center";
+            authButton.style.background = "url('/img/default-user.png') no-repeat center center";
             authButton.style.backgroundSize = "contain";
             authButton.onclick = function () {
                 $('#myModal').modal('show');

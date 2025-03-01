@@ -6,12 +6,11 @@
     <title>DayZ Wiki</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="icon" href="https://i.imgur.com/3e22nFw.png" type="image/png">
+    <link rel="icon" href="/img/icon.png" type="image/png">
     <style>
-
         body {
             font-family: Cambria;
-            background-image: url('https://i.imgur.com/hHgrtqT.jpg');
+            background-image: url('/img/back-img.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -47,7 +46,7 @@
         }
 
         .logo-menu {
-            background: url('https://i.imgur.com/3e22nFw.png') no-repeat center center;
+            background: url('/img/icon.png') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -56,7 +55,7 @@
         }
 
         .open-auth {
-            background: url('https://i.imgur.com/XOvH3nb.png') no-repeat center center; /*'https://i.imgur.com/k35f6TB.png'*/
+            background: url('/img/default-user.png') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -65,7 +64,7 @@
         }
 
         .search-btn {
-            background: url('https://i.imgur.com/PXKOyQ5.png') no-repeat center center;
+            background: url('/img/search.png') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -74,7 +73,7 @@
         }
 
         .post-btn {
-            background: url('https://i.imgur.com/Uq3Fkq0.png') no-repeat center center;
+            background: url('/img/posts.png') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -83,7 +82,16 @@
         }
 
         .bookmark-btn {
-            background: url('https://i.imgur.com/shB2igv.png') no-repeat center center;
+            background: url('/img/bookmark.png') no-repeat center center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .youtube-video-btn {
+            background: url('/img/youtube-logo.png') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -107,15 +115,6 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-
-        .youtube-video-btn {
-            background: url('https://i.imgur.com/tefKkRp_d.webp?maxwidth=760&fidelity=grand') no-repeat center center;
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
         }
 
         .modal-content {
@@ -825,7 +824,7 @@
 <div id="bookmarksModal" class="bookmark-modal">
     <div class="bookmark-modal-content" id="closeBookmarksModal">
         <button class="bookmark-close-btn">
-            <img src="https://i.imgur.com/mcKF0t8_d.webp?maxwidth=760&fidelity=grand" alt="Закрыть" class="close-icon">
+            <img src="/img/close.png" alt="Закрыть" class="close-icon">
         </button>
         <h3>Bookmarks</h3>
         <ul id="bookmarksList"></ul>
@@ -845,12 +844,12 @@
     <div class="modal-content-menu">
 
         <div class="modal-header-menu">
-            <img src="https://i.imgur.com/3e22nFw.png" alt="Логотип" class="modal-logo-menu">
+            <img src="/img/icon.png" alt="Логотип" class="modal-logo-menu">
             <div class="modal-header-text">
                 <h4>DayZ Online Guide</h4>
             </div>
             <button class="close-menu">
-                <img src="https://i.imgur.com/mcKF0t8_d.webp?maxwidth=760&fidelity=grand" alt="Закрыть" class="close-icon">
+                <img src="/img/close.png" alt="Закрыть" class="close-icon">
             </button>
         </div>
 
@@ -919,7 +918,7 @@
 <div id="myModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <img src="https://i.imgur.com/wo2HPAH.png" alt="Image" class="auth-image">
+            <img src="/img/singin.png" alt="Image" class="auth-image">
             <div class="auth-form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -966,9 +965,12 @@
         const response = await fetch('/api/v1/youtube/video');
         if (response.ok) {
             const video = await response.json();
-            document.getElementById('videoTitle').textContent = video.name;
-            document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${video.id}`;
-
+            if (video.id) {
+                document.getElementById('videoTitle').textContent = video.name;
+                document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${video.id}`;
+            } else {
+                console.error("Ошибка: video.id отсутствует или пуст");
+            }
         } else {
             document.getElementById('videoTitle').textContent = "Видео не найдено";
         }
@@ -1373,21 +1375,21 @@
             if (tokenValue) {
                 const username = getUsernameFromToken(tokenValue);
 
-                authButton.style.background = "url('https://i.imgur.com/k35f6TB.png') no-repeat center center";
+                authButton.style.background = "url('/img/auth-user.png') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
 
                 authButton.onclick = function () {
                     showGreetingModal(username);
                 };
             } else {
-                authButton.style.background = "url('https://i.imgur.com/XOvH3nb.png') no-repeat center center";
+                authButton.style.background = "url('/img/default-user.png') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
                 authButton.onclick = function () {
                     $('#myModal').modal('show');
                 };
             }
         } else {
-            authButton.style.background = "url('https://i.imgur.com/XOvH3nb.png') no-repeat center center";
+            authButton.style.background = "url('/img/default-user.png') no-repeat center center";
             authButton.style.backgroundSize = "contain";
             authButton.onclick = function () {
                 $('#myModal').modal('show');
