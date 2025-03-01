@@ -1,0 +1,41 @@
+name: Run SonarQube and Checkstyle Analysis
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    branches:
+      - main
+    types:
+      - completed
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Run Checkstyle
+        run: mvn checkstyle:checkstyle
+
+      - name: Download and Install SonarScanner
+        run: |
+          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner-cli.zip -d $HOME
+          echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+
+      - name: SonarCloud Scan
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=MeneryOLD_DayZ-Wiki \
+            -Dsonar.organization=meneryold \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_ACCESS_TOKEN }} \
+            -Dsonar.java.binaries=src/main/java/com/dayzwiki/portal
