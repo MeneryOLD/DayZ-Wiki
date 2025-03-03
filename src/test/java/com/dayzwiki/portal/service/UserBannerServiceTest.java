@@ -30,7 +30,7 @@ class UserBannerServiceTest {
     @Test
     void testUploadBannerSuccess() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        InputStream imageStream = classLoader.getResourceAsStream("img/icon.png");
+        InputStream imageStream = classLoader.getResourceAsStream("img/test.jpg");
         assertNotNull(imageStream, "Image not found in resources");
 
         MultipartFile file = mock(MultipartFile.class);

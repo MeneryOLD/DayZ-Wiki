@@ -89,8 +89,8 @@ class PostCrudControllerTest {
         postDto.setTitle("Updated Title");
         postDto.setContent("Updated Content");
 
-        ClassPathResource imgFile = new ClassPathResource("img/icon.png");
-        MultipartFile imageFile = new MockMultipartFile("image", "icon.png", "image/png", imgFile.getInputStream());
+        ClassPathResource imgFile = new ClassPathResource("img/icon.webp");
+        MultipartFile imageFile = new MockMultipartFile("image", "icon.webp", "image/png", imgFile.getInputStream());
 
         postDto.setImages(Collections.singletonList(imageFile));
 

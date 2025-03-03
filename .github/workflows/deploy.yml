@@ -27,5 +27,6 @@ jobs:
             cd ~/my-project/DayZ-Wiki
             docker compose down
             git pull origin main
+            mvn clean package
             docker compose up -d
           EOF

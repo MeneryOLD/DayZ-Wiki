@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -25,13 +26,16 @@ public class EmailChangeController {
 
     @GetMapping("/change/email")
     @ResponseBody
-    public ResponseEntity<?> changeEmailToken(@RequestParam("email") String email, @RequestParam("newEmail") String newEmail) {
+    public ResponseEntity<?> changeEmailToken(Principal principal, @RequestParam("email") String email, @RequestParam("newEmail") String newEmail) {
+        if (!principal.getName().equals(email) || principal.getName().equals(newEmail)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Uncorrect email address");
+        }
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent() && !userRepository.existsByEmail(newEmail)) {
             emailService.confirmEmail(user.get(), newEmail);
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found or email already used");
     }
 
     @GetMapping("/confirm/email")

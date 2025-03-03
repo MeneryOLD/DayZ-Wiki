@@ -7,11 +7,11 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="/img/icon.png" type="image/png">
+    <link rel="icon" href="/img/icon.webp.webp" type="image/png">
     <style>
         body {
             font-family: Cambria;
-            background-image: url('/img/back-img.jpg');
+            background-image: url('/img/back-img.webp');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -52,7 +52,7 @@
         }
 
         .logo-menu {
-            background: url('/img/icon.png') no-repeat center center;
+            background: url('/img/icon.webp') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -61,7 +61,7 @@
         }
 
         .open-auth {
-            background: url('/img/default-user.png') no-repeat center center;
+            background: url('/img/default-user.webp') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -70,7 +70,7 @@
         }
 
         .search-btn {
-            background: url('/img/search.png') no-repeat center center;
+            background: url('/img/search.webp') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -79,7 +79,7 @@
         }
 
         .post-btn {
-            background: url('/img/posts.png') no-repeat center center;
+            background: url('/img/posts.webp') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -88,7 +88,7 @@
         }
 
         .bookmark-btn {
-            background: url('/img/bookmark.png') no-repeat center center;
+            background: url('/img/bookmark.webp') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -97,7 +97,7 @@
         }
 
         .youtube-video-btn {
-            background: url('/img/youtube-logo.png') no-repeat center center;
+            background: url('/img/youtube-logo.webp') no-repeat center center;
             background-size: contain;
             width: 40px;
             height: 40px;
@@ -966,7 +966,7 @@
 <div id="bookmarksModal" class="bookmark-modal">
     <div class="bookmark-modal-content" id="closeBookmarksModal">
         <button class="bookmark-close-btn">
-            <img src="/img/close.png" alt="Закрыть" class="close-icon">
+            <img src="/img/close.webp" alt="Закрыть" class="close-icon">
         </button>
         <h3>Bookmarks</h3>
         <ul id="bookmarksList"></ul>
@@ -977,12 +977,12 @@
     <div class="modal-content-menu">
 
         <div class="modal-header-menu">
-            <img src="/img/icon.png" alt="Логотип" class="modal-logo-menu">
+            <img src="/img/icon.webp" alt="Логотип" class="modal-logo-menu">
             <div class="modal-header-text">
                 <h4>DayZ Online Guide</h4>
             </div>
             <button class="close-menu">
-                <img src="/img/close.png" alt="Закрыть" class="close-icon">
+                <img src="/img/close.webp" alt="Закрыть" class="close-icon">
             </button>
         </div>
 
@@ -1018,7 +1018,7 @@
 <div id="myModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <img src="/img/singin.png" alt="Image" class="auth-image">
+            <img src="/img/singin.webp" alt="Image" class="auth-image">
             <div class="auth-form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1203,21 +1203,21 @@
             if (tokenValue) {
                 const username = getUsernameFromToken(tokenValue);
 
-                authButton.style.background = "url('/img/auth-user.png') no-repeat center center";
+                authButton.style.background = "url('/img/auth-user.webp') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
 
                 authButton.onclick = function () {
                     showGreetingModal(username);
                 };
             } else {
-                authButton.style.background = "url('/img/default-user.png') no-repeat center center";
+                authButton.style.background = "url('/img/default-user.webp') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
                 authButton.onclick = function () {
                     $('#myModal').modal('show');
                 };
             }
         } else {
-            authButton.style.background = "url('/img/default-user.png') no-repeat center center";
+            authButton.style.background = "url('/img/default-user.webp') no-repeat center center";
             authButton.style.backgroundSize = "contain";
             authButton.onclick = function () {
                 $('#myModal').modal('show');
@@ -1483,10 +1483,6 @@
                 titleElement.textContent = itemTypes[currentIndex];
             }
         }
-
-
-
-
 
         function loadArmors(type) {
             fetch(`/ammunition/type/${type}`)
