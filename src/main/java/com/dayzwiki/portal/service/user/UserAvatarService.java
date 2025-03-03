@@ -24,7 +24,7 @@ public class UserAvatarService {
         Thumbnails.of(inputStream)
                 .size(512, 512)
                 .keepAspectRatio(true)
-                .outputFormat("png")
+                .outputFormat("jpg")
                 .toOutputStream(outputStream);
 
         byte[] imageBytes = outputStream.toByteArray();

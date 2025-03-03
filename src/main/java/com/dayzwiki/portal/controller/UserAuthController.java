@@ -40,6 +40,12 @@ public class UserAuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> registration(@RequestBody SignUpDto signUpDto) {
         try {
+            if (!signUpDto.getEmail().contains("@")) {
+                return ResponseEntity.badRequest().body("Incorrect email format");
+            }
+            if (signUpDto.getPassword().length() < 6) {
+                return ResponseEntity.badRequest().body("Password must be at least 6 characters");
+            }
             registrationService.registrationUser(signUpDto);
             return ResponseEntity.ok("Registration successful. Verify your email.");
         } catch (IllegalArgumentException e) {

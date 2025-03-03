@@ -7,11 +7,11 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="icon" href="/img/icon.png" type="image/png">
+    <link rel="icon" href="/img/icon.webp" type="image/png">
 <style>
     body {
         font-family: Cambria;
-        background-image: url('/img/back-img.jpg');
+        background-image: url('/img/back-img.webp');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
@@ -214,8 +214,6 @@
         transition: width .3s linear;
     }
 
-    /* Menu */
-
     .menu-container button:active {
         transform: scale(0.9);
     }
@@ -243,7 +241,7 @@
     }
 
     .logo-menu {
-        background: url('/img/icon.png') no-repeat center center;
+        background: url('/img/icon.webp') no-repeat center center;
         background-size: contain;
         width: 40px;
         height: 40px;
@@ -252,7 +250,7 @@
     }
 
     .open-auth {
-        background: url('/img/default-user.png') no-repeat center center;
+        background: url('/img/default-user.webp') no-repeat center center;
         background-size: contain;
         width: 40px;
         height: 40px;
@@ -261,7 +259,7 @@
     }
 
     .search-btn {
-        background: url('/img/search.png') no-repeat center center;
+        background: url('/img/search.webp') no-repeat center center;
         background-size: contain;
         width: 40px;
         height: 40px;
@@ -270,7 +268,7 @@
     }
 
     .post-btn-menu {
-        background: url('/img/posts.png') no-repeat center center;
+        background: url('/img/posts.webp') no-repeat center center;
         background-size: contain;
         width: 40px;
         height: 40px;
@@ -279,7 +277,7 @@
     }
 
     .bookmark-btn {
-        background: url('/img/bookmark.png') no-repeat center center;
+        background: url('/img/bookmark.webp') no-repeat center center;
         background-size: contain;
         width: 40px;
         height: 40px;
@@ -288,7 +286,7 @@
     }
 
     .youtube-video-btn {
-        background: url('/img/youtube-logo.png') no-repeat center center;
+        background: url('/img/youtube-logo.webp') no-repeat center center;
         background-size: contain;
         width: 40px;
         height: 40px;
@@ -449,15 +447,12 @@
         text-decoration: none;
     }
 
-
-    /*  Setting Button  */
-
     :root {
         --body-bg: cornsilk;
-        --button-bg: #f5deb3; /* Цвет кнопки */
+        --button-bg: #f5deb3;
         --list-bg: cornsilk;
-        --text-color: #8b7d6b; /* Цвет текста */
-        --text-color-hover: #a0522d; /* Цвет текста при наведении */
+        --text-color: #8b7d6b;
+        --text-color-hover: #a0522d;
         --menu-icon-transition: transform 300ms cubic-bezier(0.52, -0.80, 0.52, 0.52);
     }
 
@@ -676,9 +671,6 @@
         color: #4caf50;
     }
 
-
-    /*  #MyModal  */
-
     .modal-header {
         border-bottom: none;
         padding: 0;
@@ -768,10 +760,6 @@
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     }
 
-
-
-
-    /* Modal container */
     .modalSettings {
         display: none;
         position: fixed;
@@ -784,7 +772,6 @@
         background-color: rgba(0, 0, 0, 0.4);
     }
 
-    /* Modal content box */
     .modal-contentSettings {
         background-color: cornsilk;
         margin: 10% auto;
@@ -798,28 +785,23 @@
         display: flex;
     }
 
-    /* Close button */
     .closeSettings {
         position: absolute;
-        top: 0;
+        background: none;
+        top: 5px;
         right: 10px;
-        color: #8B4513;
-        font-size: 28px;
-        font-weight: bold;
+        border: none;
         cursor: pointer;
+        padding: 0;
     }
 
-    .closeSettings:active {
-        transform: scale(0.9);
-        color: #c0a16b;
-    }
-
-    .closeSettings:hover {
-        color: #000000;
+    .closeSettings:hover,
+    .closeSettings:focus {
+        text-decoration: none;
+        cursor: pointer;
         transform: scale(1.1);
     }
 
-    /* Left section (30%) */
     .modal-left {
         width: 30%;
         padding: 20px;
@@ -850,24 +832,20 @@
         color: cornsilk;
     }
 
-    /* Right section (70%) */
     .modal-right {
         width: 70%;
         padding: 20px;
         box-sizing: border-box;
     }
 
-    /* Hide other sections except the first one */
     .settings-section {
         display: none;
     }
 
-    /* Default visible section */
     .settings-section:first-child {
         display: block;
     }
 
-    /* Additional styling for input fields and buttons */
     .input-field {
         width: 100%;
         padding: 5px;
@@ -898,7 +876,6 @@
         transform: translateY(2px);
     }
 
-    /* Animation for showing and hiding sections */
     .settings-section {
         display: none;
         animation: fadeIn 0.5s ease-in-out;
@@ -1106,7 +1083,7 @@
 <div id="bookmarksModal" class="bookmark-modal">
     <div class="bookmark-modal-content" id="closeBookmarksModal">
         <button class="bookmark-close-btn">
-            <img src="/img/close.png" alt="Закрыть" class="close-icon">
+            <img src="/img/close.webp" alt="Закрыть" class="close-icon">
         </button>
         <h3>Bookmarks</h3>
         <ul id="bookmarksList"></ul>
@@ -1123,7 +1100,7 @@
 <div id="myModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <img src="/img/singin.png" alt="Image" class="auth-image">
+            <img src="/img/singin.webp" alt="Image" class="auth-image">
             <div class="auth-form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1168,12 +1145,12 @@
     <div class="modal-content-menu">
 
         <div class="modal-header-menu">
-            <img src="/img/icon.png" alt="Логотип" class="modal-logo-menu">
+            <img src="/img/icon.webp" alt="Логотип" class="modal-logo-menu">
             <div class="modal-header-text">
                 <h4>DayZ Online Guide</h4>
             </div>
             <button class="close-menu">
-                <img src="/img/close.png" alt="Закрыть" class="close-icon">
+                <img src="/img/close.webp" alt="Закрыть" class="close-icon">
             </button>
         </div>
 
@@ -1209,7 +1186,7 @@
     <div class="profile-header">
         <img th:src="@{/profile/get-banner(user_id=${user.id})}" class="profile-banner"
              onclick="if (document.getElementById('banner-input')) document.getElementById('banner-input').click();"
-             alt="User Banner" onerror="this.onerror=null; this.src='/img/default-profile-banner.png';"
+             alt="User Banner" onerror="this.onerror=null; this.src='/img/default-profile-banner.webp';"
         >
 
         <form th:if="${isOwner}" id="banner-form" action="/profile/upload-banner" method="POST" enctype="multipart/form-data"
@@ -1264,7 +1241,9 @@
 
     <div id="settingsModalSettings" class="modalSettings">
         <div class="modal-contentSettings">
-            <span class="closeSettings">&times;</span>
+            <button class="closeSettings">
+                <img src="/img/close.webp" alt="Закрыть" class="close-icon">
+            </button>
             <div class="modal-left">
                 <h3>Account management</h3>
                 <button class="settings-button" onclick="showSection('emailSection')">Email management</button>
@@ -1300,7 +1279,7 @@
     <div class="profile-content">
         <div class="profile-info">
             <div class="avatar" onclick="if (document.getElementById('avatar-input')) document.getElementById('avatar-input').click();">
-                <img th:src="@{/profile/get-avatar(user_id=${user.id})}" alt="User Avatar" onerror="this.onerror=null; this.src='/img/default-profile-logo.png';">
+                <img th:src="@{/profile/get-avatar(user_id=${user.id})}" alt="User Avatar" onerror="this.onerror=null; this.src='/img/default-profile-logo.webp';">
             </div>
 
             <form th:if="${isOwner}" id="avatar-form" action="/profile/upload-avatar" method="POST"
@@ -1857,21 +1836,21 @@
             if (tokenValue) {
                 const username = getUsernameFromToken(tokenValue);
 
-                authButton.style.background = "url('/img/auth-user.png') no-repeat center center";
+                authButton.style.background = "url('/img/auth-user.webp') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
 
                 authButton.onclick = function () {
                     showGreetingModal(username);
                 };
             } else {
-                authButton.style.background = "url('/img/default-user.png') no-repeat center center";
+                authButton.style.background = "url('/img/default-user.webp') no-repeat center center";
                 authButton.style.backgroundSize = "contain";
                 authButton.onclick = function () {
                     $('#myModal').modal('show');
                 };
             }
         } else {
-            authButton.style.background = "url('/img/default-user.png') no-repeat center center";
+            authButton.style.background = "url('/img/default-user.webp') no-repeat center center";
             authButton.style.backgroundSize = "contain";
             authButton.onclick = function () {
                 $('#myModal').modal('show');
@@ -1986,7 +1965,7 @@
                                 showNotification('Password successfully changed', 'success', 3000);
                             } else {
                                 return response.text().then(message => {
-                                    showNotification(message, 'danger', 3000);
+                                    showNotification('Current password is incorrect!', 'danger', 3000);
                                 });
                             }
                         })

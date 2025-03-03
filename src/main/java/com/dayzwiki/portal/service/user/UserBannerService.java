@@ -25,7 +25,7 @@ public class UserBannerService {
                 .size(1920, 300)
                 .outputQuality(1.0)
                 .keepAspectRatio(true)
-                .outputFormat("png")
+                .outputFormat("jpg")
                 .toOutputStream(outputStream);
 
         byte[] imageBytes = outputStream.toByteArray();
