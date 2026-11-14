@@ -368,6 +368,12 @@
             if (confirmed === '1') { toast(t('Email confirmed. You can sign in now.')); if (!user) openAuth('signin'); }
             else toast(t('This confirmation link is invalid or has already been used.'), false);
         }
+        const emailChanged = params.get('emailChanged');
+        if (emailChanged !== null) {
+            history.replaceState(null, '', location.pathname + location.hash);
+            if (emailChanged === '1') toast(t('Your email address has been changed.'));
+            else toast(t('This confirmation link is invalid or has already been used.'), false);
+        }
     }
 
     function initPasswordToggles(root) {
@@ -534,7 +540,7 @@
     window.DZ = {
         SECTIONS, BY_PATH, esc, slug, t, lang: I18N.lang, plural: I18N.plural, present, kg, tierInfo, mapDots, itemHref, toast, thumb,
         openItem, openItemUrl, openLayer, closeLayer, openAuth, searchApi, loadStats, iconFor, titleFor,
-        bindStrength, initPasswordToggles, busy, markInvalid,
+        bindStrength, initPasswordToggles, busy, markInvalid, currentUser,
         onDrawerClose: null
     };
 

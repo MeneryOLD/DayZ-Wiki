@@ -116,6 +116,12 @@
         <artifactId>spring-security-test</artifactId>
         <scope>test</scope>
     </dependency>
+    <!-- In-memory database for the page tests (src/test/resources/application-h2.properties) -->
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>test</scope>
+    </dependency>
 </dependencies>
 
 <build>

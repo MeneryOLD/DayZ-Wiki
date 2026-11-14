@@ -9,5 +9,8 @@ import java.util.List;
 public class PostDto {
     private String title;
     private String content;
+    /** New image files. */
     private List<MultipartFile> images;
+    /** When editing: ids of the post's current images to keep (the others are removed). */
+    private List<Integer> keepImageIds;
 }

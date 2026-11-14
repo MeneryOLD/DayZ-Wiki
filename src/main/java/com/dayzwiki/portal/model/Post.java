@@ -26,6 +26,7 @@ public class Post {
     private User author;
 
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

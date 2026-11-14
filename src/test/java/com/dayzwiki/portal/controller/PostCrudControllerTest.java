@@ -3,24 +3,24 @@ package com.dayzwiki.portal.controller;
 import com.dayzwiki.portal.dto.PostDto;
 import com.dayzwiki.portal.model.Post;
 import com.dayzwiki.portal.model.user.User;
-import com.dayzwiki.portal.repository.PostImageRepository;
 import com.dayzwiki.portal.repository.PostRepository;
-import com.dayzwiki.portal.repository.user.UserRepository;
+import com.dayzwiki.portal.service.CurrentUserService;
+import com.dayzwiki.portal.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
-import org.springframework.core.io.ClassPathResource;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 class PostCrudControllerTest {
@@ -28,140 +28,129 @@ class PostCrudControllerTest {
     @Mock
     private PostRepository postRepository;
     @Mock
-    private PostImageRepository postImageRepository;
+    private PostService postService;
     @Mock
-    private UserRepository userRepository;
-    @Mock
-    private Principal principal;
+    private CurrentUserService currentUser;
 
-    private PostCrudController postManagementController;
+    private PostCrudController controller;
+    private User author;
+    private User stranger;
+    private Post post;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        postManagementController = new PostCrudController(postRepository, postImageRepository, userRepository);
+        controller = new PostCrudController(postRepository, postService, currentUser);
+        author = user(1L, "author@example.com");
+        stranger = user(2L, "other@example.com");
+        post = new Post();
+        post.setId(10);
+        post.setAuthor(author);
+        when(postRepository.findById(10)).thenReturn(Optional.of(post));
+    }
+
+    private static User user(long id, String email) {
+        User u = new User();
+        u.setId(id);
+        u.setEmail(email);
+        return u;
+    }
+
+    private Principal signedIn(User u, String... roles) {
+        Principal p = new UsernamePasswordAuthenticationToken(u.getEmail(), null,
+                java.util.Arrays.stream(roles).map(r -> new SimpleGrantedAuthority("ROLE_" + r)).toList());
+        when(currentUser.find(p)).thenReturn(Optional.of(u));
+        return p;
+    }
+
+    private static PostDto dto() {
+        PostDto dto = new PostDto();
+        dto.setTitle("Found an M4 at Tisy");
+        dto.setContent("Spawned in the north barracks after a server restart.");
+        return dto;
     }
 
     @Test
-    void testCreatePostSuccess() throws Exception {
-        Post post = new Post();
-        MultipartFile[] images = {
-                new MockMultipartFile("images", "image.jpg", "image/jpeg", "test image content".getBytes())
-        };
-        User user = new User();
-        user.setEmail("test@example.com");
-
-        when(principal.getName()).thenReturn("testUser");
-        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.of(user));
-
-        ResponseEntity<?> response = postManagementController.createPost(post, images, principal);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Post successfully created!", response.getBody());
-        assertEquals(user, post.getAuthor());
-        assertEquals(1, post.getPostImages().size());
-        assertArrayEquals("test image content".getBytes(), post.getPostImages().get(0).getImage());
-        verify(postRepository, times(1)).save(post);
+    void createRequiresSignIn() {
+        ResponseEntity<?> r = controller.createPost(dto(), null);
+        assertEquals(HttpStatus.UNAUTHORIZED, r.getStatusCode());
+        verifyNoInteractions(postService);
     }
 
     @Test
-    void testCreatePostWithoutImages() throws Exception {
-        Post post = new Post();
-        User user = new User();
-        user.setEmail("test@example.com");
+    void createSavesForSignedInUser() {
+        Post saved = new Post();
+        saved.setId(11);
+        when(postService.create(eq(author), anyString(), anyString(), any())).thenReturn(saved);
 
-        when(principal.getName()).thenReturn("testUser");
-        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.of(user));
+        ResponseEntity<?> r = controller.createPost(dto(), signedIn(author));
 
-        ResponseEntity<?> response = postManagementController.createPost(post, null, principal);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Post successfully created!", response.getBody());
-        assertEquals(user, post.getAuthor());
-        assertTrue(post.getPostImages().isEmpty());
-        verify(postRepository, times(1)).save(post);
+        assertEquals(HttpStatus.OK, r.getStatusCode());
+        verify(postService).create(eq(author), eq("Found an M4 at Tisy"), anyString(), any());
     }
 
     @Test
-    void testCreatePostUserNotFound() {
-        Post post = new Post();
+    void createRejectsInvalidInput() {
+        when(postService.create(any(), any(), any(), any())).thenThrow(new PostService.InvalidPostException("The title must be 3-120 characters."));
 
-        when(principal.getName()).thenReturn("testUser");
-        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.empty());
+        ResponseEntity<?> r = controller.createPost(dto(), signedIn(author));
 
-        ResponseEntity<?> response = postManagementController.createPost(post, null, principal);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Error created post", response.getBody());
-        verify(postRepository, never()).save(post);
+        assertEquals(HttpStatus.BAD_REQUEST, r.getStatusCode());
     }
 
     @Test
-    void testCreatePostImageProcessingError() throws Exception {
-        Post post = new Post();
-        MultipartFile[] images = {
-                new MockMultipartFile("images", "image.jpg", "image/jpeg", (byte[]) null)
-        };
-        User user = new User();
-        user.setEmail("test@example.com");
-
-        when(principal.getName()).thenReturn("testUser");
-        when(userRepository.findByEmailOrName("testUser", "testUser")).thenReturn(Optional.of(user));
-
-        ResponseEntity<?> response = postManagementController.createPost(post, images, principal);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Post successfully created!", response.getBody());
-        assertEquals(user, post.getAuthor());
-        assertTrue(post.getPostImages().isEmpty()); // No images added due to processing error
-        verify(postRepository, times(1)).save(post);
+    void strangerCannotEdit() {
+        ResponseEntity<?> r = controller.editPost(10, dto(), signedIn(stranger));
+        assertEquals(HttpStatus.FORBIDDEN, r.getStatusCode());
+        verify(postService, never()).edit(any(), any(), any(), any(), any(), anyBoolean());
     }
 
     @Test
-    void testDeletePost() {
-        Integer postId = 1;
-
-        ResponseEntity<Void> response = postManagementController.deletePost(postId);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(postRepository, times(1)).deleteById(postId);
-        verify(postImageRepository, times(1)).deleteAllByPostId(postId);
+    void authorCanEdit() {
+        when(postService.edit(eq(post), any(), any(), any(), any(), eq(false))).thenReturn(post);
+        ResponseEntity<?> r = controller.editPost(10, dto(), signedIn(author));
+        assertEquals(HttpStatus.OK, r.getStatusCode());
     }
 
     @Test
-    void testEditPostSuccess() throws IOException {
-        Integer postId = 1;
-        PostDto postDto = new PostDto();
-        postDto.setTitle("Updated Title");
-        postDto.setContent("Updated Content");
-
-        ClassPathResource imgFile = new ClassPathResource("img/icon.webp");
-        MultipartFile imageFile = new MockMultipartFile("image", "icon.webp", "image/png", imgFile.getInputStream());
-
-        postDto.setImages(Collections.singletonList(imageFile));
-
-        Post post = new Post();
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-
-        ResponseEntity<Void> response = postManagementController.editPost(postId, postDto);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Updated Title", post.getTitle());
-        assertEquals("Updated Content", post.getContent());
-        verify(postRepository, times(1)).save(post);
-        verify(postImageRepository, times(1)).deleteAllByPostId(postId);
+    void editMissingPostIs404() {
+        ResponseEntity<?> r = controller.editPost(99, dto(), signedIn(author));
+        assertEquals(HttpStatus.NOT_FOUND, r.getStatusCode());
     }
 
     @Test
-    void testEditPostNotFound() {
-        Integer postId = 1;
-        PostDto postDto = new PostDto();
-        when(postRepository.findById(postId)).thenReturn(Optional.empty());
+    void strangerCannotDelete() {
+        ResponseEntity<?> r = controller.deletePost(10, signedIn(stranger));
+        assertEquals(HttpStatus.FORBIDDEN, r.getStatusCode());
+        verify(postService, never()).delete(any());
+    }
 
-        ResponseEntity<Void> response = postManagementController.editPost(postId, postDto);
+    @Test
+    void anonymousCannotDelete() {
+        ResponseEntity<?> r = controller.deletePost(10, null);
+        assertEquals(HttpStatus.FORBIDDEN, r.getStatusCode());
+        verify(postService, never()).delete(any());
+    }
 
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        verify(postRepository, never()).save(any());
-        verify(postImageRepository, never()).deleteAllByPostId(postId);
+    @Test
+    void authorCanDelete() {
+        ResponseEntity<?> r = controller.deletePost(10, signedIn(author));
+        assertEquals(HttpStatus.OK, r.getStatusCode());
+        verify(postService).delete(post);
+    }
+
+    @Test
+    void moderatorCanDeleteAnyPost() {
+        ResponseEntity<?> r = controller.deletePost(10, signedIn(stranger, "MODER"));
+        assertEquals(HttpStatus.OK, r.getStatusCode());
+        verify(postService).delete(post);
+    }
+
+    @Test
+    void moderatorEditKeepsApproval() {
+        when(postService.edit(eq(post), any(), any(), any(), any(), eq(true))).thenReturn(post);
+        ResponseEntity<?> r = controller.editPost(10, dto(), signedIn(stranger, "ADMIN"));
+        assertEquals(HttpStatus.OK, r.getStatusCode());
+        verify(postService).edit(eq(post), any(), any(), eq((List<Integer>) null), any(), eq(true));
     }
 }

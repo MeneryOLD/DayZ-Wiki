@@ -18,7 +18,7 @@ public class UserBanner {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "banner", nullable = false)
+    @Column(name = "banner", nullable = false, columnDefinition = "LONGBLOB")
     private byte[] banner;
 
 }

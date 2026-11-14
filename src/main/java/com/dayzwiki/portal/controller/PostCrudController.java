@@ -2,104 +2,76 @@ package com.dayzwiki.portal.controller;
 
 import com.dayzwiki.portal.dto.PostDto;
 import com.dayzwiki.portal.model.Post;
-import com.dayzwiki.portal.model.PostImage;
 import com.dayzwiki.portal.model.user.User;
-import com.dayzwiki.portal.repository.PostImageRepository;
 import com.dayzwiki.portal.repository.PostRepository;
-import com.dayzwiki.portal.repository.user.UserRepository;
+import com.dayzwiki.portal.service.CurrentUserService;
+import com.dayzwiki.portal.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 import java.util.Optional;
 
+/** Create, edit and delete posts. Only the author or a moderator may change a post. */
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/posts")
 public class PostCrudController {
 
     private final PostRepository postRepository;
-    private final PostImageRepository postImageRepository;
-    private final UserRepository userRepository;
+    private final PostService postService;
+    private final CurrentUserService currentUser;
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> createPost(@ModelAttribute Post post,
-                             @RequestParam(value = "images", required = false) MultipartFile[] images,
-                             Principal principal) {
-
-        post.setApproved(false);
-        Optional<User> user = userRepository.findByEmailOrName(principal.getName(), principal.getName());
-
-        if (user.isPresent()) {
-            post.setAuthor(user.get());
-        } else {
-            return ResponseEntity.ok("Error created post");
+    public ResponseEntity<?> createPost(@ModelAttribute PostDto postDto, Principal principal) {
+        Optional<User> user = currentUser.find(principal);
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Sign in to write a post."));
         }
-
-        if (images != null) {
-            for (MultipartFile image : images) {
-                if (!image.isEmpty()) {
-                    try {
-                        PostImage postImage = new PostImage();
-                        postImage.setImage(image.getBytes());
-                        postImage.setPost(post);
-                        post.getPostImages().add(postImage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+        try {
+            Post post = postService.create(user.get(), postDto.getTitle(), postDto.getContent(), postDto.getImages());
+            return ResponseEntity.ok(Map.of("id", post.getId(), "message", "Post sent for review."));
+        } catch (PostService.InvalidPostException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
-
-        postRepository.save(post);
-        return ResponseEntity.ok("Post successfully created!");
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
-        postRepository.deleteById(id);
-        postImageRepository.deleteAllByPostId(id);
-
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Void> editPost(@PathVariable Integer id, @ModelAttribute PostDto postDto) {
+    @ResponseBody
+    public ResponseEntity<?> editPost(@PathVariable Integer id, @ModelAttribute PostDto postDto, Principal principal) {
+        Optional<Post> post = postRepository.findById(id);
+        if (post.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Post not found."));
+        }
+        boolean moderator = CurrentUserService.isModerator(principal);
+        if (!PostService.canEdit(post.get(), currentUser.find(principal).orElse(null), moderator)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", "You can only edit your own posts."));
+        }
+        try {
+            Post saved = postService.edit(post.get(), postDto.getTitle(), postDto.getContent(),
+                    postDto.getKeepImageIds(), postDto.getImages(), moderator);
+            return ResponseEntity.ok(Map.of("id", saved.getId(), "approved", saved.isApproved()));
+        } catch (PostService.InvalidPostException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
 
-        Optional<Post> postOptional = postRepository.findById(id);
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-
-            post.setApproved(false);
-            post.setTitle(postDto.getTitle());
-            post.setContent(postDto.getContent());
-            post.updateTimestamps();
-
-            postImageRepository.deleteAllByPostId(id);
-
-            if (postDto.getImages() != null) {
-                for (MultipartFile file : postDto.getImages()) {
-                    try {
-                        PostImage postImage = new PostImage();
-                        postImage.setImage(file.getBytes());
-                        postImage.setPost(post);
-                        post.getPostImages().add(postImage);
-                    } catch (IOException e) {
-                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-                    }
-                }
-            }
-
-            postRepository.save(post);
-            return ResponseEntity.ok().build();
-        } else {
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<?> deletePost(@PathVariable Integer id, Principal principal) {
+        Optional<Post> post = postRepository.findById(id);
+        if (post.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        if (!PostService.canEdit(post.get(), currentUser.find(principal).orElse(null), CurrentUserService.isModerator(principal))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        postService.delete(post.get());
+        return ResponseEntity.ok().build();
     }
 }

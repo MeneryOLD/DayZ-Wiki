@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Pieces shared by the community pages: post card, composer dialog, lightbox, confirm dialog, moderation tabs. -->
+<body>
+
+<!-- A post in a grid. c = PostService.PostCard -->
+<a th:fragment="card(c)" class="post-card" th:href="@{/posts/{id}(id=${c.post.id})}"
+   th:attr="data-title=${#strings.toLowerCase(c.post.title)},data-text=${#strings.toLowerCase(c.post.content)},data-author=${#strings.toLowerCase(c.post.author.name)},data-time=${c.post.createdAt != null} ? ${#temporals.format(c.post.createdAt, 'yyyyMMddHHmmss')} : '0'">
+    <div class="post-cover" th:classappend="${c.coverId == null} ? 'no-img'">
+        <img th:if="${c.coverId != null}" th:src="@{/posts/images/{id}(id=${c.coverId})}" alt="" loading="lazy">
+        <span th:if="${c.coverId == null}" class="post-cover-mark" aria-hidden="true"><i class="fa-solid fa-tower-broadcast"></i></span>
+        <span th:if="${c.imageCount > 1}" class="post-cover-count"><i class="fa-regular fa-images"></i> <th:block th:text="${c.imageCount}">2</th:block></span>
+        <span th:if="${!c.post.approved}" class="post-flag"><i class="fa-regular fa-clock"></i> <th:block th:text="#{posts.pending}">In review</th:block></span>
+    </div>
+    <div class="post-card-body">
+        <h3 th:text="${c.post.title}">Title</h3>
+        <p th:text="${#strings.abbreviate(c.post.content, 200)}">Text</p>
+        <div class="post-byline">
+            <img class="avatar avatar-xs" th:src="@{/profile/get-avatar(user_id=${c.post.author.id})}" alt="" loading="lazy">
+            <b th:text="${c.post.author.name}">author</b>
+            <time th:if="${c.post.createdAt != null}" th:attr="datetime=${c.post.createdAt}" th:text="${#temporals.format(c.post.createdAt, 'd MMM yyyy')}">1 Jan 2026</time>
+        </div>
+    </div>
+</a>
+
+<!-- Write / edit dialog. Opened by community.js -->
+<div th:fragment="composer" class="dialog" id="composer" hidden role="dialog" aria-modal="true" aria-labelledby="composerTitle">
+    <form class="dialog-card composer" id="composerForm" novalidate>
+        <button type="button" class="icon-btn dialog-close" data-close-dialog th:attr="aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
+        <div class="composer-head">
+            <div class="eyebrow"><i class="fa-solid fa-tower-broadcast"></i> <th:block th:text="#{compose.eyebrow}">Community post</th:block></div>
+            <h2 id="composerTitle" th:attr="data-new=#{compose.title},data-edit=#{compose.editTitle}" th:text="#{compose.title}">Write a post</h2>
+        </div>
+        <label class="auth-field"><span th:text="#{compose.postTitle}">Title</span>
+            <span class="auth-input"><i class="fa-solid fa-heading"></i><input name="title" maxlength="120" required autocomplete="off" th:attr="placeholder=#{compose.titlePh}"></span>
+        </label>
+        <label class="auth-field"><span class="field-row"><th:block th:text="#{compose.text}">Text</th:block><small class="counter" id="composerCount">0 / 5000</small></span>
+            <textarea class="composer-text" name="content" maxlength="5000" rows="8" required th:attr="placeholder=#{compose.textPh}"></textarea>
+        </label>
+        <div class="auth-field"><span class="field-row"><th:block th:text="#{compose.images}">Images</th:block><small th:text="#{compose.imagesHint}">Up to 3 · JPG, PNG, WebP</small></span>
+            <div class="dropzone" id="composerDrop">
+                <input type="file" id="composerFiles" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
+                <div class="thumbs" id="composerThumbs"></div>
+                <button type="button" class="drop-add" id="composerAdd">
+                    <i class="fa-regular fa-image"></i>
+                    <span th:text="#{compose.addImages}">Add images</span>
+                    <small th:text="#{compose.drop}">or drop them here</small>
+                </button>
+            </div>
+        </div>
+        <p class="composer-note" id="composerNote"><i class="fa-solid fa-shield-halved"></i> <th:block th:text="#{compose.note}">Posts appear after a moderator approves them.</th:block></p>
+        <div class="composer-actions">
+            <button type="button" class="btn" data-close-dialog th:text="#{compose.cancel}">Cancel</button>
+            <button class="btn btn-primary" type="submit"><span th:text="#{compose.publish}">Send for review</span><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </form>
+</div>
+
+<!-- Full-size image viewer -->
+<div th:fragment="lightbox" class="lightbox" id="lightbox" hidden>
+    <button class="lightbox-close icon-btn" th:attr="aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-nav prev icon-btn" data-step="-1" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+    <img id="lightboxImg" alt="">
+    <button class="lightbox-nav next icon-btn" data-step="1" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- Yes/no question. community.js fills the text. -->
+<div th:fragment="confirm" class="dialog" id="confirmDialog" hidden role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="dialog-card confirm-card">
+        <span class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <h3 id="confirmTitle"></h3>
+        <p id="confirmText"></p>
+        <div class="composer-actions">
+            <button type="button" class="btn" data-confirm="no" th:text="#{compose.cancel}">Cancel</button>
+            <button type="button" class="btn btn-danger" data-confirm="yes" id="confirmYes">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Moderation section tabs -->
+<nav th:fragment="modtabs(active)" class="mod-tabs">
+    <a href="/moder/posts" th:classappend="${active == 'posts'} ? 'active'"><i class="fa-solid fa-inbox"></i> <th:block th:text="#{mod.tab.posts}">Post queue</th:block></a>
+    <a href="/moder/youtube/videos" th:classappend="${active == 'videos'} ? 'active'"><i class="fa-brands fa-youtube"></i> <th:block th:text="#{mod.tab.videos}">Featured videos</th:block></a>
+</nav>
+
+</body>
+</html>

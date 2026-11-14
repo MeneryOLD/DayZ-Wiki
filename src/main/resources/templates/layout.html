@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/maps.css">
     <link rel="stylesheet" href="/css/range.css">
+    <link rel="stylesheet" href="/css/community.css">
     <script>
         // Apply the saved theme before first paint to avoid a flash.
         try { var t = localStorage.getItem('dz-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
@@ -48,6 +49,10 @@
         <div class="nav-group" th:text="#{nav.gear}">Gear &amp; Travel</div>
         <a href="/armors" class="nav-link" th:classappend="${active == 'armors'} ? 'active'"><i class="fa-solid fa-shirt"></i><span th:text="#{section.armors}">Clothing &amp; Gear</span><em data-count="armors"></em></a>
         <a href="/cars" class="nav-link" th:classappend="${active == 'cars'} ? 'active'"><i class="fa-solid fa-car-side"></i><span th:text="#{section.cars}">Vehicles</span><em data-count="cars"></em></a>
+
+        <div class="nav-group" th:text="#{nav.community}">Community</div>
+        <a href="/posts" class="nav-link" th:classappend="${active == 'posts'} ? 'active'"><i class="fa-solid fa-tower-broadcast"></i><span th:text="#{nav.posts}">Posts</span></a>
+        <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" href="/moder/posts" class="nav-link" th:classappend="${active == 'moderation'} ? 'active'"><i class="fa-solid fa-shield-halved"></i><span th:text="#{nav.moderation}">Moderation</span></a>
     </nav>
     <div class="sidebar-foot">
         <span class="version-pill"><i class="fa-solid fa-circle-check"></i> <th:block th:text="#{side.version}">Game version 1.30</th:block></span>
@@ -68,7 +73,7 @@
         <button class="icon-btn" id="themeToggle" th:attr="title=#{top.theme},aria-label=#{top.theme}"><i class="fa-solid fa-circle-half-stroke"></i></button>
         <button class="icon-btn" id="bookmarksBtn" th:attr="title=#{top.bookmarks},aria-label=#{top.bookmarks}"><i class="fa-solid fa-bookmark"></i></button>
         <a class="icon-btn" href="/posts" id="postsBtn" th:attr="title=#{top.posts},aria-label=#{top.posts}"><i class="fa-solid fa-newspaper"></i></a>
-        <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" class="icon-btn" href="/moder/youtube/videos" th:attr="title=#{top.moderation},aria-label=#{top.moderation}"><i class="fa-solid fa-shield-halved"></i></a>
+        <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" class="icon-btn" href="/moder/posts" th:attr="title=#{top.moderation},aria-label=#{top.moderation}"><i class="fa-solid fa-shield-halved"></i></a>
         <div class="account" id="account">
             <button class="account-btn" id="accountBtn"><i class="fa-solid fa-user"></i><span id="accountLabel" th:text="#{top.signin}">Sign in</span></button>
             <div class="account-menu" id="accountMenu" hidden>

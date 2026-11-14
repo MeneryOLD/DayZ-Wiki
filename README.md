@@ -66,6 +66,16 @@ docker compose up --build
 
 The site runs at <http://localhost:8080>.
 
+**Preview without MySQL** (in-memory database with sample accounts, posts and videos; every demo account's password is `survivor1`, e.g. `ghost@example.com` is a moderator):
+
+```bash
+./mvnw -q dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=cp.txt
+./mvnw -q test-compile
+java -cp "target/test-classes:target/classes:$(cat cp.txt)" com.dayzwiki.portal.DayzWikiApplication --spring.profiles.active=h2,demo
+```
+
+(On Windows use `;` instead of `:` between the classpath parts.)
+
 ### 3. Load the wiki data
 
 Start the app once so Hibernate creates the tables, then load the item data:

@@ -2,6 +2,7 @@ package com.dayzwiki.portal.config;
 
 import com.dayzwiki.portal.security.JwtTokenProvider;
 import com.dayzwiki.portal.security.JwtAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -50,6 +51,8 @@ public class SecurityConfig {
                                 "/search/**", "/profile/**", "/api/v1/**", "/armors/**", "/weapons/**",
                                 "/medication/**", "/modules/**", "/foods/**", "/ammunition/**", "/cars/**",
                                 "/diseases/**", "/explosives/**", "/img/**", "/js/**", "/css/**", "/data/**", "/maps/**", "/range").permitAll()
+                        // Reading posts and profiles is public; writing still needs an account (checked in the controllers).
+                        .requestMatchers(HttpMethod.GET, "/posts", "/posts/*", "/posts/images/*", "/@*").permitAll()
                         .requestMatchers("/moder/**").hasAnyRole("MODER", "ADMIN")
                         .requestMatchers("/api/v1/youtube/**").hasAnyRole("MODER", "ADMIN")
                         .anyRequest().authenticated())

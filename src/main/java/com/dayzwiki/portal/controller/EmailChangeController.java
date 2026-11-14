@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -40,15 +39,16 @@ public class EmailChangeController {
 
     @GetMapping("/confirm/email")
     public String confirmEmail(@RequestParam("token") String token, @RequestParam("email") String email) {
-        VerificationToken verificationToken = verificationTokenRepository.findByToken(token)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found"));
-
+        Optional<VerificationToken> found = verificationTokenRepository.findByToken(token);
+        if (found.isEmpty() || !"EMAIL".equals(found.get().getType()) || userRepository.existsByEmail(email)) {
+            return "redirect:/?emailChanged=0";
+        }
+        VerificationToken verificationToken = found.get();
         User user = verificationToken.getUser();
         user.setEmail(email);
         userRepository.save(user);
         verificationTokenRepository.delete(verificationToken);
-
-        return "home";
+        return "redirect:/?emailChanged=1";
     }
 
 }

@@ -20,7 +20,7 @@ public class PostImage {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "image", nullable = false)
+    @Column(name = "image", nullable = false, columnDefinition = "LONGBLOB")
     private byte[] image;
 
 }

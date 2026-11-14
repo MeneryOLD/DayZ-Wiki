@@ -18,7 +18,7 @@ public class UserAvatar {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "avatar", nullable = false)
+    @Column(name = "avatar", nullable = false, columnDefinition = "LONGBLOB")
     private byte[] avatar;
 
 }
