@@ -10,6 +10,7 @@ import com.dayzwiki.portal.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class RegistrationService {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
+    /**
+     * Runs in one transaction: if the confirmation email cannot be sent, the new account is rolled back,
+     * so the person can simply try again instead of finding their username already taken.
+     */
+    @Transactional
     public void registrationUser(SignUpDto signUpDto) {
         if (userRepository.existsByName(signUpDto.getName())) {
             throw new IllegalArgumentException("Username already taken!");
@@ -36,8 +42,8 @@ public class RegistrationService {
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         user.setEnabled(Boolean.FALSE);
 
-        Role roles = roleRepository.findByName("USER").orElseThrow(() ->
-                new RuntimeException("Role 'USER' not found"));
+        Role roles = roleRepository.findByName("USER")
+                .orElseGet(() -> roleRepository.save(new Role("USER")));
         user.setRoles(List.of(roles));
 
         userRepository.save(user);

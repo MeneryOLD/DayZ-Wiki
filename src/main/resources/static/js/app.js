@@ -192,21 +192,75 @@
     }
     function closeAuth() { const d = $('#authDialog'); if (d) d.hidden = true; }
     function switchAuthTab(tab) {
-        document.querySelectorAll('[data-auth-tab]').forEach(b => b.classList.toggle('active', b.dataset.authTab === tab));
+        const tabs = document.querySelectorAll('[data-auth-tab]');
+        tabs.forEach(b => { b.classList.toggle('active', b.dataset.authTab === tab); b.setAttribute('aria-selected', b.dataset.authTab === tab); });
         document.querySelectorAll('[data-auth-form]').forEach(f => { f.hidden = f.dataset.authForm !== tab; });
+        moveTabInk();
+        requestAnimationFrame(moveTabInk);
         const f = document.querySelector('[data-auth-form="' + tab + '"] input');
         if (f) setTimeout(() => f.focus(), 30);
+    }
+    // Slide the orange underline under the active tab (hidden on the "done" panel).
+    function moveTabInk() {
+        const ink = $('.auth-tabs-ink'), active = $('.auth-tab.active');
+        if (!ink) return;
+        ink.style.opacity = active ? '1' : '0';
+        if (!active || !active.offsetWidth) return;
+        const first = !ink.style.width;   // first placement: jump into place instead of sliding in from the left
+        if (first) ink.style.transition = 'none';
+        ink.style.width = active.offsetWidth + 'px';
+        ink.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+        if (first) { void ink.offsetWidth; ink.style.transition = ''; }
+    }
+    function showAuthDone(title, text) {
+        const done = $('[data-auth-form="done"]');
+        done.querySelector('[data-done-title]').textContent = title;
+        done.querySelector('[data-done-text]').textContent = text;
+        switchAuthTab('done');
     }
 
     function requireFields(form) {
         let ok = true;
         form.querySelectorAll('input[required]').forEach(i => {
-            const bad = !i.value.trim() || (i.type === 'email' && !i.value.includes('@'));
+            const bad = !i.value.trim() || (i.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.value.trim()));
             i.classList.toggle('invalid', bad);
             if (bad) ok = false;
         });
         if (!ok) toast(t('Please fill in the highlighted fields.'), false);
         return ok;
+    }
+    function markInvalid(input, message) {
+        input.classList.add('invalid');
+        input.focus();
+        toast(message, false);
+    }
+    // Disable the submit button and show a spinner while a request is running.
+    async function busy(form, fn) {
+        const b = form.querySelector('button[type="submit"]');
+        if (b.classList.contains('loading')) return;
+        b.classList.add('loading'); b.disabled = true;
+        try { await fn(); } finally { b.classList.remove('loading'); b.disabled = false; }
+    }
+
+    // 0-4 score shown as four bars under the password field.
+    function passwordScore(pw) {
+        if (!pw) return 0;
+        if (pw.length < 6) return 1;
+        let s = 1;
+        if (pw.length >= 10) s++;
+        if (/[a-zа-яё]/.test(pw) && /[A-ZА-ЯЁ]/.test(pw)) s++;
+        if (/\d/.test(pw) && /[^\p{L}\d]/u.test(pw)) s++;
+        else if (/\d/.test(pw) || /[^\p{L}\d]/u.test(pw)) s += pw.length >= 8 ? 1 : 0;
+        return Math.min(s, 4);
+    }
+    function bindStrength(input, meter, label) {
+        if (!input || !meter) return;
+        const words = [label ? label.textContent : '', t('Too short'), t('Weak'), t('Good'), t('Strong')];
+        input.addEventListener('input', () => {
+            const s = input.value ? passwordScore(input.value) : 0;
+            meter.dataset.meter = s;
+            if (label) label.textContent = words[s];
+        });
     }
 
     function initAuth() {
@@ -230,55 +284,99 @@
         const dialog = $('#authDialog');
         if (!dialog) return;
         dialog.addEventListener('click', e => { if (e.target === dialog || e.target.closest('[data-close-dialog]')) closeAuth(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && !dialog.hidden) closeAuth(); });
         document.querySelectorAll('[data-auth-tab]').forEach(b => b.addEventListener('click', () => switchAuthTab(b.dataset.authTab)));
-        document.querySelectorAll('.pw-toggle').forEach(t => t.addEventListener('click', () => {
-            const i = t.previousElementSibling; const show = i.type === 'password';
-            i.type = show ? 'text' : 'password';
-            t.innerHTML = '<i class="fa-solid ' + (show ? 'fa-eye-slash' : 'fa-eye') + '"></i>';
-        }));
+        dialog.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => switchAuthTab(b.dataset.goto)));
+        window.addEventListener('resize', moveTabInk);
+        if (document.fonts) document.fonts.ready.then(moveTabInk);
+        initPasswordToggles(dialog);
+        dialog.querySelectorAll('input').forEach(i => i.addEventListener('input', () => i.classList.remove('invalid')));
 
         const signin = document.querySelector('[data-auth-form="signin"]');
-        signin.addEventListener('submit', async e => {
+        signin.addEventListener('submit', e => {
             e.preventDefault();
             if (!requireFields(signin)) return;
             const fd = new FormData(signin);
-            try {
-                const r = await fetch('/api/v1/auth/signin', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nameOrEmail: fd.get('nameOrEmail'), password: fd.get('password'), remember: !!fd.get('remember') })
-                });
-                if (r.ok) { toast(t('Signed in.')); setTimeout(() => location.reload(), 400); }
-                else toast(t('Wrong username/email or password.'), false);
-            } catch (err) { toast(t('Could not reach the server. Try again.'), false); }
+            busy(signin, async () => {
+                try {
+                    const r = await fetch('/api/v1/auth/signin', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ nameOrEmail: fd.get('nameOrEmail').trim(), password: fd.get('password'), remember: !!fd.get('remember') })
+                    });
+                    if (r.ok) { toast(t('Signed in.')); setTimeout(() => location.reload(), 400); return; }
+                    if (r.status === 403) { toast(t(await r.text()), false); return; }
+                    signin.querySelector('[name="password"]').classList.add('invalid');
+                    toast(t('Wrong username/email or password.'), false);
+                } catch (err) { toast(t('Could not reach the server. Try again.'), false); }
+            });
         });
 
         const signup = document.querySelector('[data-auth-form="signup"]');
-        signup.addEventListener('submit', async e => {
+        bindStrength(signup.querySelector('[data-strength]'), signup.querySelector('.pw-meter'), signup.querySelector('[data-meter-label]'));
+        signup.addEventListener('submit', e => {
             e.preventDefault();
             if (!requireFields(signup)) return;
             const fd = new FormData(signup);
-            if (fd.get('password') !== fd.get('password2')) { toast(t('Passwords do not match.'), false); return; }
-            try {
-                const r = await fetch('/api/v1/auth/signup', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: fd.get('name'), email: fd.get('email'), password: fd.get('password') })
-                });
-                const text = await r.text();
-                toast(text || (r.ok ? t('Account created.') : t('Registration failed.')), r.ok);
-                if (r.ok) { signup.reset(); switchAuthTab('signin'); }
-            } catch (err) { toast(t('Could not reach the server. Try again.'), false); }
+            const name = fd.get('name').trim(), email = fd.get('email').trim();
+            if (!/^[\p{L}\p{N}_.\-]{3,32}$/u.test(name)) { markInvalid(signup.querySelector('[name="name"]'), t('Username must be 3-32 characters: letters, numbers, _ . -')); return; }
+            if (fd.get('password').length < 6) { markInvalid(signup.querySelector('[name="password"]'), t('Password must be at least 6 characters')); return; }
+            if (fd.get('password') !== fd.get('password2')) { markInvalid(signup.querySelector('[name="password2"]'), t('Passwords do not match.')); return; }
+            busy(signup, async () => {
+                try {
+                    const r = await fetch('/api/v1/auth/signup', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, password: fd.get('password') })
+                    });
+                    const text = await r.text();
+                    if (r.ok) {
+                        signup.reset();
+                        signup.querySelector('.pw-meter').dataset.meter = 0;
+                        showAuthDone(t('Check your inbox'), t('We sent a confirmation link to {0}. Open it to activate your account, then sign in.', email));
+                        return;
+                    }
+                    const msg = text && text.length < 200 && text.charAt(0) !== '{' ? t(text) : t('Registration failed. Try again in a minute.');
+                    if (/username/i.test(text)) signup.querySelector('[name="name"]').classList.add('invalid');
+                    if (/email/i.test(text) && !/send/i.test(text)) signup.querySelector('[name="email"]').classList.add('invalid');
+                    toast(msg, false);
+                } catch (err) { toast(t('Could not reach the server. Try again.'), false); }
+            });
         });
 
         const reset = document.querySelector('[data-auth-form="reset"]');
-        reset.addEventListener('submit', async e => {
+        reset.addEventListener('submit', e => {
             e.preventDefault();
             if (!requireFields(reset)) return;
-            const email = new FormData(reset).get('email');
-            try {
-                const r = await fetch('/api/v1/auth/change/password?email=' + encodeURIComponent(email));
-                toast(r.ok ? t('Check your inbox for the reset link.') : t('Could not send the reset email.'), r.ok);
-            } catch (err) { toast(t('Could not reach the server. Try again.'), false); }
+            const email = new FormData(reset).get('email').trim();
+            busy(reset, async () => {
+                try {
+                    const r = await fetch('/api/v1/auth/change/password?email=' + encodeURIComponent(email));
+                    if (r.ok) { reset.reset(); showAuthDone(t('Check your inbox'), t('We sent a password reset link to {0}.', email)); }
+                    else markInvalid(reset.querySelector('[name="email"]'), t('Could not send the reset email. Check the address and try again.'));
+                } catch (err) { toast(t('Could not reach the server. Try again.'), false); }
+            });
         });
+
+        // Direct links to the dialog: ?auth=signin | signup | reset
+        const params = new URLSearchParams(location.search);
+        const wanted = params.get('auth');
+        if (!user && ['signin', 'signup', 'reset'].indexOf(wanted) > -1) openAuth(wanted);
+
+        // Coming back from the confirmation email: /?confirmed=1 (ok) or /?confirmed=0 (bad link).
+        const confirmed = params.get('confirmed');
+        if (confirmed !== null) {
+            history.replaceState(null, '', location.pathname + location.hash);
+            if (confirmed === '1') { toast(t('Email confirmed. You can sign in now.')); if (!user) openAuth('signin'); }
+            else toast(t('This confirmation link is invalid or has already been used.'), false);
+        }
+    }
+
+    function initPasswordToggles(root) {
+        root.querySelectorAll('.pw-toggle').forEach(b => b.addEventListener('click', () => {
+            const i = b.previousElementSibling; const show = i.type === 'password';
+            i.type = show ? 'text' : 'password';
+            b.innerHTML = '<i class="fa-solid ' + (show ? 'fa-eye-slash' : 'fa-eye') + '"></i>';
+            i.focus();
+        }));
     }
 
     // ---------- Bookmarks ----------
@@ -436,6 +534,7 @@
     window.DZ = {
         SECTIONS, BY_PATH, esc, slug, t, lang: I18N.lang, plural: I18N.plural, present, kg, tierInfo, mapDots, itemHref, toast, thumb,
         openItem, openItemUrl, openLayer, closeLayer, openAuth, searchApi, loadStats, iconFor, titleFor,
+        bindStrength, initPasswordToggles, busy, markInvalid,
         onDrawerClose: null
     };
 

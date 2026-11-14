@@ -87,18 +87,17 @@ class RegistrationServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenRoleNotFound() {
+    void shouldCreateUserRoleWhenMissing() {
         SignUpDto signUpDto = new SignUpDto("newUser", "new@example.com", "password");
 
         when(userRepository.existsByName(signUpDto.getName())).thenReturn(false);
         when(userRepository.existsByEmail(signUpDto.getEmail())).thenReturn(false);
         when(roleRepository.findByName("USER")).thenReturn(Optional.empty());
+        when(roleRepository.save(any(Role.class))).thenAnswer(inv -> inv.getArgument(0));
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            registrationService.registrationUser(signUpDto);
-        });
+        registrationService.registrationUser(signUpDto);
 
-        assertEquals("Role 'USER' not found", exception.getMessage());
-        verify(userRepository, never()).save(any(User.class));
+        verify(roleRepository).save(argThat(r -> "USER".equals(r.getName())));
+        verify(userRepository).save(any(User.class));
     }
 }

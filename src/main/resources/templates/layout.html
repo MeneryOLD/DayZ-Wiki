@@ -110,45 +110,83 @@
 
     <!-- Auth dialog -->
     <div class="dialog" id="authDialog" hidden role="dialog" aria-modal="true" aria-labelledby="authTitle">
-        <div class="dialog-card">
+        <div class="dialog-card auth-card">
             <button class="icon-btn dialog-close" data-close-dialog th:attr="aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
             <div class="auth-side">
-                <img src="/img/icon.webp" alt="">
-                <h3 th:text="#{auth.title}">Survivor access</h3>
-                <p th:text="#{auth.text}">Save bookmarks, write posts and keep your profile across devices.</p>
+                <div class="auth-brand"><img src="/img/icon.webp" alt=""><span class="brand-text">DayZ<b>Wiki</b></span></div>
+                <div class="auth-side-body">
+                    <div class="auth-signal"><span class="auth-pulse"></span><th:block th:text="#{auth.signal}">Channel open</th:block></div>
+                    <h3 th:text="#{auth.title}">Survivor access</h3>
+                    <p th:text="#{auth.text}">Save bookmarks, write posts and keep your profile across devices.</p>
+                    <ul class="auth-perks">
+                        <li><i class="fa-solid fa-bookmark"></i><span th:text="#{auth.perk.bookmarks}">Bookmark the gear you're hunting for</span></li>
+                        <li><i class="fa-solid fa-pen-nib"></i><span th:text="#{auth.perk.posts}">Write posts for the community</span></li>
+                        <li><i class="fa-solid fa-id-card"></i><span th:text="#{auth.perk.profile}">Keep your own survivor profile</span></li>
+                    </ul>
+                </div>
+                <div class="auth-coords">GRID 037-112 · 45.6 MHz</div>
             </div>
             <div class="auth-main">
-                <div class="seg" role="tablist">
-                    <button class="seg-btn active" data-auth-tab="signin" role="tab" th:text="#{auth.tab.signin}">Sign in</button>
-                    <button class="seg-btn" data-auth-tab="signup" role="tab" th:text="#{auth.tab.signup}">Register</button>
-                    <button class="seg-btn" data-auth-tab="reset" role="tab" th:text="#{auth.tab.reset}">Reset</button>
-                </div>
                 <h2 id="authTitle" class="sr-only" th:text="#{auth.account}">Account</h2>
+                <div class="auth-tabs" role="tablist">
+                    <button class="auth-tab active" data-auth-tab="signin" role="tab" th:text="#{auth.tab.signin}">Sign in</button>
+                    <button class="auth-tab" data-auth-tab="signup" role="tab" th:text="#{auth.tab.signup}">Register</button>
+                    <button class="auth-tab" data-auth-tab="reset" role="tab" th:text="#{auth.tab.reset}">Reset</button>
+                    <span class="auth-tabs-ink" aria-hidden="true"></span>
+                </div>
 
                 <form class="auth-form" data-auth-form="signin" novalidate>
-                    <label><th:block th:text="#{auth.nameOrEmail}">Username or email</th:block><input name="nameOrEmail" autocomplete="username" required></label>
-                    <label><th:block th:text="#{auth.password}">Password</th:block>
-                        <span class="pw"><input name="password" type="password" autocomplete="current-password" required><button type="button" class="pw-toggle" th:attr="aria-label=#{auth.showPassword}"><i class="fa-solid fa-eye"></i></button></span>
+                    <div class="auth-head"><h3 th:text="#{auth.signin.title}">Welcome back, survivor</h3><p th:text="#{auth.signin.text}">Sign in to pick up where you left off.</p></div>
+                    <label class="auth-field"><span th:text="#{auth.nameOrEmail}">Username or email</span>
+                        <span class="auth-input"><i class="fa-solid fa-user"></i><input name="nameOrEmail" autocomplete="username" required></span>
                     </label>
-                    <label class="check"><input type="checkbox" name="remember"> <th:block th:text="#{auth.remember}">Keep me signed in</th:block></label>
-                    <button class="btn btn-primary" type="submit" th:text="#{auth.signin}">Sign in</button>
+                    <label class="auth-field"><span th:text="#{auth.password}">Password</span>
+                        <span class="auth-input pw"><i class="fa-solid fa-lock"></i><input name="password" type="password" autocomplete="current-password" required><button type="button" class="pw-toggle" th:attr="aria-label=#{auth.showPassword}"><i class="fa-solid fa-eye"></i></button></span>
+                    </label>
+                    <div class="auth-row">
+                        <label class="check"><input type="checkbox" name="remember"> <th:block th:text="#{auth.remember}">Keep me signed in</th:block></label>
+                        <button type="button" class="link-btn" data-goto="reset" th:text="#{auth.forgot}">Forgot password?</button>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit"><span th:text="#{auth.signin}">Sign in</span><i class="fa-solid fa-arrow-right"></i></button>
+                    <p class="auth-switch"><th:block th:text="#{auth.noAccount}">No account yet?</th:block> <button type="button" class="link-btn" data-goto="signup" th:text="#{auth.createOne}">Create one</button></p>
                 </form>
 
                 <form class="auth-form" data-auth-form="signup" hidden novalidate>
-                    <label><th:block th:text="#{auth.username}">Username</th:block><input name="name" autocomplete="username" required></label>
-                    <label><th:block th:text="#{auth.email}">Email</th:block><input name="email" type="email" autocomplete="email" required></label>
-                    <label><th:block th:text="#{auth.password}">Password</th:block>
-                        <span class="pw"><input name="password" type="password" autocomplete="new-password" required><button type="button" class="pw-toggle" th:attr="aria-label=#{auth.showPassword}"><i class="fa-solid fa-eye"></i></button></span>
+                    <div class="auth-head"><h3 th:text="#{auth.signup.title}">Join the survivors</h3><p th:text="#{auth.signup.text}">It takes a minute. We'll email you a link to confirm the account.</p></div>
+                    <label class="auth-field"><span th:text="#{auth.username}">Username</span>
+                        <span class="auth-input"><i class="fa-solid fa-user"></i><input name="name" autocomplete="username" required maxlength="32" data-username></span>
+                        <small class="field-hint" th:text="#{auth.usernameHint}">3–32 characters: letters, numbers, _ . -</small>
                     </label>
-                    <label><th:block th:text="#{auth.password2}">Repeat password</th:block><input name="password2" type="password" autocomplete="new-password" required></label>
-                    <button class="btn btn-primary" type="submit" th:text="#{auth.create}">Create account</button>
+                    <label class="auth-field"><span th:text="#{auth.email}">Email</span>
+                        <span class="auth-input"><i class="fa-solid fa-envelope"></i><input name="email" type="email" autocomplete="email" required></span>
+                    </label>
+                    <label class="auth-field"><span th:text="#{auth.password}">Password</span>
+                        <span class="auth-input pw"><i class="fa-solid fa-lock"></i><input name="password" type="password" autocomplete="new-password" required data-strength><button type="button" class="pw-toggle" th:attr="aria-label=#{auth.showPassword}"><i class="fa-solid fa-eye"></i></button></span>
+                        <span class="pw-meter" data-meter="0" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                        <small class="field-hint" data-meter-label th:text="#{auth.passwordHint}">At least 6 characters</small>
+                    </label>
+                    <label class="auth-field"><span th:text="#{auth.password2}">Repeat password</span>
+                        <span class="auth-input"><i class="fa-solid fa-shield-halved"></i><input name="password2" type="password" autocomplete="new-password" required></span>
+                    </label>
+                    <button class="btn btn-primary btn-block" type="submit"><span th:text="#{auth.create}">Create account</span><i class="fa-solid fa-arrow-right"></i></button>
+                    <p class="auth-switch"><th:block th:text="#{auth.haveAccount}">Already registered?</th:block> <button type="button" class="link-btn" data-goto="signin" th:text="#{auth.signin}">Sign in</button></p>
                 </form>
 
                 <form class="auth-form" data-auth-form="reset" hidden novalidate>
-                    <p class="muted" th:text="#{auth.resetText}">Enter your account email and we'll send a link to set a new password.</p>
-                    <label><th:block th:text="#{auth.email}">Email</th:block><input name="email" type="email" autocomplete="email" required></label>
-                    <button class="btn btn-primary" type="submit" th:text="#{auth.sendReset}">Send reset link</button>
+                    <div class="auth-head"><h3 th:text="#{auth.reset.title}">Lost your key?</h3><p th:text="#{auth.resetText}">Enter your account email and we'll send a link to set a new password.</p></div>
+                    <label class="auth-field"><span th:text="#{auth.email}">Email</span>
+                        <span class="auth-input"><i class="fa-solid fa-envelope"></i><input name="email" type="email" autocomplete="email" required></span>
+                    </label>
+                    <button class="btn btn-primary btn-block" type="submit"><span th:text="#{auth.sendReset}">Send reset link</span><i class="fa-solid fa-paper-plane"></i></button>
+                    <p class="auth-switch"><th:block th:text="#{auth.remembered}">Remembered it?</th:block> <button type="button" class="link-btn" data-goto="signin" th:text="#{auth.signin}">Sign in</button></p>
                 </form>
+
+                <div class="auth-form auth-done" data-auth-form="done" hidden>
+                    <span class="auth-done-icon"><i class="fa-solid fa-envelope-circle-check"></i></span>
+                    <h3 data-done-title></h3>
+                    <p data-done-text></p>
+                    <button type="button" class="btn btn-primary btn-block" data-goto="signin"><span th:text="#{auth.backSignin}">Back to sign in</span><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
             </div>
         </div>
     </div>

@@ -31,7 +31,7 @@ public class AuthViewController {
     public String confirmEmail(@RequestParam("token") String token) {
         Optional<VerificationToken> verificationTokenOptional = verificationTokenRepository.findByToken(token);
         if (verificationTokenOptional.isEmpty() || !"REGISTRATION".equals(verificationTokenOptional.get().getType())) {
-            return "redirect:error";
+            return "redirect:/?confirmed=0";
         }
 
         VerificationToken verificationToken = verificationTokenOptional.get();
@@ -40,7 +40,7 @@ public class AuthViewController {
 
         verificationTokenRepository.delete(verificationToken);
         userRepository.save(user);
-        return "redirect:/";
+        return "redirect:/?confirmed=1";
     }
 
 

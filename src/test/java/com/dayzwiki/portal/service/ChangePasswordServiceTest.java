@@ -47,6 +47,7 @@ class ChangePasswordServiceTest {
 
         token = new VerificationToken();
         token.setToken("validToken");
+        token.setType("CHANGE");
         token.setUser(user);
 
         changePasswordDto = new ChangePasswordDto();

@@ -35,6 +35,13 @@ public class ChangePasswordService {
     public void changePasswordByToken(TokenDto tokenDto) {
         VerificationToken token = verificationTokenRepository.findByToken(tokenDto.getToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found"));
+        // Only password-reset tokens may change a password (not email-confirmation tokens).
+        if (!"CHANGE".equals(token.getType())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found");
+        }
+        if (tokenDto.getData() == null || tokenDto.getData().length() < 6) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password must be at least 6 characters");
+        }
 
         User user = token.getUser();
         user.setPassword(passwordEncoder.encode(tokenDto.getData()));
