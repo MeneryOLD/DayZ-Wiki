@@ -14,4 +14,5 @@ public class SearchApi {
     private Object url;
     private Object description;
     private Object source;
+    private Object image;
 }

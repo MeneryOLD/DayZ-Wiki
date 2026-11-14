@@ -6,30 +6,20 @@ import lombok.Getter;
 @Entity
 @Table(name = "foods")
 @Getter
-public class Food {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
-    private String englishName;
-    private String altName;
-
-    private int baseCalories;
-    private int baseThirst;
+public class Food extends BaseItem {
 
     private String type;
+    private Integer baseCalories;
+    private Integer baseThirst;
+    private Integer stomach;
+    private String states;
     private String tier;
-    private int durability;
+    private Integer durability;
     private String size;
-    private float weight;
-    private String source;
-    private String description;
+    private Float weight;
 
-    public String getUrlName() {
-        String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "https://dayzwiki.org/foods/" + formattedName;
+    @Override
+    protected String getSection() {
+        return "foods";
     }
-
 }

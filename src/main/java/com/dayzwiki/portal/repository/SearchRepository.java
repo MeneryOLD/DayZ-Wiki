@@ -10,17 +10,20 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
 public class SearchRepository {
+
+    private static final Set<String> SORTABLE = Set.of("name", "english_name", "section", "source_table");
 
     @PersistenceContext
     private EntityManager entityManager;
 
     public List<SearchApi> search(String searchText, String type, Integer page, Integer size, List<Order> orders) {
         StringBuilder queryStr = new StringBuilder(
-                "SELECT DISTINCT name, english_name, section, url, description, source_table " +
+                "SELECT DISTINCT name, english_name, section, url, description, source_table, image " +
                         "FROM full_text_search " +
                         "WHERE (LOWER(name) LIKE :searchText " +
                         "OR LOWER(alt_name) LIKE :searchText " +
@@ -32,15 +35,12 @@ public class SearchRepository {
             queryStr.append(" AND LOWER(section) = :type");
         }
 
-        if (orders != null && !orders.isEmpty()) {
-            queryStr.append(" ORDER BY ");
-            String orderClause = orders.stream()
-                    .map(order -> order.getField() + " " + order.getDirection())
-                    .collect(Collectors.joining(", "));
-            queryStr.append(orderClause);
-        } else {
-            queryStr.append(" ORDER BY LENGTH(name)");
-        }
+        // Sort fields come from the request body, so only allow known columns and directions (prevents SQL injection).
+        String orderClause = orders == null ? "" : orders.stream()
+                .filter(order -> order.getField() != null && SORTABLE.contains(order.getField().toLowerCase(Locale.ROOT)))
+                .map(order -> order.getField().toLowerCase(Locale.ROOT) + ("desc".equalsIgnoreCase(order.getDirection()) ? " DESC" : " ASC"))
+                .collect(Collectors.joining(", "));
+        queryStr.append(orderClause.isEmpty() ? " ORDER BY LENGTH(name), name" : " ORDER BY " + orderClause);
 
         Query query = entityManager.createNativeQuery(queryStr.toString());
         query.setParameter("searchText", "%" + searchText.trim().toLowerCase(Locale.ROOT) + "%");
@@ -65,7 +65,8 @@ public class SearchRepository {
                 row[2].toString(), // section
                 row[3].toString(), // url
                 shortDescription(row[4]), // description
-                new SourceApi(row[5].toString(), null) // source
+                new SourceApi(row[5].toString(), null), // source
+                row[6] // image path, may be null
         )).collect(Collectors.toList());
     }
 
@@ -73,10 +74,10 @@ public class SearchRepository {
         StringBuilder queryStr = new StringBuilder(
                 "SELECT COUNT(DISTINCT name) " +
                         "FROM full_text_search " +
-                        "WHERE LOWER(name) LIKE :searchText " +
+                        "WHERE (LOWER(name) LIKE :searchText " +
                         "OR LOWER(alt_name) LIKE :searchText " +
                         "OR LOWER(english_name) LIKE :searchText " +
-                        "OR LOWER(section) LIKE :searchText"
+                        "OR LOWER(section) LIKE :searchText)"
         );
 
         if (type != null && !type.isEmpty()) {

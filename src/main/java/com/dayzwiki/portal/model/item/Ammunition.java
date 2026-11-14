@@ -6,29 +6,20 @@ import lombok.Getter;
 @Entity
 @Table(name = "ammunition")
 @Getter
-public class Ammunition {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
-    private String englishName;
-    private String altName;
-
-    private float healthDamage;
-    private float bloodDamage;
-    private float shockDamage;
+public class Ammunition extends BaseItem {
 
     private String type;
     private String size;
+    private Float weight;
     private String tier;
-    private String source;
-    private String description;
+    private Float healthDamage;
+    private Float bloodDamage;
+    private Float shockDamage;
+    @Column(columnDefinition = "TEXT")
+    private String usedBy;
 
-    public String getUrlName() {
-        String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "https://dayzwiki.org/ammunition/" + formattedName;
+    @Override
+    protected String getSection() {
+        return "ammunition";
     }
-
 }

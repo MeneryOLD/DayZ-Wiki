@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head(${#messages.msg('map.' + mapId)})}"></head>
+<body>
+<div class="app">
+    <aside th:replace="~{layout :: sidebar('maps')}"></aside>
+    <div class="main">
+        <header th:replace="~{layout :: topbar}"></header>
+
+        <main class="content" id="mapPage" th:attr="data-map=${mapId}">
+            <section class="map-hero" id="mapHero">
+                <div class="map-hero-inner">
+                    <a class="crumb" href="/maps"><i class="fa-solid fa-arrow-left"></i> <th:block th:text="#{map.all}">All maps</th:block></a>
+                    <div class="eyebrow" id="mapBiome"></div>
+                    <h1 class="hero-title" th:text="${#messages.msg('map.' + mapId)}">Map</h1>
+                    <p id="mapTagline"></p>
+                    <div class="hero-meta" id="mapChips"></div>
+                </div>
+            </section>
+
+            <div class="map-layout">
+                <div class="map-main">
+                    <section class="panel">
+                        <h2 class="panel-title" th:text="#{map.overview}">Overview</h2>
+                        <p class="lead" id="mapIntro"></p>
+                    </section>
+
+                    <section class="panel">
+                        <h2 class="panel-title" th:text="#{map.history}">History &amp; lore</h2>
+                        <div class="prose" id="mapHistory"></div>
+                    </section>
+
+                    <section>
+                        <div class="section-head"><h2 th:text="#{map.different}">What makes it different</h2></div>
+                        <div class="feature-grid" id="mapFeatures"></div>
+                    </section>
+
+                    <section>
+                        <div class="section-head"><h2 th:text="#{map.gallery}">Gallery</h2><span class="muted small" th:text="#{map.enlarge}">Click to enlarge</span></div>
+                        <div class="gallery" id="mapGallery"></div>
+                    </section>
+
+                    <section class="panel" id="mapImagePanel">
+                        <div class="section-head" style="margin-top:0"><h2 th:text="#{map.theMap}">The map</h2><span class="muted small" id="mapCaption"></span></div>
+                        <button class="map-image" id="mapImageBtn" th:attr="aria-label=#{map.openImage}"><img id="mapImage" alt=""></button>
+                    </section>
+
+                    <section id="locationsSection">
+                        <div class="section-head"><h2 th:text="#{map.locations}">Key locations</h2></div>
+                        <div class="locations" id="mapLocations"></div>
+                    </section>
+
+                    <section>
+                        <div class="section-head"><h2 id="exclusiveTitle" th:text="#{map.only}">Only on this map</h2><span class="muted small" th:text="#{map.fromEconomy}">From the official loot economy</span></div>
+                        <div class="news" id="mapExclusive"><div class="skeleton" style="height:66px"></div></div>
+                    </section>
+                </div>
+
+                <aside class="map-side">
+                    <section class="panel">
+                        <h2 class="panel-title" th:text="#{map.facts}">Quick facts</h2>
+                        <table class="dz-stats" id="mapFacts"></table>
+                    </section>
+                    <section class="panel">
+                        <h2 class="panel-title" th:text="#{map.loot}">Loot that spawns here</h2>
+                        <div class="loot-list" id="mapLoot"></div>
+                    </section>
+                    <section class="panel">
+                        <h2 class="panel-title" th:text="#{map.vehicles}">Vehicle limits</h2>
+                        <p class="muted small" style="margin:0 0 8px" th:text="#{map.vehiclesNote}">Maximum number on a server at once.</p>
+                        <table class="dz-stats" id="mapVehicles"></table>
+                    </section>
+                    <section class="panel">
+                        <h2 class="panel-title" th:text="#{map.wildlife}">Wildlife</h2>
+                        <p class="muted" id="mapWildlife" style="margin:0"></p>
+                    </section>
+                </aside>
+            </div>
+
+            <nav class="map-pager" id="mapPager"></nav>
+
+            <p class="source-note" th:utext="#{map.sources}">
+                Map facts and lore: community <a href="https://dayz.wiki.gg/wiki/Maps" target="_blank" rel="noopener">DayZ Wiki</a> (CC BY-SA) and the official patch notes.
+                Loot and vehicle figures: Bohemia Interactive's official Central Economy files. Images © Bohemia Interactive.
+            </p>
+        </main>
+    </div>
+</div>
+
+<div class="lightbox" id="lightbox" hidden>
+    <button class="icon-btn lightbox-close" th:attr="aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
+    <img id="lightboxImg" alt="">
+    <p id="lightboxCaption"></p>
+</div>
+
+<th:block th:replace="~{layout :: overlays}"></th:block>
+<th:block th:replace="~{layout :: scripts}"></th:block>
+<script src="/js/maps.js"></script>
+</body>
+</html>

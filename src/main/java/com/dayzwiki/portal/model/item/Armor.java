@@ -6,28 +6,21 @@ import lombok.Getter;
 @Entity
 @Table(name = "armors")
 @Getter
-public class Armor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
-    private String englishName;
-    private String altName;
+public class Armor extends BaseItem {
 
     private String type;
     private String size;
     private Double weight;
-    private int durability;
+    private Integer durability;
     private String insulation;
-    private int capacity;
+    private Integer capacity;
+    @Column(columnDefinition = "TEXT")
     private String additionalSlots;
-    private String source;
-    private String description;
+    private String protection;
+    private String tier;
 
-    public String getUrlName() {
-        String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "https://dayzwiki.org/armors/" + formattedName;
+    @Override
+    protected String getSection() {
+        return "armors";
     }
-
 }

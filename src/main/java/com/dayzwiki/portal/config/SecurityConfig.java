@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/reset/password", "/confirm/email", "/error",
                                 "/search/**", "/profile/**", "/api/v1/**", "/armors/**", "/weapons/**",
                                 "/medication/**", "/modules/**", "/foods/**", "/ammunition/**", "/cars/**",
-                                "/diseases/**", "/explosives/**", "/img/**").permitAll()
+                                "/diseases/**", "/explosives/**", "/img/**", "/js/**", "/css/**", "/data/**", "/maps/**", "/range").permitAll()
                         .requestMatchers("/moder/**").hasAnyRole("MODER", "ADMIN")
                         .requestMatchers("/api/v1/youtube/**").hasAnyRole("MODER", "ADMIN")
                         .anyRequest().authenticated())

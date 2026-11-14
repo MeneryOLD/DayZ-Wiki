@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/img/icon.webp" type="image/png">
-    <title>404</title>
-    <style>
-        body {
-            font-family: Cambria;
-            background-image: url('/img/back-img.webp');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-        h3 {
-            color: beige;
-            text-align: center;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{error.title} + ' · ' + #{site.suffix}">Lost · DayZ Wiki</title>
+    <link rel="icon" href="/img/icon.webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <script>try { var t = localStorage.getItem('dz-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 </head>
 <body>
-<h3>404</h3>
-<h3>You failed the survival test, you should go back to the <a href="/">beginning</a></h3>
+<main class="content" style="min-height:100vh;display:grid;place-items:center">
+    <section class="hero" style="max-width:760px;width:100%;margin:0">
+        <div class="eyebrow"><i class="fa-solid fa-compass"></i> <th:block th:text="#{error.eyebrow}">Signal lost</th:block></div>
+        <h1 class="hero-title"><th:block th:text="#{error.title1}">You wandered</th:block> <span th:text="#{error.title2}">off the map</span></h1>
+        <p th:text="#{error.text}">This page doesn't exist, or it was moved. Head back to the coast and try again.</p>
+        <a class="btn btn-primary" href="/"><i class="fa-solid fa-house"></i> <th:block th:text="#{error.home}">Back to the manual</th:block></a>
+        <a class="btn" href="/search" style="margin-left:8px;color:#fff;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15)"><i class="fa-solid fa-magnifying-glass"></i> <th:block th:text="#{error.search}">Search</th:block></a>
+    </section>
+</main>
 </body>
 </html>

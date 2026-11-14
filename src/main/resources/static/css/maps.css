@@ -1,0 +1,119 @@
+/* Maps overview, map detail pages and the home page map strip. Loaded after app.css. */
+.map-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.map-card {
+    position: relative; display: block; min-height: 360px; border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--line); background: #0b0d10; color: #f2f3f5; isolation: isolate;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.map-card:hover { transform: translateY(-3px); border-color: var(--map-accent, var(--accent)); box-shadow: var(--shadow); }
+.map-card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 0.6s; }
+.map-card:hover .map-card-img { transform: scale(1.05); }
+.map-card::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(8, 10, 12, 0.05) 0%, rgba(8, 10, 12, 0.5) 45%, rgba(8, 10, 12, 0.95) 100%);
+}
+.map-card-body { position: absolute; left: 0; right: 0; bottom: 0; padding: 24px; }
+.map-card .eyebrow { color: var(--map-accent, var(--accent)); }
+.map-card h2 { font-size: 52px; text-transform: uppercase; margin: 2px 0 6px; }
+.map-card p { margin: 0 0 16px; color: rgba(242, 243, 245, 0.82); max-width: 520px; font-size: 14px; }
+.map-card-stats { display: flex; flex-wrap: wrap; gap: 8px 22px; padding-right: 110px; }
+.map-card-stats span { display: flex; flex-direction: column; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(242, 243, 245, 0.6); }
+.map-card-stats b { font-family: var(--font-head); font-size: 24px; color: #fff; letter-spacing: 0.01em; text-transform: none; }
+.map-card-go { position: absolute; right: 24px; bottom: 26px; font-weight: 600; font-size: 13px; color: var(--map-accent, var(--accent)); }
+.map-new { position: absolute; top: 18px; right: 18px; height: 26px; padding: 0 10px; font-size: 12px; }
+.table tr.no-hover { cursor: default; }
+.table tr.no-hover:hover { background: none; }
+.table th a { color: var(--accent); }
+
+.map-hero {
+    position: relative; overflow: hidden; border-radius: 22px; border: 1px solid var(--line);
+    min-height: 400px; display: flex; align-items: flex-end; margin-bottom: 26px;
+    background-color: #0b0d10; background-size: cover; background-position: center; color: #f2f3f5;
+}
+.map-hero-inner { padding: clamp(24px, 4vw, 48px); max-width: 860px; }
+.map-hero .eyebrow { color: var(--map-accent, var(--accent)); }
+.map-hero p { color: rgba(242, 243, 245, 0.85); font-size: 17px; margin: 14px 0 18px; }
+.crumb { display: flex; width: fit-content; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: rgba(242, 243, 245, 0.75); margin-bottom: 18px; }
+.crumb:hover { color: #fff; }
+
+.map-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; align-items: start; }
+.map-main { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.map-main .section-head { margin-top: 6px; }
+.map-side { display: flex; flex-direction: column; gap: 16px; position: sticky; top: calc(var(--topbar) + 16px); }
+.panel-title { font-size: 22px; text-transform: uppercase; margin-bottom: 12px; }
+.lead { font-size: 17px; color: var(--text-2); margin: 0; }
+.prose p { color: var(--text-2); margin: 0 0 12px; }
+.prose p:last-child { margin-bottom: 0; }
+
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.feature { padding: 18px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+.feature-icon {
+    width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 12px;
+    background: color-mix(in srgb, var(--map-accent, var(--accent)) 16%, transparent); color: var(--map-accent, var(--accent));
+}
+.feature h3 { font-size: 21px; text-transform: uppercase; margin-bottom: 6px; }
+.feature p { margin: 0; font-size: 14px; color: var(--text-2); }
+
+.gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.shot { position: relative; border: 0; padding: 0; border-radius: 12px; overflow: hidden; cursor: zoom-in; aspect-ratio: 16 / 10; background: var(--surface-2); }
+.shot.wide { grid-column: 1 / -1; aspect-ratio: 21 / 9; }
+.shot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.shot:hover img { transform: scale(1.05); }
+.shot span {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 12px 9px; font-size: 12px; color: #fff; text-align: left;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.78));
+}
+
+.map-image { display: block; width: 100%; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; padding: 0; cursor: zoom-in; background: var(--surface-2); }
+.map-image img { width: 100%; display: block; }
+
+.locations { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.loc { display: flex; gap: 10px; align-items: flex-start; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
+.loc i { color: var(--map-accent, var(--accent)); margin-top: 3px; }
+.loc b { display: block; font-size: 14px; }
+.loc span { font-size: 12px; color: var(--muted); }
+
+.loot-list { display: flex; flex-direction: column; }
+.loot-row { display: flex; align-items: center; gap: 10px; padding: 9px 4px; border-bottom: 1px solid var(--line); font-size: 14px; }
+.loot-row:last-child { border-bottom: 0; }
+.loot-row i { width: 18px; color: var(--muted); text-align: center; }
+.loot-row span { flex: 1; }
+.loot-row b { font-family: var(--font-mono); font-size: 13px; }
+.loot-row:hover span { color: var(--accent); }
+
+.map-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 30px; }
+.map-pager a { display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+.map-pager a:hover { border-color: var(--accent); }
+.map-pager b { font-family: var(--font-head); font-size: 24px; text-transform: uppercase; }
+
+.lightbox {
+    position: fixed; inset: 0; z-index: 95; background: rgba(0, 0, 0, 0.9);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; animation: fade 0.2s;
+}
+.lightbox img { max-width: 100%; max-height: 82vh; border-radius: 10px; box-shadow: var(--shadow); }
+.lightbox p { color: #ddd; margin: 12px 0 0; font-size: 14px; }
+.lightbox-close { position: absolute; top: 16px; right: 16px; color: #fff; }
+
+/* Home page strip */
+.home-maps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.home-map { position: relative; display: block; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); color: #fff; isolation: isolate; }
+.home-map img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 0.5s; }
+.home-map::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 35%, rgba(8, 10, 12, 0.92)); }
+.home-map:hover img { transform: scale(1.06); }
+.home-map:hover { border-color: var(--accent); }
+.home-map div { position: absolute; left: 14px; right: 14px; bottom: 12px; }
+.home-map b { display: block; font-family: var(--font-head); font-size: 28px; text-transform: uppercase; line-height: 1; }
+.home-map span { font-size: 12px; color: rgba(255, 255, 255, 0.75); }
+.home-map em { position: absolute; top: 10px; right: 10px; font-style: normal; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--accent); color: var(--accent-ink); }
+
+@media (max-width: 1100px) {
+    .map-layout { grid-template-columns: 1fr; }
+    .map-side { position: static; }
+    .home-maps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+    .map-grid { grid-template-columns: 1fr; }
+    .gallery { grid-template-columns: 1fr; }
+    .map-card h2 { font-size: 40px; }
+    .map-card-stats { padding-right: 0; padding-bottom: 26px; }
+}

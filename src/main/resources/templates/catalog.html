@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- Shared category page. Each fragments/*.html file renders this with its own section id and title. -->
+<html th:lang="${#locale.language}" lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="page(section, title)">
+<head th:replace="~{layout :: head(${#messages.msg('section.' + section)})}"></head>
+<body>
+<div class="app">
+    <aside th:replace="~{layout :: sidebar(${section})}"></aside>
+    <div class="main">
+        <header th:replace="~{layout :: topbar}"></header>
+
+        <main class="content" th:attr="data-section=${section}">
+            <div class="page-head">
+                <div>
+                    <div class="eyebrow"><i class="fa-solid fa-book-open"></i> <th:block th:text="#{cat.eyebrow}">Field manual · 1.30</th:block></div>
+                    <h1 class="page-title" id="pageTitle" th:text="${#messages.msg('section.' + section)}">Section</h1>
+                    <p class="page-sub" id="pageSub"></p>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="chips" id="typeChips" role="tablist" th:attr="aria-label=#{cat.categories}"></div>
+                <div class="filters">
+                    <div class="filter-search">
+                        <i class="fa-solid fa-filter"></i>
+                        <input class="field" id="filterInput" type="search" th:attr="placeholder=#{cat.filter},aria-label=#{cat.filter}">
+                    </div>
+                    <select class="field" id="mapFilter" th:attr="aria-label=#{cat.byMap}">
+                        <option value="" th:text="#{cat.allMaps}">All maps</option>
+                        <option value="Chernarus" th:text="#{map.chernarus}">Chernarus</option>
+                        <option value="Livonia" th:text="#{map.livonia}">Livonia</option>
+                        <option value="Sakhal" th:text="#{map.sakhal}">Sakhal</option>
+                        <option value="Nasdara" th:text="#{map.nasdara}">Nasdara</option>
+                    </select>
+                    <select class="field" id="sortSelect" th:attr="aria-label=#{cat.sortBy}">
+                        <option value="name" th:text="#{cat.sortName}">Name A–Z</option>
+                    </select>
+                    <div class="view-toggle" role="group" th:attr="aria-label=#{cat.view}">
+                        <button data-view="grid" th:attr="title=#{cat.cards},aria-label=#{cat.cardView}"><i class="fa-solid fa-grip"></i></button>
+                        <button data-view="table" th:attr="title=#{cat.table},aria-label=#{cat.tableView}"><i class="fa-solid fa-table-list"></i></button>
+                    </div>
+                    <span class="result-count" id="resultCount"></span>
+                </div>
+            </div>
+
+            <div id="results"></div>
+
+            <p class="source-note" th:utext="#{cat.sources}">
+                Spawn maps and loot tiers come from Bohemia Interactive's official Central Economy files.
+                Stats and descriptions are from the community <a href="https://dayz.wiki.gg" target="_blank" rel="noopener">DayZ Wiki</a> (CC BY-SA).
+            </p>
+        </main>
+    </div>
+</div>
+
+<th:block th:replace="~{layout :: overlays}"></th:block>
+<th:block th:replace="~{layout :: scripts}"></th:block>
+<script>
+    (function () {
+        var s = window.DZ && window.DZ.SECTIONS[document.querySelector('main').dataset.section];
+        if (s) document.getElementById('pageSub').textContent = s.blurb;
+    })();
+</script>
+<script src="/js/catalog.js"></script>
+</body>
+</html>

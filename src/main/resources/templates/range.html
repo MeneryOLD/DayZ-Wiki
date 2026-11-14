@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head(#{title.range})}"></head>
+<body>
+<div class="app">
+    <aside th:replace="~{layout :: sidebar('range')}"></aside>
+    <div class="main">
+        <header th:replace="~{layout :: topbar}"></header>
+
+        <main class="content" id="rangePage">
+            <div class="page-head">
+                <div>
+                    <div class="eyebrow"><i class="fa-solid fa-bullseye"></i> <th:block th:text="#{range.eyebrow}">Damage calculator · update 1.30</th:block></div>
+                    <h1 class="page-title" th:text="#{range.title}">Shooting Range</h1>
+                    <p class="page-sub" th:text="#{range.lead}">Dress the survivor, pick a gun and click on the body to fire. Every hit is worked out from the game's own numbers: health, shock and blood damage, armor, gear wear and bleeding.</p>
+                </div>
+            </div>
+
+            <div class="range">
+                <!-- Loadout -->
+                <section class="panel range-col">
+                    <div class="range-col-head">
+                        <h2 class="panel-title" th:text="#{range.loadout}">Loadout</h2>
+                        <button class="btn btn-sm" id="repairAll" th:title="#{range.repairTitle}"><i class="fa-solid fa-screwdriver-wrench"></i> <th:block th:text="#{range.repair}">Repair</th:block></button>
+                    </div>
+                    <div class="presets" id="presets"></div>
+                    <div class="slots" id="slots"></div>
+                </section>
+
+                <!-- Target -->
+                <section class="panel range-target">
+                    <div class="gun-bar">
+                        <div class="gun-pic" id="gunPic"></div>
+                        <div class="gun-fields">
+                            <label><th:block th:text="#{range.weapon}">Weapon</th:block><select class="field" id="weaponSel"></select></label>
+                            <div class="gun-modes" id="gunModes"></div>
+                            <div class="gun-row">
+                                <label><th:block th:text="#{range.ammo}">Ammunition</th:block><select class="field" id="ammoSel"></select></label>
+                                <label><th:block th:text="#{range.distance}">Distance</th:block> <b id="distOut">25 m</b><input type="range" id="distance" min="5" max="800" step="5" value="25"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ammo-strip" id="ammoStats"></div>
+
+                    <div class="figure-wrap">
+                        <svg class="figure" id="figure" viewBox="0 0 300 600" role="img" th:attr="aria-label=#{range.figure}">
+                            <defs>
+                                <pattern id="chain" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/></pattern>
+                            </defs>
+                            <!-- clickable zones: data-zone matches ZONES in range.js -->
+                            <g id="zones">
+                                <path data-zone="head" d="M150 18c22 0 36 18 36 42 0 26-15 46-36 46s-36-20-36-46c0-24 14-42 36-42z"/>
+                                <path data-zone="torso" d="M136 104h28l4 12c16 2 30 6 38 12l-2 64c-4 32-6 64-4 100H100c2-36 0-68-4-100l-2-64c8-6 22-10 38-12z"/>
+                                <path data-zone="rarm" d="M94 128c-14 4-22 14-24 30l-14 86-10 74 20 4 14-74 18-74z"/>
+                                <path data-zone="larm" d="M206 128c14 4 22 14 24 30l14 86 10 74-20 4-14-74-18-74z"/>
+                                <path data-zone="rhand" d="M46 320l20 4 2 20c0 12-6 20-14 20s-14-8-14-20z"/>
+                                <path data-zone="lhand" d="M254 320l-20 4-2 20c0 12 6 20 14 20s14-8 14-20z"/>
+                                <path data-zone="rleg" d="M100 292h48l-4 96-6 136h-26l-8-136z"/>
+                                <path data-zone="lleg" d="M152 292h48l-4 96-8 136h-26l-6-136z"/>
+                                <path data-zone="rfoot" d="M112 524h26l2 26c0 8-4 12-12 12h-28c-6 0-8-6-4-12z"/>
+                                <path data-zone="lfoot" d="M162 524h26l16 26c4 6 2 12-4 12h-28c-8 0-12-4-12-12z"/>
+                            </g>
+                            <!-- gear drawn on top; no pointer events -->
+                            <g id="gearLayer" pointer-events="none"></g>
+                            <g id="hits" pointer-events="none"></g>
+                        </svg>
+                        <div class="zone-tip" id="zoneTip" hidden></div>
+                        <div class="state-banner" id="stateBanner" hidden></div>
+                    </div>
+                    <p class="muted small center" th:text="#{range.clickHint}">Click a body part to fire one shot. Hover to preview the damage.</p>
+                </section>
+
+                <!-- Status -->
+                <section class="range-col range-status">
+                    <div class="panel">
+                        <div class="range-col-head">
+                            <h2 class="panel-title" th:text="#{range.survivor}">Survivor</h2>
+                            <span class="life" id="lifeState" th:text="#{range.alive}">Alive</span>
+                        </div>
+                        <div class="meters" id="meters"></div>
+                        <div class="clock">
+                            <div><span class="muted small" th:text="#{range.time}">Time since first shot</span><b id="clock">0:00</b></div>
+                            <div class="clock-btns">
+                                <button class="btn btn-sm" id="playBtn"><i class="fa-solid fa-play"></i> <th:block th:text="#{range.play}">Let time pass</th:block></button>
+                                <select class="field field-sm" id="speedSel" th:attr="aria-label=#{range.speed}">
+                                    <option value="1">×1</option><option value="10" selected>×10</option><option value="60">×60</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="treat">
+                            <button class="btn btn-sm" id="bandageBtn"><i class="fa-solid fa-bandage"></i> <th:block th:text="#{range.bandage}">Bandage</th:block></button>
+                            <button class="btn btn-sm" id="epiBtn"><i class="fa-solid fa-syringe"></i> <th:block th:text="#{range.epi}">Epinephrine</th:block></button>
+                            <button class="btn btn-sm" id="bloodBtn"><i class="fa-solid fa-droplet"></i> <th:block th:text="#{range.bloodbag}">Blood bag</th:block></button>
+                            <button class="btn btn-sm btn-primary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> <th:block th:text="#{range.reset}">New survivor</th:block></button>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <h2 class="panel-title" th:text="#{range.wounds}">Wounds &amp; limbs</h2>
+                        <div id="wounds"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="range-col-head"><h2 class="panel-title" th:text="#{range.log}">Shot log</h2><span class="muted small" id="shotCount" th:text="#{range.zeroShots}">0 shots</span></div>
+                        <ol class="log" id="log"></ol>
+                    </div>
+                </section>
+            </div>
+
+            <details class="panel how">
+                <summary><h2 class="panel-title" th:text="#{range.how}">How the numbers are worked out</h2></summary>
+                <div class="how-grid" id="howGrid"></div>
+            </details>
+
+            <p class="source-note" th:utext="#{range.sources}">
+                Ammunition damage, projectile speed and air friction, clothing protection and durability, and bleeding rates come from the community
+                <a href="https://dayz.wiki.gg/wiki/Ammunition" target="_blank" rel="noopener">DayZ Wiki</a> (CC BY-SA), which reads them from the game's config files.
+                Body-part multipliers are not published by Bohemia Interactive, so they are estimates. Treat results as a close guide, not an exact replay of the game.
+            </p>
+        </main>
+    </div>
+</div>
+
+<th:block th:replace="~{layout :: overlays}"></th:block>
+<th:block th:replace="~{layout :: scripts}"></th:block>
+<script src="/js/range.js"></script>
+</body>
+</html>

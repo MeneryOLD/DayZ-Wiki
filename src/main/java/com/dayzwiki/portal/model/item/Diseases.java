@@ -6,25 +6,19 @@ import lombok.Getter;
 @Entity
 @Table(name = "diseases")
 @Getter
-public class Diseases {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Diseases extends BaseItem {
 
-    private String name;
-    private String englishName;
-    private String altName;
-
+    @Column(columnDefinition = "TEXT")
     private String causes;
+    @Column(columnDefinition = "TEXT")
     private String symptoms;
+    @Column(columnDefinition = "TEXT")
     private String treatment;
-    private String source;
-    private String description;
+    @Column(columnDefinition = "TEXT")
+    private String prevention;
 
-    public String getUrlName() {
-        String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "https://dayzwiki.org/diseases/" + formattedName;
+    @Override
+    protected String getSection() {
+        return "diseases";
     }
-
 }
-

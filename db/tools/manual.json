@@ -1,0 +1,426 @@
+{
+ "_vehicle_maps": {
+  "Olga 24": "Chernarus (max 8), Livonia (8), Sakhal (4), Nasdara (8)",
+  "Gunter 2": "Chernarus (max 8), Livonia (8), Sakhal (4), Nasdara (8)",
+  "Ada 4x4": "Chernarus (max 8), Livonia (8), Sakhal (4), Nasdara (8)",
+  "Sarka 120": "Chernarus (max 8), Livonia (8), Sakhal (4), Nasdara (8)",
+  "M1025": "Chernarus (max 3), Livonia (3), Nasdara (5, desert variant)",
+  "M3S": "Chernarus (max 8), Livonia (8), Sakhal (4), Nasdara (6)",
+  "Rubber Boat": "Chernarus (max 17), Livonia (5), Sakhal (14 incl. military), Nasdara (5)"
+ },
+ "cars": [
+  {
+   "name": "Jana 50",
+   "englishName": "Jana 50",
+   "altName": "Motorbike_01, moped",
+   "type": "Motorbike",
+   "seats": null,
+   "capacity": "None",
+   "fuelTank": null,
+   "topSpeed": 70,
+   "tier": null,
+   "maps": "Chernarus, Livonia, Sakhal, Nasdara (shares the motorbike spawn pool: max 25 / 12 / 12 / 30)",
+   "location": "Towns, villages and roadsides",
+   "rarity": null,
+   "classname": "Motorbike_01",
+   "description": "Light 50cc moped added in update 1.30. Cheap to run and quick to get moving, but slow (around 70 km/h) and has no cargo storage. Top speed is approximate, from the developers' description.",
+   "source": "cars"
+  },
+  {
+   "name": "Bitrak 682",
+   "englishName": "Bitrak 682",
+   "altName": "Motorbike_02, enduro, dirt bike",
+   "type": "Motorbike",
+   "seats": null,
+   "capacity": "None",
+   "fuelTank": null,
+   "topSpeed": 130,
+   "tier": null,
+   "maps": "Chernarus, Livonia, Sakhal, Nasdara (shares the motorbike spawn pool: max 25 / 12 / 12 / 30)",
+   "location": "Towns, villages and roadsides",
+   "rarity": null,
+   "classname": "Motorbike_02",
+   "description": "Enduro motorbike added in update 1.30. Much faster than the Jana 50 (around 130 km/h) and good off-road. Accepts left, right and front shield attachments. Has no cargo storage. Top speed is approximate, from the developers' description.",
+   "source": "cars"
+  }
+ ],
+ "diseases": [
+  {
+   "name": "Silicosis",
+   "englishName": "Silicosis",
+   "altName": "Sillicosis, dust lung",
+   "source": "diseases",
+   "causes": "Breathing sand and dust during Nasdara sandstorms without a face covering",
+   "symptoms": "Coughing during sandstorms; heavy breathing and greatly reduced stamina",
+   "treatment": "No medicine cures it. Leave the dust and shelter indoors; it clears over time while your immune system is in good shape (fed, hydrated, healthy)",
+   "prevention": "Wear a mask or face covering in sandstorms; shelter in buildings, underground or in a vehicle",
+   "description": "Respiratory illness added with the Badlands expansion (1.30). Exact exposure thresholds and timings have not been published by the developers."
+  },
+  {
+   "name": "Irritated Eyes",
+   "englishName": "Irritated Eyes",
+   "altName": "eye irritation, sand in eyes",
+   "source": "diseases",
+   "causes": "Sand and dust in the eyes during Nasdara sandstorms without eye protection",
+   "symptoms": "Impaired vision. Does not damage health and does not show the sickness icon",
+   "treatment": "Use the Wash Face action at a well, pond or other water source (splashing from a bottle helps only a little)",
+   "prevention": "Wear goggles (e.g. Dust Goggles) or other eye protection; a mask alone does not protect the eyes",
+   "description": "Condition added with the Badlands expansion (1.30)."
+  }
+ ],
+ "foods": [
+  {
+   "name": "Achar",
+   "englishName": "Achar",
+   "_cns": [
+    "Achar"
+   ],
+   "type": "Canned Goods",
+   "description": "Jar of spicy pickled vegetables. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Ayran",
+   "englishName": "Ayran",
+   "_cns": [
+    "Ayran",
+    "AyranBottle"
+   ],
+   "type": "Drinks",
+   "description": "Salty yogurt drink, found in cartons and bottles. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Lassi",
+   "englishName": "Lassi",
+   "_cns": [
+    "Lassi_Mango",
+    "Lassi_Masala",
+    "Lassi_Mint"
+   ],
+   "type": "Drinks",
+   "description": "Yogurt drink in mango, masala and mint flavours. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Halva",
+   "englishName": "Halva",
+   "_cns": [
+    "HalvaCan"
+   ],
+   "type": "Canned Goods",
+   "description": "Canned sweet sesame halva. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Canned Sarma",
+   "englishName": "Canned Sarma",
+   "_cns": [
+    "SarmaCan"
+   ],
+   "type": "Canned Goods",
+   "description": "Canned stuffed vine leaves. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Salty Mix",
+   "englishName": "Salty Mix",
+   "_cns": [
+    "SaltyMix"
+   ],
+   "type": "Dry Goods and Snacks",
+   "description": "Bag of salty snack mix. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Spicy Crackers",
+   "englishName": "Spicy Crackers",
+   "_cns": [
+    "SpicyCrackers"
+   ],
+   "type": "Dry Goods and Snacks",
+   "description": "Pack of spicy crackers. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Rooh Afza",
+   "englishName": "Rooh Afza",
+   "_cns": [
+    "SmallGlassBottle_Afza"
+   ],
+   "type": "Drinks",
+   "description": "Small glass bottle of rose-flavoured syrup drink. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Jallab",
+   "englishName": "Jallab",
+   "_cns": [
+    "SmallGlassBottle_Jallab"
+   ],
+   "type": "Drinks",
+   "description": "Small glass bottle of date and grape molasses drink. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "ZumZam Soda",
+   "englishName": "ZumZam Soda",
+   "_cns": [
+    "SodaCan_ZumZam"
+   ],
+   "type": "Drinks",
+   "description": "Can of ZumZam soda. Added with the Badlands expansion (update 1.30). Nutrition values have not been documented yet."
+  },
+  {
+   "name": "Cat Food",
+   "englishName": "Cat Food",
+   "_cns": [
+    "CatFoodCan"
+   ],
+   "type": "Canned Goods",
+   "description": "Canned food for cats. Edible for survivors in a pinch."
+  },
+  {
+   "name": "Dog Food",
+   "englishName": "Dog Food",
+   "_cns": [
+    "DogFoodCan"
+   ],
+   "type": "Canned Goods",
+   "description": "Canned food for dogs. Edible for survivors in a pinch."
+  },
+  {
+   "name": "Unknown Food Can",
+   "englishName": "Unknown Food Can",
+   "_cns": [
+    "UnknownFoodCan"
+   ],
+   "type": "Canned Goods",
+   "description": "A can with no label. Eating it carries a risk of food poisoning."
+  }
+ ],
+ "armors": [
+  {
+   "name": "Turban",
+   "englishName": "Turban",
+   "_cns": [
+    "TurbanHat_Beige",
+    "TurbanHat_Black",
+    "TurbanHat_Brown",
+    "TurbanHat_Green",
+    "TurbanHat_Grey",
+    "TurbanHat_NavyBlue",
+    "TurbanHat_Pink",
+    "TurbanHat_Purple",
+    "TurbanHat_Red",
+    "TurbanHat_Skyblue",
+    "TurbanHat_White",
+    "TurbanHat_Yellow"
+   ],
+   "type": "Hats",
+   "description": "Traditional wrapped head cloth. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Pakol",
+   "englishName": "Pakol",
+   "_cns": [
+    "PakolHat_Beige",
+    "PakolHat_Black",
+    "PakolHat_Brown",
+    "PakolHat_Grey",
+    "PakolHat_White"
+   ],
+   "type": "Hats",
+   "description": "Soft, round-topped wool cap. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "OBR Cap",
+   "englishName": "OBR Cap",
+   "_cns": [
+    "OBRCap_Olive",
+    "OBRCap_Beige"
+   ],
+   "type": "Hats",
+   "description": "Military field cap from the OBR uniform set. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Keffiyeh",
+   "englishName": "Keffiyeh",
+   "_cns": [
+    "Keffiyeh_Black",
+    "Keffiyeh_Blue",
+    "Keffiyeh_Brown",
+    "Keffiyeh_Gray",
+    "Keffiyeh_LightBlue",
+    "Keffiyeh_LightBrown",
+    "Keffiyeh_LightRed",
+    "Keffiyeh_Red"
+   ],
+   "type": "Masks",
+   "description": "Cotton headdress that can cover the face against sun and sand. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Kameez",
+   "englishName": "Kameez",
+   "_cns": [
+    "KameezShirt_Beige",
+    "KameezShirt_Black",
+    "KameezShirt_BlueFlowers",
+    "KameezShirt_Brown",
+    "KameezShirt_Grey",
+    "KameezShirt_NavyBlue",
+    "KameezShirt_Olive",
+    "KameezShirt_Orange",
+    "KameezShirt_Pink",
+    "KameezShirt_Purple",
+    "KameezShirt_Red",
+    "KameezShirt_SkyBlue",
+    "KameezShirt_White",
+    "KameezShirt_Yellow"
+   ],
+   "type": "Shirts and Jackets",
+   "description": "Long, loose traditional shirt. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Short Sleeve Shirt",
+   "englishName": "Short Sleeve Shirt",
+   "_cns": [
+    "ShortSleeveShirt_Black",
+    "ShortSleeveShirt_BlueRectangles",
+    "ShortSleeveShirt_CreamSquares",
+    "ShortSleeveShirt_Green",
+    "ShortSleeveShirt_White",
+    "ShortSleeveShirt_Waves",
+    "PoliceShortSleeveShirt",
+    "ShortSleeveShirt_Hawaiian_Black",
+    "ShortSleeveShirt_Hawaiian_Blue",
+    "ShortSleeveShirt_Hawaiian_White"
+   ],
+   "type": "Shirts and Jackets",
+   "description": "Light short-sleeved shirt, including a police variant. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "OBR Jacket",
+   "englishName": "OBR Jacket",
+   "_cns": [
+    "OBRJacket_Olive",
+    "OBRJacket_Beige",
+    "OBRJacket_Officer"
+   ],
+   "type": "Shirts and Jackets",
+   "description": "Military uniform jacket, including an officer variant. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "OBR Pants",
+   "englishName": "OBR Pants",
+   "_cns": [
+    "OBRPants_Beige",
+    "OBRPants_Olive"
+   ],
+   "type": "Pants",
+   "description": "Military uniform trousers. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Men's Shalwar",
+   "englishName": "Men's Shalwar",
+   "_cns": [
+    "MensShalwarPants_Beige",
+    "MensShalwarPants_Black",
+    "MensShalwarPants_Brown",
+    "MensShalwarPants_Grey",
+    "MensShalwarPants_NavyBlue",
+    "MensShalwarPants_SkyBlue",
+    "MensShalwarPants_White"
+   ],
+   "type": "Pants",
+   "description": "Loose traditional trousers (men's cut). Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Women's Shalwar",
+   "englishName": "Women's Shalwar",
+   "_cns": [
+    "WomensShalwarPants_NavyBlue",
+    "WomensShalwarPants_Olive",
+    "WomensShalwarPants_Orange",
+    "WomensShalwarPants_Pink",
+    "WomensShalwarPants_Purple",
+    "WomensShalwarPants_Red"
+   ],
+   "type": "Pants",
+   "description": "Loose traditional trousers (women's cut). Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Robe",
+   "englishName": "Robe",
+   "_cns": [
+    "RobeVest_Beige",
+    "RobeVest_Brown",
+    "RobeVest_Green",
+    "RobeVest_Grey",
+    "RobeVest_Navy"
+   ],
+   "type": "Vests",
+   "description": "Long robe worn in the vest slot. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Linen Vest",
+   "englishName": "Linen Vest",
+   "_cns": [
+    "LinenVest_Black",
+    "LinenVest_Brown",
+    "LinenVest_DarkGrey",
+    "LinenVest_Green",
+    "LinenVest_Grey",
+    "LinenVest_NavyBlue"
+   ],
+   "type": "Vests",
+   "description": "Light linen vest. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Chest Rig",
+   "englishName": "Chest Rig",
+   "_cns": [
+    "ChestRigVest_Khaki",
+    "ChestRigVest_Olive",
+    "ChestRigVest_Tan"
+   ],
+   "type": "Vests",
+   "description": "Load-bearing chest rig with pouches. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Sandals",
+   "englishName": "Sandals",
+   "_cns": [
+    "SandalsShoes_Black",
+    "SandalsShoes_BlueNavy",
+    "SandalsShoes_Brown",
+    "SandalsShoes_Grey"
+   ],
+   "type": "Shoes",
+   "description": "Light open sandals. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Traditional Sandals",
+   "englishName": "Traditional Sandals",
+   "_cns": [
+    "TraditionalSandalShoes_Black",
+    "TraditionalSandalShoes_Brown",
+    "TraditionalSandalShoes_LightBrown",
+    "TraditionalSandalShoes_NavyBlue"
+   ],
+   "type": "Shoes",
+   "description": "Leather traditional sandals. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "Knife Sheath",
+   "englishName": "Knife Sheath",
+   "_cns": [
+    "NylonKnifeSheath"
+   ],
+   "type": "Belts",
+   "description": "Sheath that attaches a knife to a belt. Added with the Badlands expansion (update 1.30)."
+  },
+  {
+   "name": "NBC Pack",
+   "englishName": "NBC Pack",
+   "_cns": [
+    "NBCPack_Grey",
+    "NBCPack_Yellow",
+    "NBCPack_White"
+   ],
+   "type": "Backpacks",
+   "description": "Pack carried as part of the NBC protective kit. Added with the Badlands expansion (update 1.30)."
+  }
+ ]
+}

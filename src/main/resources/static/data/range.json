@@ -1,0 +1,2191 @@
+{
+ "ammo": {
+  ".22 LR Rounds": {
+   "name": ".22 LR Rounds",
+   "health": 20.0,
+   "blood": 100.0,
+   "shock": 20.0,
+   "speed": 370.0,
+   "friction": -0.00249,
+   "pellets": 1,
+   "image": "/img/items/ammo-22.webp"
+  },
+  ".308 WIN Rounds": {
+   "name": ".308 WIN Rounds",
+   "health": 150.0,
+   "blood": 100.0,
+   "shock": 150.0,
+   "speed": 770.0,
+   "friction": -0.001,
+   "pellets": 1,
+   "image": "/img/items/ammo-308win.webp"
+  },
+  ".357 Rounds": {
+   "name": ".357 Rounds",
+   "health": 65.0,
+   "blood": 100.0,
+   "shock": 90.0,
+   "speed": 440.0,
+   "friction": -0.0014,
+   "pellets": 1,
+   "image": "/img/items/ammo-357.webp"
+  },
+  ".380 ACP Rounds": {
+   "name": ".380 ACP Rounds",
+   "health": 35.0,
+   "blood": 100.0,
+   "shock": 35.0,
+   "speed": 300.0,
+   "friction": -0.0015,
+   "pellets": 1,
+   "image": "/img/items/ammo-380.webp"
+  },
+  ".45 ACP Rounds": {
+   "name": ".45 ACP Rounds",
+   "health": 40.0,
+   "blood": 100.0,
+   "shock": 40.0,
+   "speed": 260.0,
+   "friction": -0.001,
+   "pellets": 1,
+   "image": "/img/items/ammo-45acp.webp"
+  },
+  "12ga 00 Buckshots": {
+   "name": "12ga 00 Buckshots",
+   "health": 35.0,
+   "blood": 100.0,
+   "shock": 35.0,
+   "speed": 340.0,
+   "friction": -0.00575,
+   "pellets": 8,
+   "image": "/img/items/ammo-12gapellets.webp"
+  },
+  "12ga Beanbag Rounds": {
+   "name": "12ga Beanbag Rounds",
+   "health": 0.0,
+   "blood": 0,
+   "shock": 100.0,
+   "speed": 240.0,
+   "friction": -0.006,
+   "pellets": 1,
+   "image": null
+  },
+  "12ga Rifled Slugs": {
+   "name": "12ga Rifled Slugs",
+   "health": 110.0,
+   "blood": 100.0,
+   "shock": 110.0,
+   "speed": 380.0,
+   "friction": -0.00499,
+   "pellets": 1,
+   "image": "/img/items/ammo-12gaslug.webp"
+  },
+  "12ga Rubber Slugs": {
+   "name": "12ga Rubber Slugs",
+   "health": 0.0,
+   "blood": 0,
+   "shock": 150.0,
+   "speed": 60.0,
+   "friction": -0.02,
+   "pellets": 1,
+   "image": "/img/items/ammo-12garubberslug.webp"
+  },
+  "5.45x39mm Rounds": {
+   "name": "5.45x39mm Rounds",
+   "health": 115.0,
+   "blood": 100.0,
+   "shock": 115.0,
+   "speed": 880.0,
+   "friction": -0.00125,
+   "pellets": 1,
+   "image": "/img/items/ammo-545x39.webp"
+  },
+  "5.56x45mm Rounds": {
+   "name": "5.56x45mm Rounds",
+   "health": 110.0,
+   "blood": 100.0,
+   "shock": 110.0,
+   "speed": 850.0,
+   "friction": -0.00125,
+   "pellets": 1,
+   "image": "/img/items/ammo-556x45.webp"
+  },
+  "7.62x39mm Rounds": {
+   "name": "7.62x39mm Rounds",
+   "health": 110.0,
+   "blood": 100.0,
+   "shock": 110.0,
+   "speed": 640.0,
+   "friction": -0.0015,
+   "pellets": 1,
+   "image": "/img/items/ammo-762x39.webp"
+  },
+  "7.62x54mmR Rounds": {
+   "name": "7.62x54mmR Rounds",
+   "health": 150.0,
+   "blood": 100.0,
+   "shock": 150.0,
+   "speed": 785.0,
+   "friction": -0.001,
+   "pellets": 1,
+   "image": "/img/items/ammo-762x54.webp"
+  },
+  "9x19mm Rounds": {
+   "name": "9x19mm Rounds",
+   "health": 40.0,
+   "blood": 100.0,
+   "shock": 40.0,
+   "speed": 350.0,
+   "friction": -0.0023,
+   "pellets": 1,
+   "image": "/img/items/ammo-9x19.webp"
+  },
+  "9x39mm Armor-Piercing Rounds": {
+   "name": "9x39mm Armor-Piercing Rounds",
+   "health": 95.0,
+   "blood": 100.0,
+   "shock": 66.0,
+   "speed": 320.0,
+   "friction": 0.00055,
+   "pellets": 1,
+   "image": "/img/items/ammo-9x39ap.webp"
+  },
+  "9x39mm Rounds": {
+   "name": "9x39mm Rounds",
+   "health": 95.0,
+   "blood": 100.0,
+   "shock": 66.0,
+   "speed": 320.0,
+   "friction": 0.00055,
+   "pellets": 1,
+   "image": "/img/items/ammo-9x39.webp"
+  },
+  "Bolt": {
+   "name": "Bolt",
+   "health": 125.0,
+   "blood": 100.0,
+   "shock": 95.0,
+   "speed": 105.0,
+   "friction": -0.0013,
+   "pellets": 1,
+   "image": "/img/items/ammo-arrowbolt.webp"
+  },
+  "Flare": {
+   "name": "Flare",
+   "health": 10.0,
+   "blood": 100.0,
+   "shock": 0.0,
+   "speed": 80.0,
+   "friction": -0.06,
+   "pellets": 1,
+   "image": "/img/items/flare-red.webp"
+  },
+  "Improvised Bolt": {
+   "name": "Improvised Bolt",
+   "health": 125.0,
+   "blood": 100.0,
+   "shock": 85.0,
+   "speed": 85.0,
+   "friction": -0.01,
+   "pellets": 1,
+   "image": "/img/items/ammo-sharpstick.webp"
+  },
+  "Improvised Bolt (feathered)": {
+   "name": "Improvised Bolt (feathered)",
+   "health": 125.0,
+   "blood": 100.0,
+   "shock": 85.0,
+   "speed": 90.0,
+   "friction": -0.004,
+   "pellets": 1,
+   "image": "/img/items/ammo-arrowprimitive.webp"
+  }
+ },
+ "weapons": [
+  {
+   "name": "AUR A1",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Burst, Full-Auto",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/augshort.webp"
+  },
+  {
+   "name": "AUR AX",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Burst, Full-Auto",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/aug.webp"
+  },
+  {
+   "name": "Bizon",
+   "type": "Submachine Gun",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    ".380 ACP Rounds"
+   ],
+   "image": "/img/items/pp19.webp"
+  },
+  {
+   "name": "BK-12",
+   "type": "Shotgun",
+   "modes": "Single",
+   "ammo": [
+    "12ga 00 Buckshots",
+    "12ga Rifled Slugs",
+    "12ga Rubber Slugs"
+   ],
+   "image": "/img/items/izh18shotgun.webp"
+  },
+  {
+   "name": "BK-133",
+   "type": "Shotgun",
+   "modes": "Single (Pump-Action)",
+   "ammo": [
+    "12ga 00 Buckshots",
+    "12ga Rifled Slugs",
+    "12ga Rubber Slugs"
+   ],
+   "image": "/img/items/mp133shotgun.webp"
+  },
+  {
+   "name": "BK-18",
+   "type": "Breech-action Rifle",
+   "modes": "Single (Break-action)",
+   "ammo": [
+    "7.62x39mm Rounds"
+   ],
+   "image": "/img/items/izh18.webp"
+  },
+  {
+   "name": "BK-43",
+   "type": "Shotgun",
+   "modes": "Single, Double",
+   "ammo": [
+    "12ga 00 Buckshots",
+    "12ga Rifled Slugs",
+    "12ga Rubber Slugs"
+   ],
+   "image": "/img/items/izh43shotgun.webp"
+  },
+  {
+   "name": "Blaze",
+   "type": "Breech-action Rifle",
+   "modes": "Single, Double",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/b95.webp"
+  },
+  {
+   "name": "CR-527",
+   "type": "Bolt-action Rifle",
+   "modes": "Single",
+   "ammo": [
+    "7.62x39mm Rounds"
+   ],
+   "image": "/img/items/cz527.webp"
+  },
+  {
+   "name": "CR-550 Savanna",
+   "type": "Bolt-action Rifle",
+   "modes": "Single",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/cz550.webp"
+  },
+  {
+   "name": "CR-61 Skorpion",
+   "type": "Submachine Gun",
+   "modes": "Semi-Auto, Full Auto",
+   "ammo": [
+    ".380 ACP Rounds"
+   ],
+   "image": "/img/items/cz61.webp"
+  },
+  {
+   "name": "CR-75",
+   "type": "Handgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    "9x19mm Rounds"
+   ],
+   "image": "/img/items/cz75.webp"
+  },
+  {
+   "name": "Crossbow",
+   "type": "Archery",
+   "modes": "Single",
+   "ammo": [
+    "Bolt",
+    "Improvised Bolt"
+   ],
+   "image": "/img/items/crossbow-autumn.webp"
+  },
+  {
+   "name": "Deagle",
+   "type": "Handgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    ".357 Rounds"
+   ],
+   "image": "/img/items/deagle.webp"
+  },
+  {
+   "name": "Derringer",
+   "type": "Handgun",
+   "modes": "Single",
+   "ammo": [
+    ".357 Rounds"
+   ],
+   "image": "/img/items/derringer-black.webp"
+  },
+  {
+   "name": "DMR",
+   "type": "Marksman Rifle",
+   "modes": "Semi-Auto",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/m14.webp"
+  },
+  {
+   "name": "Engraved Kolt 1911",
+   "type": "Handgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    ".45 ACP Rounds"
+   ],
+   "image": "/img/items/engraved1911.webp"
+  },
+  {
+   "name": "FX-45",
+   "type": "Handgun",
+   "modes": "",
+   "ammo": [
+    ".45 ACP Rounds"
+   ],
+   "image": "/img/items/fnx45.webp"
+  },
+  {
+   "name": "IJ-70",
+   "type": "Handgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    ".380 ACP Rounds"
+   ],
+   "image": "/img/items/makarovij70.webp"
+  },
+  {
+   "name": "KA-101",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/ak101.webp"
+  },
+  {
+   "name": "KA-74",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    "5.45x39mm Rounds"
+   ],
+   "image": "/img/items/ak74.webp"
+  },
+  {
+   "name": "KA-M",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    "7.62x39mm Rounds"
+   ],
+   "image": "/img/items/akm.webp"
+  },
+  {
+   "name": "KAS-74U",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    "5.45x39mm Rounds"
+   ],
+   "image": "/img/items/aks74u.webp"
+  },
+  {
+   "name": "Kolt 1911",
+   "type": "Handgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    ".45 ACP Rounds"
+   ],
+   "image": "/img/items/colt1911.webp"
+  },
+  {
+   "name": "LAR",
+   "type": "Battle Rifle",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/fal.webp"
+  },
+  {
+   "name": "LE-MAS",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Burst Fire, Full-Auto",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/famas.webp"
+  },
+  {
+   "name": "Lee Enfield",
+   "type": "Bolt-action Rifle",
+   "modes": "Single",
+   "ammo": [
+    "7.62x54mmR Rounds"
+   ],
+   "image": "/img/items/leeenfield.webp"
+  },
+  {
+   "name": "Longhorn",
+   "type": "Handgun",
+   "modes": "Single",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/longhorn.webp"
+  },
+  {
+   "name": "Luger",
+   "type": "Handgun",
+   "modes": "Semi Auto",
+   "ammo": [
+    "9x19mm Rounds"
+   ],
+   "image": "/img/items/luger.webp"
+  },
+  {
+   "name": "M16-A2",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, 3-Round Burst",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/m16a2.webp"
+  },
+  {
+   "name": "M4-A1",
+   "type": "Assault rifle",
+   "modes": "Semi-Auto, Full Auto",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/m4a1.webp"
+  },
+  {
+   "name": "M70 Tundra",
+   "type": "Bolt-action Rifle",
+   "modes": "Single",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/winchester70.webp"
+  },
+  {
+   "name": "MK II",
+   "type": "Handgun",
+   "modes": "Semi-Automatic",
+   "ammo": [
+    ".22 LR Rounds"
+   ],
+   "image": "/img/items/mkii.webp"
+  },
+  {
+   "name": "Mlock-91",
+   "type": "Handgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    "9x19mm Rounds"
+   ],
+   "image": "/img/items/glock19.webp"
+  },
+  {
+   "name": "Mosin 91/30",
+   "type": "Bolt-action Rifle",
+   "modes": "Single (Bolt-Action)",
+   "ammo": [
+    "7.62x54mmR Rounds"
+   ],
+   "image": "/img/items/mosin9130.webp"
+  },
+  {
+   "name": "MP-18",
+   "type": "Submachine Gun",
+   "modes": "",
+   "ammo": [
+    "9x19mm Rounds"
+   ],
+   "image": "/img/items/mp18.webp"
+  },
+  {
+   "name": "P1",
+   "type": "Handgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    "9x19mm Rounds"
+   ],
+   "image": "/img/items/p1.webp"
+  },
+  {
+   "name": "Pioneer",
+   "type": "Bolt-action Rifle",
+   "modes": "Single",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/scout.webp"
+  },
+  {
+   "name": "R12",
+   "type": "Shotgun",
+   "modes": "Semi-Auto",
+   "ammo": [
+    "12ga Rifled Slugs",
+    "12ga 00 Buckshots",
+    "12ga Rubber Slugs"
+   ],
+   "image": "/img/items/r12.webp"
+  },
+  {
+   "name": "RAK-37",
+   "type": "Submachine Gun",
+   "modes": "Full-Auto",
+   "ammo": [
+    ".380 ACP Rounds"
+   ],
+   "image": "/img/items/pm73cropped.webp"
+  },
+  {
+   "name": "Repeater Carbine",
+   "type": "Lever-action Rifle",
+   "modes": "Single (Lever-Action)",
+   "ammo": [
+    ".357 Rounds"
+   ],
+   "image": "/img/items/repeater.webp"
+  },
+  {
+   "name": "Revolver",
+   "type": "Handgun",
+   "modes": "Semi-Auto (Double-Action)",
+   "ammo": [
+    ".357 Rounds"
+   ],
+   "image": "/img/items/revolver.webp"
+  },
+  {
+   "name": "Sawed-off BK-12",
+   "type": "Shotgun",
+   "modes": "Single",
+   "ammo": [
+    "12ga 00 Buckshots",
+    "12ga Rifled Slugs",
+    "12ga Rubber Slugs"
+   ],
+   "image": "/img/items/sawedoffizh18shotgun.webp"
+  },
+  {
+   "name": "Sawed-off BK-18",
+   "type": "Break-action Rifle",
+   "modes": "Single (Break-action)",
+   "ammo": [
+    "7.62x39mm Rounds"
+   ],
+   "image": "/img/items/sawedoffizh18.webp"
+  },
+  {
+   "name": "Sawed-off BK-43",
+   "type": "Shotgun",
+   "modes": "Single, Double",
+   "ammo": [
+    "12ga 00 Buckshots",
+    "12ga Rifled Slugs",
+    "12ga Rubber Slugs"
+   ],
+   "image": "/img/items/sawed-offizh43shotgun.webp"
+  },
+  {
+   "name": "Sawed-off Blaze",
+   "type": "Breech-action Rifle",
+   "modes": "Single, Double",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/sawedoffb95.webp"
+  },
+  {
+   "name": "Sawed-off LE-MAS",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Burst Fire, Full-Auto",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/sawedofffamas.webp"
+  },
+  {
+   "name": "Sawed-off Mosin 91/30",
+   "type": "Bolt-action Rifle",
+   "modes": "Single",
+   "ammo": [
+    "7.62x54mmR Rounds"
+   ],
+   "image": "/img/items/sawedoffmosin9130.webp"
+  },
+  {
+   "name": "Sawed-off Revolver",
+   "type": "Handgun",
+   "modes": "Semi-Auto (Double-Action)",
+   "ammo": [
+    ".357 Rounds"
+   ],
+   "image": "/img/items/sawedoffmagnum.webp"
+  },
+  {
+   "name": "SCR 16",
+   "type": "Automatic rifle",
+   "modes": "Semi Auto, Full Auto",
+   "ammo": [
+    "5.56x45mm Rounds"
+   ],
+   "image": "/img/items/scarl.webp"
+  },
+  {
+   "name": "SCR 17",
+   "type": "Automatic rifle",
+   "modes": "Semi Auto, Full Auto",
+   "ammo": [
+    ".308 WIN Rounds"
+   ],
+   "image": "/img/items/scarh.webp"
+  },
+  {
+   "name": "SG5-K",
+   "type": "Submachine Gun",
+   "modes": "Full-Auto, Burst, Semi-Auto",
+   "ammo": [
+    "9x19mm Rounds"
+   ],
+   "image": "/img/items/mp5k.webp"
+  },
+  {
+   "name": "Signal Pistol",
+   "type": "Handgun",
+   "modes": "Single",
+   "ammo": [
+    "Flare"
+   ],
+   "image": "/img/items/flaregun.webp"
+  },
+  {
+   "name": "SK 59/66",
+   "type": "Semi-automatic Rifle",
+   "modes": "Semi-Auto",
+   "ammo": [
+    "7.62x39mm Rounds"
+   ],
+   "image": "/img/items/sks.webp"
+  },
+  {
+   "name": "Sporter 22",
+   "type": "Semi-automatic Rifle",
+   "modes": "Semi-Auto",
+   "ammo": [
+    ".22 LR Rounds"
+   ],
+   "image": "/img/items/ruger1022.webp"
+  },
+  {
+   "name": "SSG 82",
+   "type": "Bolt-action Rifle",
+   "modes": "Bolt-Action",
+   "ammo": [
+    "5.45x39mm Rounds"
+   ],
+   "image": "/img/items/ssg82.webp"
+  },
+  {
+   "name": "SVAL",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    "9x39mm Rounds",
+    "9x39mm Armor-Piercing Rounds"
+   ],
+   "image": "/img/items/asval.webp"
+  },
+  {
+   "name": "USG-45",
+   "type": "Submachine Gun",
+   "modes": "Semi-Auto, Full Auto",
+   "ammo": [
+    ".45 ACP Rounds"
+   ],
+   "image": "/img/items/ump45.webp"
+  },
+  {
+   "name": "Vaiga",
+   "type": "Shotgun",
+   "modes": "Semi-Auto, Full Auto",
+   "ammo": [
+    "12ga 00 Buckshots",
+    "12ga Rifled Slugs",
+    "12ga Rubber Slugs"
+   ],
+   "image": "/img/items/saiga.webp"
+  },
+  {
+   "name": "Vikhr",
+   "type": "Assault Rifle",
+   "modes": "Semi-Auto, Full-Auto",
+   "ammo": [
+    "9x39mm Rounds",
+    "9x39mm Armor-Piercing Rounds"
+   ],
+   "image": "/img/items/vikhr.webp"
+  },
+  {
+   "name": "VS-89",
+   "type": "Bolt-action Rifle",
+   "modes": "Bolt-Action",
+   "ammo": [
+    "7.62x54mmR Rounds"
+   ],
+   "image": "/img/items/sv98.webp"
+  },
+  {
+   "name": "VSD",
+   "type": "Semi-automatic Rifle",
+   "modes": "Semi-Auto",
+   "ammo": [
+    "7.62x54mmR Rounds"
+   ],
+   "image": "/img/items/svd-w-pso-1.webp"
+  },
+  {
+   "name": "VSS",
+   "type": "Automatic Rifle",
+   "modes": "Semi-Auto, full auto",
+   "ammo": [
+    "9x39mm Rounds",
+    "9x39mm Armor-Piercing Rounds"
+   ],
+   "image": "/img/items/vss.webp"
+  }
+ ],
+ "gear": {
+  "head": [
+   {
+    "name": "Armored Hood",
+    "hp": 220.0,
+    "h": 0.7,
+    "b": 0.25,
+    "s": 1.0,
+    "image": "/img/items/witchhoodcoif-black.webp"
+   },
+   {
+    "name": "Assault Helmet",
+    "hp": 100.0,
+    "h": 0.25,
+    "b": 0.0,
+    "s": 0.5,
+    "image": "/img/items/gorka-helmet-w-visor.webp"
+   },
+   {
+    "name": "Ballistic Helmet",
+    "hp": 75.0,
+    "h": 0.25,
+    "b": 0.0,
+    "s": 0.5,
+    "image": "/img/items/ballistichelmet-green.webp"
+   },
+   {
+    "name": "Camouflage Helmet",
+    "hp": 75.0,
+    "h": 0.25,
+    "b": 0.0,
+    "s": 0.5,
+    "image": "/img/items/ballistichelmet-bdu.webp"
+   },
+   {
+    "name": "Chainmail Coif",
+    "hp": 200.0,
+    "h": 0.7,
+    "b": 0.25,
+    "s": 1.0,
+    "image": "/img/items/chainmail-coif.webp"
+   },
+   {
+    "name": "Combat Helmet",
+    "hp": 85.0,
+    "h": 0.25,
+    "b": 0.0,
+    "s": 0.5,
+    "image": "/img/items/ssh-68-helmet.webp"
+   },
+   {
+    "name": "Enduro Helmet",
+    "hp": 75.0,
+    "h": 0.75,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/dirtbikehelmet-red.webp"
+   },
+   {
+    "name": "Firefighter Helmet",
+    "hp": 70.0,
+    "h": 0.75,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/firefighterhelmetred.webp"
+   },
+   {
+    "name": "Flight Helmet",
+    "hp": 75.0,
+    "h": 0.5,
+    "b": 0.0,
+    "s": 0.75,
+    "image": "/img/items/zsh3pilothelmet.webp"
+   },
+   {
+    "name": "Great Helm",
+    "hp": 125.0,
+    "h": 0.5,
+    "b": 0.0,
+    "s": 1.0,
+    "image": "/img/items/medievalhelmet.webp"
+   },
+   {
+    "name": "Hard Hat",
+    "hp": 60.0,
+    "h": 0.9,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/constructionhelmet-blue.webp"
+   },
+   {
+    "name": "Headdress",
+    "hp": 200.0,
+    "h": 0.9,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/headdress-wolf.webp"
+   },
+   {
+    "name": "Hockey Helmet",
+    "hp": 130.0,
+    "h": 0.9,
+    "b": 0.8,
+    "s": 0.9,
+    "image": "/img/items/hockey-helmet-red.webp"
+   },
+   {
+    "name": "Motorbike Helmet",
+    "hp": 60.0,
+    "h": 0.75,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/motobikehelmetgreen.webp"
+   },
+   {
+    "name": "Norse Helm",
+    "hp": 160.0,
+    "h": 0.55,
+    "b": 0.0,
+    "s": 1.0,
+    "image": "/img/items/norsehelm.webp"
+   },
+   {
+    "name": "Skate Helmet",
+    "hp": 120.0,
+    "h": 0.9,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/skatehelmet-black.webp"
+   },
+   {
+    "name": "T65 Helmet",
+    "hp": 150.0,
+    "h": 0.25,
+    "b": 0.0,
+    "s": 0.5,
+    "image": "/img/items/t56tankerhelmet-olive.webp"
+   },
+   {
+    "name": "Tactical Helmet",
+    "hp": 80.0,
+    "h": 0.25,
+    "b": 0.0,
+    "s": 0.5,
+    "image": "/img/items/tacticalhelmet.webp"
+   },
+   {
+    "name": "Tanker Helmet",
+    "hp": 60.0,
+    "h": 0.9,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/tanker01.webp"
+   },
+   {
+    "name": "Welding Mask",
+    "hp": 130.0,
+    "h": 0.75,
+    "b": 0.0,
+    "s": 0.9,
+    "image": "/img/items/weldingmask.webp"
+   },
+   {
+    "name": "Bandana",
+    "hp": 25.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/bandanacamopattern.webp"
+   },
+   {
+    "name": "Baseball Cap",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/baseballcap-blue.webp"
+   },
+   {
+    "name": "Beanie",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/beaniehat-beige.webp"
+   },
+   {
+    "name": "Beret",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/militaryberet-red.webp"
+   },
+   {
+    "name": "Boonie Hat",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/booniehat-black.webp"
+   },
+   {
+    "name": "Budenovka",
+    "hp": 110.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/budenovkahat-gray.webp"
+   },
+   {
+    "name": "Burlap Sack",
+    "hp": 200.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/burlapsack.webp"
+   },
+   {
+    "name": "Cowboy Hat",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/cowboy-hat-brown.webp"
+   },
+   {
+    "name": "Flat Cap",
+    "hp": 45.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/grey-check-flat-cap.webp"
+   },
+   {
+    "name": "Ghillie Hood",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/ghilliehoodtan.webp"
+   },
+   {
+    "name": "Improvised Head Wrapping",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/headcover-improvised.webp"
+   },
+   {
+    "name": "Keffiyeh",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/keffiyeh-lightblue.webp"
+   },
+   {
+    "name": "Military Cap",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/militarycap-bdu.webp"
+   },
+   {
+    "name": "Morozko Hat",
+    "hp": 250.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/morozkohat.webp"
+   },
+   {
+    "name": "NBC Hood",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/nbc-hood.webp"
+   },
+   {
+    "name": "Officer Cap",
+    "hp": 35.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/soviet-army-hat.webp"
+   },
+   {
+    "name": "OKZK Cap",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/okzkcap-green.webp"
+   },
+   {
+    "name": "Petushok Hat",
+    "hp": 40.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/petushokhat-green.webp"
+   },
+   {
+    "name": "Pilotka",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/pilotka.webp"
+   },
+   {
+    "name": "Police Cap",
+    "hp": 30.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/policecapgreen.webp"
+   },
+   {
+    "name": "Prisoner Cap",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/chernarusprisonersuniformcap.webp"
+   },
+   {
+    "name": "Radar Cap",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/radar-cap-brown.webp"
+   },
+   {
+    "name": "Scrub Hat",
+    "hp": 25.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/scrubscap.webp"
+   },
+   {
+    "name": "Shemagh",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/shemag-brown.webp"
+   },
+   {
+    "name": "Sherpa Hat",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/sherpahat-red.webp"
+   },
+   {
+    "name": "Snowstorm Ushanka",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/snowstormushanka-olive.webp"
+   },
+   {
+    "name": "Ushanka",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/ushanka-green.webp"
+   },
+   {
+    "name": "Winter Coif",
+    "hp": 70.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/wintercoif-blue.webp"
+   },
+   {
+    "name": "Witch Hat",
+    "hp": 250.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/witchhat.webp"
+   },
+   {
+    "name": "Zmiovka",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/zmijovka-cap-green.webp"
+   }
+  ],
+  "face": [
+   {
+    "name": "Balaclava",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/balaclava-3hole.webp"
+   },
+   {
+    "name": "Combat Gas Mask",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/gasmask.webp"
+   },
+   {
+    "name": "Crooked Nose",
+    "hp": 250.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/crookednose.webp"
+   },
+   {
+    "name": "Dust Mask",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/respirator.webp"
+   },
+   {
+    "name": "Gas Mask",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/gp5-gas-mask.webp"
+   },
+   {
+    "name": "Hockey Mask",
+    "hp": 90.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/hockey-mask-2.webp"
+   },
+   {
+    "name": "Improvised Face Wrapping",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/facecover-improvised.webp"
+   },
+   {
+    "name": "Mime Mask",
+    "hp": 60.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/mimemask-male.webp"
+   },
+   {
+    "name": "NBC Respirator",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/airbornemask.webp"
+   },
+   {
+    "name": "Ski Mask",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/balaclave.webp"
+   },
+   {
+    "name": "Surgical Mask",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/surgicalmask.webp"
+   }
+  ],
+  "vest": [
+   {
+    "name": "Ballistic Vest",
+    "hp": 170.0,
+    "h": 0.5,
+    "b": 0.0,
+    "s": 0.75,
+    "image": "/img/items/pressvest-blue.webp"
+   },
+   {
+    "name": "Chestplate",
+    "hp": 250.0,
+    "h": 0.55,
+    "b": 0.0,
+    "s": 0.65,
+    "image": "/img/items/chestplate.webp"
+   },
+   {
+    "name": "Plate Carrier",
+    "hp": 225.0,
+    "h": 0.3,
+    "b": 0.0,
+    "s": 0.6,
+    "image": "/img/items/platecarriervest.webp"
+   },
+   {
+    "name": "Stab Vest",
+    "hp": 105.0,
+    "h": 0.5,
+    "b": 0.0,
+    "s": 0.75,
+    "image": "/img/items/stabvest.webp"
+   },
+   {
+    "name": "Assault Vest",
+    "hp": 110.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/smersh-vest.webp"
+   },
+   {
+    "name": "Chest Holster",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/holster01.webp"
+   },
+   {
+    "name": "Chest Rig",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/chestrigvest-khaki.webp"
+   },
+   {
+    "name": "Field Vest",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/ukassvest-black.webp"
+   },
+   {
+    "name": "Hunter Vest",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/huntingvest.webp"
+   },
+   {
+    "name": "Leather Vest",
+    "hp": 200.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/naturalleatherstoragevest.webp"
+   },
+   {
+    "name": "Tactical Vest",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/highcapacityvest-black.webp"
+   }
+  ],
+  "top": [
+   {
+    "name": "Chainmail",
+    "hp": 250.0,
+    "h": 0.7,
+    "b": 0.25,
+    "s": 1.0,
+    "image": "/img/items/chainmail.webp"
+   },
+   {
+    "name": "BDU Jacket",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/bdujacket.webp"
+   },
+   {
+    "name": "Blouse",
+    "hp": 110.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/dayz-0-61-blouse-blue-3d-model-preview.webp"
+   },
+   {
+    "name": "Bomber Jacket",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/bomber-jacket-grey.webp"
+   },
+   {
+    "name": "Bushlat Jacket",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/bushlatpolicejacket-blue.webp"
+   },
+   {
+    "name": "Collar Dress",
+    "hp": 75.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/pinkcheckeredwooldress3d.webp"
+   },
+   {
+    "name": "Combat Jacket",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/ttskojacket-camo.webp"
+   },
+   {
+    "name": "CUU Jacket",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/mccuu-uniform-jacket.webp"
+   },
+   {
+    "name": "Denim Jacket",
+    "hp": 140.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/denimjacket.webp"
+   },
+   {
+    "name": "Down Jacket",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/downjacketred.webp"
+   },
+   {
+    "name": "Field Jacket",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/m65jacket-tan.webp"
+   },
+   {
+    "name": "Firefighter Jacket",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/firefighterjacket-black.webp"
+   },
+   {
+    "name": "Heavy Labor Jacket",
+    "hp": 140.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/gulagjacket-grey.webp"
+   },
+   {
+    "name": "Hiking Jacket",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/hikingjacket-blackblue-model.webp"
+   },
+   {
+    "name": "Hoodie",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/hoodie-red.webp"
+   },
+   {
+    "name": "Hunter Jacket",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/huntingjacket-autumn.webp"
+   },
+   {
+    "name": "Improvised Torso Wrapping",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/torsocover-improvised.webp"
+   },
+   {
+    "name": "Jumpsuit Jacket",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/jumpsuitjacket-green.webp"
+   },
+   {
+    "name": "Lab Coat",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/lab-coat.webp"
+   },
+   {
+    "name": "Leather Jacket",
+    "hp": 200.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/naturalleatherjacket.webp"
+   },
+   {
+    "name": "Mens Suit Jacket",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/mansuit-white.webp"
+   },
+   {
+    "name": "Military Sweater",
+    "hp": 140.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/militarysweater-chernarus.webp"
+   },
+   {
+    "name": "Military Winter Coat",
+    "hp": 170.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/wintermilitarycoat-brown.webp"
+   },
+   {
+    "name": "Navy Uniform Jacket",
+    "hp": 140.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/navyuniformjacket.webp"
+   },
+   {
+    "name": "NBC Jacket",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/nbcjacketgray.webp"
+   },
+   {
+    "name": "Nurse Dress",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/nursedress-3d.webp"
+   },
+   {
+    "name": "OMK Jacket",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/omkjacket-navy.webp"
+   },
+   {
+    "name": "OREL Police Jacket",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/oreljacket-model.webp"
+   },
+   {
+    "name": "Paramedic Jacket",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/paramedicjacketcrimson.webp"
+   },
+   {
+    "name": "Patrol Jacket",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/gorkaejacket-summer.webp"
+   },
+   {
+    "name": "Pea Coat",
+    "hp": 140.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/wool-coat-red-check.webp"
+   },
+   {
+    "name": "Pilot Jacket",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/pilotjacket-brown.webp"
+   },
+   {
+    "name": "Police Jacket",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/policeuniformjacket-model.webp"
+   },
+   {
+    "name": "Prisoner Jacket",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/prisonuniformjacket.webp"
+   },
+   {
+    "name": "Quilted Jacket",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/quilted-jacket-3d.webp"
+   },
+   {
+    "name": "Raincoat",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/rain-coat-orange.webp"
+   },
+   {
+    "name": "Rider Jacket",
+    "hp": 170.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/ridersjacket-black.webp"
+   },
+   {
+    "name": "Scrub T-Shirt",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/medicalscrubshirt.webp"
+   },
+   {
+    "name": "Shirt",
+    "hp": 70.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/bright-blue-check-shirt.webp"
+   },
+   {
+    "name": "Sports Shirt",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/sports-shirt.webp"
+   },
+   {
+    "name": "Sweater",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/sweater-red.webp"
+   },
+   {
+    "name": "T-Shirt",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/t-shirt-orange-white.webp"
+   },
+   {
+    "name": "Tactical Shirt",
+    "hp": 90.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/tactical-shirt-olive.webp"
+   },
+   {
+    "name": "Telnyashka",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/telnyashkashirt.webp"
+   },
+   {
+    "name": "Tracksuit Jacket",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/tracksuitjacketgreen.webp"
+   },
+   {
+    "name": "Womens Suit Jacket",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/womansuit-brown.webp"
+   }
+  ],
+  "gloves": [
+   {
+    "name": "Combat Gloves",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/omnogloves-gray.webp"
+   },
+   {
+    "name": "Fingerless Gloves",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/woolglovesfingerless-green.webp"
+   },
+   {
+    "name": "Improvised Hands Wrapping",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/handscover-improvised.webp"
+   },
+   {
+    "name": "NBC Gloves",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/nbcglovesgray.webp"
+   },
+   {
+    "name": "Padded Gloves",
+    "hp": 170.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/paddedgloves-brown.webp"
+   },
+   {
+    "name": "Ski Gloves",
+    "hp": 120.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/skigloves-blue.webp"
+   },
+   {
+    "name": "Surgical Gloves",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/surgicalgloves-blue.webp"
+   },
+   {
+    "name": "Tactical Gloves",
+    "hp": 165.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/tacticalgloves-black.webp"
+   },
+   {
+    "name": "Wool Gloves",
+    "hp": 110.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/woolgloves-green.webp"
+   },
+   {
+    "name": "Working Gloves",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/workinggloves-black.webp"
+   }
+  ],
+  "legs": [
+   {
+    "name": "Chainmail Leggings",
+    "hp": 250.0,
+    "h": 0.7,
+    "b": 0.25,
+    "s": 1.0,
+    "image": "/img/items/chainmail-leggings.webp"
+   },
+   {
+    "name": "BDU Pants",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/bdu-pants-model.webp"
+   },
+   {
+    "name": "Capri Pants",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/threequarterpants.webp"
+   },
+   {
+    "name": "Cargo Pants",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/cargoworn.webp"
+   },
+   {
+    "name": "Combat Pants",
+    "hp": 170.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/ttskopants-model.webp"
+   },
+   {
+    "name": "Crop Hiking Pants",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/canvasshortworn.webp"
+   },
+   {
+    "name": "CUU Pants",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/mccuu-uniform-pants.webp"
+   },
+   {
+    "name": "Denim Shorts",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/shorts.webp"
+   },
+   {
+    "name": "Denim Skirt",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/denim-skirt-1.webp"
+   },
+   {
+    "name": "Firefighter Pants",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/firefighterspants-black.webp"
+   },
+   {
+    "name": "Hiking Pants",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/canvasworn.webp"
+   },
+   {
+    "name": "Hunter Pants",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/autumnhunterpants-model.webp"
+   },
+   {
+    "name": "Improvised Legs Wrapping",
+    "hp": 50.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/legscover-improvised.webp"
+   },
+   {
+    "name": "Jeans",
+    "hp": 140.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/jeans-model.webp"
+   },
+   {
+    "name": "Jumpsuit Pants",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/jumpsuitpants-teal.webp"
+   },
+   {
+    "name": "Leather Pants",
+    "hp": 200.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/naturalleatherpants.webp"
+   },
+   {
+    "name": "Navy Uniform Pants",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/navyuniformpants.webp"
+   },
+   {
+    "name": "NBC Pants",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/nbcpantsgray.webp"
+   },
+   {
+    "name": "OMK Pants",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/omkpants-navy.webp"
+   },
+   {
+    "name": "OREL Police Pants",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/orelpants-model.webp"
+   },
+   {
+    "name": "Paramedic Pants",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/paramedicpantsmodel.webp"
+   },
+   {
+    "name": "Patrol Pants",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/gorkapants-summer.webp"
+   },
+   {
+    "name": "Police Pants",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/policeuniformpants-model.webp"
+   },
+   {
+    "name": "Prisoner Pants",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/chernarusprisonuniformpants-model.webp"
+   },
+   {
+    "name": "Scrub Pants",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/medicalscrubpants.webp"
+   },
+   {
+    "name": "Suit Pants",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/dresspants-leaked.webp"
+   },
+   {
+    "name": "Tracksuit Pants",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/tracksuitpantsblack-model.webp"
+   }
+  ],
+  "feet": [
+   {
+    "name": "Assault Boots",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/militarybootsblack.webp"
+   },
+   {
+    "name": "Athletic Shoes",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/athleticshoesblack.webp"
+   },
+   {
+    "name": "Combat Boots",
+    "hp": 170.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/combat-boots.webp"
+   },
+   {
+    "name": "Dress Shoes",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/leather-shoes-brown.webp"
+   },
+   {
+    "name": "Fur Boots",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/traditionalboots-beige.webp"
+   },
+   {
+    "name": "Hiking Boots",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/shoehikingbrown01.webp"
+   },
+   {
+    "name": "Hunter Boots",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/combatbootsbeige.webp"
+   },
+   {
+    "name": "Improvised Feet Wrapping",
+    "hp": 15.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/feetcover-improvised.webp"
+   },
+   {
+    "name": "Jungle Boots",
+    "hp": 180.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/junglebootsgreen.webp"
+   },
+   {
+    "name": "Leather Shoes",
+    "hp": 200.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/natural-leather-moccasins.webp"
+   },
+   {
+    "name": "Medieval Boots",
+    "hp": 150.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/medievalboots.webp"
+   },
+   {
+    "name": "Military Winter Boots",
+    "hp": 160.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/coldoperationboots-camo.webp"
+   },
+   {
+    "name": "NBC Boots",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/nbcbootsgray.webp"
+   },
+   {
+    "name": "Running Shoes",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/jogging-shoes-white.webp"
+   },
+   {
+    "name": "Sneakers",
+    "hp": 80.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/conversechucks-red.webp"
+   },
+   {
+    "name": "Trail Shoes",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/low-hiking-boots-blue.webp"
+   },
+   {
+    "name": "Wellies",
+    "hp": 100.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/wellies-brown.webp"
+   },
+   {
+    "name": "Working Boots",
+    "hp": 130.0,
+    "h": 1.0,
+    "b": 1.0,
+    "s": 1.0,
+    "image": "/img/items/workingbootsyellow.webp"
+   }
+  ]
+ }
+}

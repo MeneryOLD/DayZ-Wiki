@@ -6,32 +6,28 @@ import lombok.Getter;
 @Entity
 @Table(name = "weapons")
 @Getter
-public class Weapon {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
-    private String englishName;
-    private String altName;
+public class Weapon extends BaseItem {
 
     private String type;
     private String size;
-    private float weight;
+    private Float weight;
+    private String tier;
+    private Integer damage;
+    private Integer heavyDamage;
+    private String damageType;
+    private Integer durability;
+    @Column(columnDefinition = "TEXT")
+    private String ammunition;
+    private String fireModes;
+    @Column(columnDefinition = "TEXT")
+    private String magazines;
 
     @ManyToOne
     @JoinColumn(name = "caliber", referencedColumnName = "id")
     private Ammunition caliber;
-    private String tier;
-    private int damage;
-    private String description;
-    private String source;
-    private int durability;
 
-    public String getUrlName() {
-        String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "https://dayzwiki.org/weapons/" + formattedName;
+    @Override
+    protected String getSection() {
+        return "weapons";
     }
-
 }

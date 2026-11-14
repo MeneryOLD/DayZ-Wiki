@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Shared layout fragments for the wiki pages. -->
+
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' · ' + #{site.suffix}">DayZ Wiki</title>
+    <link rel="icon" href="/img/icon.webp" type="image/webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/maps.css">
+    <link rel="stylesheet" href="/css/range.css">
+    <script>
+        // Apply the saved theme before first paint to avoid a flash.
+        try { var t = localStorage.getItem('dz-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+    </script>
+</head>
+
+<body>
+
+<aside th:fragment="sidebar(active)" class="sidebar" id="sidebar">
+    <a href="/" class="brand">
+        <img src="/img/icon.webp" alt="" class="brand-logo">
+        <span class="brand-text">DayZ<b>Wiki</b></span>
+    </a>
+    <nav class="nav">
+        <a href="/" class="nav-link" th:classappend="${active == 'home'} ? 'active'"><i class="fa-solid fa-house"></i><span th:text="#{nav.overview}">Overview</span></a>
+        <a href="/search" class="nav-link" th:classappend="${active == 'search'} ? 'active'"><i class="fa-solid fa-magnifying-glass"></i><span th:text="#{nav.search}">Search</span></a>
+
+        <a href="/maps" class="nav-link" th:classappend="${active == 'maps'} ? 'active'"><i class="fa-solid fa-map-location-dot"></i><span th:text="#{nav.maps}">Maps</span><em>4</em></a>
+        <a href="/range" class="nav-link" th:classappend="${active == 'range'} ? 'active'"><i class="fa-solid fa-bullseye"></i><span th:text="#{nav.range}">Shooting Range</span></a>
+
+        <div class="nav-group" th:text="#{nav.arsenal}">Arsenal</div>
+        <a href="/weapons" class="nav-link" th:classappend="${active == 'weapons'} ? 'active'"><i class="fa-solid fa-gun"></i><span th:text="#{section.weapons}">Weapons</span><em data-count="weapons"></em></a>
+        <a href="/ammunition" class="nav-link" th:classappend="${active == 'ammunition'} ? 'active'"><i class="fa-solid fa-circle-dot"></i><span th:text="#{section.ammunition}">Ammunition</span><em data-count="ammunition"></em></a>
+        <a href="/modules" class="nav-link" th:classappend="${active == 'modules'} ? 'active'"><i class="fa-solid fa-crosshairs"></i><span th:text="#{section.modules}">Attachments</span><em data-count="modules"></em></a>
+        <a href="/explosives" class="nav-link" th:classappend="${active == 'explosives'} ? 'active'"><i class="fa-solid fa-bomb"></i><span th:text="#{section.explosives}">Explosives</span><em data-count="explosives"></em></a>
+
+        <div class="nav-group" th:text="#{nav.survival}">Survival</div>
+        <a href="/foods" class="nav-link" th:classappend="${active == 'foods'} ? 'active'"><i class="fa-solid fa-utensils"></i><span th:text="#{section.foods}">Food &amp; Drink</span><em data-count="foods"></em></a>
+        <a href="/medication" class="nav-link" th:classappend="${active == 'medicaments'} ? 'active'"><i class="fa-solid fa-kit-medical"></i><span th:text="#{section.medicaments}">Medical</span><em data-count="medicaments"></em></a>
+        <a href="/diseases" class="nav-link" th:classappend="${active == 'diseases'} ? 'active'"><i class="fa-solid fa-virus"></i><span th:text="#{section.diseases}">Diseases</span><em data-count="diseases"></em></a>
+
+        <div class="nav-group" th:text="#{nav.gear}">Gear &amp; Travel</div>
+        <a href="/armors" class="nav-link" th:classappend="${active == 'armors'} ? 'active'"><i class="fa-solid fa-shirt"></i><span th:text="#{section.armors}">Clothing &amp; Gear</span><em data-count="armors"></em></a>
+        <a href="/cars" class="nav-link" th:classappend="${active == 'cars'} ? 'active'"><i class="fa-solid fa-car-side"></i><span th:text="#{section.cars}">Vehicles</span><em data-count="cars"></em></a>
+    </nav>
+    <div class="sidebar-foot">
+        <span class="version-pill"><i class="fa-solid fa-circle-check"></i> <th:block th:text="#{side.version}">Game version 1.30</th:block></span>
+        <span class="muted small" th:text="#{side.tracked}">Badlands · 4 maps tracked</span>
+    </div>
+</aside>
+
+<header th:fragment="topbar" class="topbar">
+    <button class="icon-btn only-mobile" id="menuToggle" th:attr="aria-label=#{top.menu}"><i class="fa-solid fa-bars"></i></button>
+    <div class="global-search" id="globalSearch">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="globalSearchInput" autocomplete="off" th:attr="placeholder=#{top.searchPlaceholder},aria-label=#{top.searchLabel}">
+        <kbd class="hide-mobile">/</kbd>
+        <div class="search-pop" id="searchPop" hidden></div>
+    </div>
+    <div class="topbar-actions">
+        <button class="lang-btn" id="langToggle" th:attr="data-lang=${#locale.language == 'ru'} ? 'en' : 'ru',title=#{lang.switch},aria-label=#{lang.switch}" th:text="${#locale.language == 'ru'} ? 'EN' : 'RU'">RU</button>
+        <button class="icon-btn" id="themeToggle" th:attr="title=#{top.theme},aria-label=#{top.theme}"><i class="fa-solid fa-circle-half-stroke"></i></button>
+        <button class="icon-btn" id="bookmarksBtn" th:attr="title=#{top.bookmarks},aria-label=#{top.bookmarks}"><i class="fa-solid fa-bookmark"></i></button>
+        <a class="icon-btn" href="/posts" id="postsBtn" th:attr="title=#{top.posts},aria-label=#{top.posts}"><i class="fa-solid fa-newspaper"></i></a>
+        <a sec:authorize="hasAnyRole('MODER', 'ADMIN')" class="icon-btn" href="/moder/youtube/videos" th:attr="title=#{top.moderation},aria-label=#{top.moderation}"><i class="fa-solid fa-shield-halved"></i></a>
+        <div class="account" id="account">
+            <button class="account-btn" id="accountBtn"><i class="fa-solid fa-user"></i><span id="accountLabel" th:text="#{top.signin}">Sign in</span></button>
+            <div class="account-menu" id="accountMenu" hidden>
+                <a id="profileLink" href="#"><i class="fa-solid fa-id-badge"></i> <th:block th:text="#{top.profile}">My profile</th:block></a>
+                <a href="/posts"><i class="fa-solid fa-newspaper"></i> <th:block th:text="#{top.postsShort}">Posts</th:block></a>
+                <button id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> <th:block th:text="#{top.signout}">Sign out</th:block></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<th:block th:fragment="overlays">
+    <div class="scrim" id="scrim" hidden></div>
+
+    <!-- Item detail drawer -->
+    <aside class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-labelledby="drawerTitle">
+        <div class="drawer-head">
+            <div>
+                <div class="drawer-kicker" id="drawerKicker"></div>
+                <h2 id="drawerTitle"></h2>
+            </div>
+            <div class="drawer-actions">
+                <button class="icon-btn" id="drawerBookmark" th:attr="title=#{drawer.bookmark},aria-label=#{drawer.bookmark}"><i class="fa-regular fa-bookmark"></i></button>
+                <button class="icon-btn" id="drawerLink" th:attr="title=#{drawer.link},aria-label=#{drawer.link}"><i class="fa-solid fa-link"></i></button>
+                <button class="icon-btn" id="drawerClose" th:attr="title=#{drawer.close},aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="drawer-body" id="drawerBody"></div>
+    </aside>
+
+    <!-- Bookmarks panel -->
+    <aside class="drawer drawer-left" id="bookmarksPanel" aria-hidden="true" role="dialog" th:attr="aria-label=#{bm.title}">
+        <div class="drawer-head">
+            <div><div class="drawer-kicker" th:text="#{bm.kicker}">Saved</div><h2 th:text="#{bm.title}">Bookmarks</h2></div>
+            <div class="drawer-actions"><button class="icon-btn" data-close="bookmarksPanel" th:attr="aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button></div>
+        </div>
+        <div class="drawer-body" id="bookmarksList"></div>
+    </aside>
+
+    <!-- Auth dialog -->
+    <div class="dialog" id="authDialog" hidden role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="dialog-card">
+            <button class="icon-btn dialog-close" data-close-dialog th:attr="aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
+            <div class="auth-side">
+                <img src="/img/icon.webp" alt="">
+                <h3 th:text="#{auth.title}">Survivor access</h3>
+                <p th:text="#{auth.text}">Save bookmarks, write posts and keep your profile across devices.</p>
+            </div>
+            <div class="auth-main">
+                <div class="seg" role="tablist">
+                    <button class="seg-btn active" data-auth-tab="signin" role="tab" th:text="#{auth.tab.signin}">Sign in</button>
+                    <button class="seg-btn" data-auth-tab="signup" role="tab" th:text="#{auth.tab.signup}">Register</button>
+                    <button class="seg-btn" data-auth-tab="reset" role="tab" th:text="#{auth.tab.reset}">Reset</button>
+                </div>
+                <h2 id="authTitle" class="sr-only" th:text="#{auth.account}">Account</h2>
+
+                <form class="auth-form" data-auth-form="signin" novalidate>
+                    <label><th:block th:text="#{auth.nameOrEmail}">Username or email</th:block><input name="nameOrEmail" autocomplete="username" required></label>
+                    <label><th:block th:text="#{auth.password}">Password</th:block>
+                        <span class="pw"><input name="password" type="password" autocomplete="current-password" required><button type="button" class="pw-toggle" th:attr="aria-label=#{auth.showPassword}"><i class="fa-solid fa-eye"></i></button></span>
+                    </label>
+                    <label class="check"><input type="checkbox" name="remember"> <th:block th:text="#{auth.remember}">Keep me signed in</th:block></label>
+                    <button class="btn btn-primary" type="submit" th:text="#{auth.signin}">Sign in</button>
+                </form>
+
+                <form class="auth-form" data-auth-form="signup" hidden novalidate>
+                    <label><th:block th:text="#{auth.username}">Username</th:block><input name="name" autocomplete="username" required></label>
+                    <label><th:block th:text="#{auth.email}">Email</th:block><input name="email" type="email" autocomplete="email" required></label>
+                    <label><th:block th:text="#{auth.password}">Password</th:block>
+                        <span class="pw"><input name="password" type="password" autocomplete="new-password" required><button type="button" class="pw-toggle" th:attr="aria-label=#{auth.showPassword}"><i class="fa-solid fa-eye"></i></button></span>
+                    </label>
+                    <label><th:block th:text="#{auth.password2}">Repeat password</th:block><input name="password2" type="password" autocomplete="new-password" required></label>
+                    <button class="btn btn-primary" type="submit" th:text="#{auth.create}">Create account</button>
+                </form>
+
+                <form class="auth-form" data-auth-form="reset" hidden novalidate>
+                    <p class="muted" th:text="#{auth.resetText}">Enter your account email and we'll send a link to set a new password.</p>
+                    <label><th:block th:text="#{auth.email}">Email</th:block><input name="email" type="email" autocomplete="email" required></label>
+                    <button class="btn btn-primary" type="submit" th:text="#{auth.sendReset}">Send reset link</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script src="/js/i18n.js"></script>
+    <script src="/js/item-details.js"></script>
+    <script src="/js/app.js"></script>
+</th:block>
+
+</body>
+</html>

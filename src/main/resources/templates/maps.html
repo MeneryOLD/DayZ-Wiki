@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head(#{title.maps})}"></head>
+<body>
+<div class="app">
+    <aside th:replace="~{layout :: sidebar('maps')}"></aside>
+    <div class="main">
+        <header th:replace="~{layout :: topbar}"></header>
+
+        <main class="content" id="mapsPage">
+            <div class="page-head">
+                <div>
+                    <div class="eyebrow"><i class="fa-solid fa-map-location-dot"></i> <th:block th:text="#{maps.eyebrow}">The world · 4 official maps</th:block></div>
+                    <h1 class="page-title" th:text="#{maps.title}">Maps</h1>
+                    <p class="page-sub" th:text="#{maps.lead}">From the green hills of Chernarus to the deserts of Nasdara: the history, quirks, key locations and exclusive loot of every official DayZ map.</p>
+                </div>
+            </div>
+
+            <div class="map-grid" id="mapGrid">
+                <div class="skeleton" style="height:340px"></div><div class="skeleton" style="height:340px"></div>
+            </div>
+
+            <div class="section-head"><h2 th:text="#{maps.sideBySide}">Side by side</h2></div>
+            <div class="table-wrap"><table class="table" id="compare"></table></div>
+
+            <p class="source-note" th:utext="#{maps.sources}">
+                Map facts and lore: community <a href="https://dayz.wiki.gg/wiki/Maps" target="_blank" rel="noopener">DayZ Wiki</a> (CC BY-SA) and the official patch notes.
+                Loot and vehicle figures: Bohemia Interactive's official
+                <a href="https://github.com/BohemiaInteractive/DayZ-Central-Economy" target="_blank" rel="noopener">Central Economy files</a>.
+                Images © Bohemia Interactive.
+            </p>
+        </main>
+    </div>
+</div>
+
+<th:block th:replace="~{layout :: overlays}"></th:block>
+<th:block th:replace="~{layout :: scripts}"></th:block>
+<script src="/js/maps.js"></script>
+</body>
+</html>

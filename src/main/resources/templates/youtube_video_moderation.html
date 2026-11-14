@@ -989,6 +989,7 @@
             margin-top: 20px;
         }
     </style>
+    <link rel="stylesheet" href="/css/theme.css">
 </head>
 
 <body>
@@ -1268,114 +1269,7 @@
         </button>
     </h3>`;
 
-        switch (item.source) {
-            case 'weapons':
-                itemDetails += `
-                Type: ${item.type} <br>
-                Weight: ${item.weight} kg <br>
-                Size: ${item.size} places <br>
-                ${item.caliber ? `Caliber: ${item.caliber.englishName} <br>` : ''}
-                Tier: ${item.tier} <br>
-                Damage: ${item.damage} hp <br>
-                Durability: ${item.durability} hp <br>
-                Description: ${item.description} <br>
-                    `;
-                break;
-
-            case 'armors':
-                itemDetails += `
-        Type: ${item.type} <br>
-        Size: ${item.size} <br>
-        Weight: ${item.weight} kg <br>
-        Durability: ${item.durability} hp <br>
-        Insulation: ${item.insulation} <br>
-        Capacity: ${item.capacity} places <br>
-        ${item.additionalSlots ? `Additional Slots: ${item.additionalSlots} <br>` : ''}
-        Description: ${item.description} <br>
-    `;
-                break;
-
-            case 'ammunition':
-                itemDetails += `
-        Type: ${item.type} <br>
-        Size: ${item.size} <br>
-        Weight: ${item.weight} kg <br>
-        Tier: ${item.tier} <br>
-        Health Damage: ${item.healthDamage} <br>
-        Blood Damage: ${item.bloodDamage} <br>
-        Shock Damage: ${item.shockDamage} <br>
-        Description: ${item.description} <br>
-                    `;
-                break;
-
-            case 'foods':
-                itemDetails += `
-        Type: ${item.type} <br>
-        Size: ${item.size} <br>
-        Weight: ${item.weight} kg <br>
-        Tier: ${item.tier} <br>
-        Base Calories: ${item.baseCalories} <br>
-        Base Thirst: ${item.baseThirst} <br>
-        Durability: ${item.durability} hp <br>
-        Description: ${item.description} <br>
-                    `;
-                break;
-
-            case 'cars':
-                itemDetails += `
-        Tier: ${item.tier} <br>
-        Seats: ${item.seats} <br>
-        Capacity: ${item.capacity} places <br>
-        Fuel Tank: ${item.fuelTank} <br>
-        Top Speed: ${item.topSpeed} <br>
-        Description: ${item.description} <br>
-                    `;
-                break;
-
-            case 'diseases':
-                itemDetails += `
-        Causes: ${item.causes} <br>
-        Symptoms: ${item.symptoms}<br>
-        Treatment: ${item.treatment} <br>
-        Description: ${item.description} <br>
-                    `;
-                break;
-
-            case 'explosives':
-                itemDetails += `
-        Type: ${item.type} <br>
-        Size: ${item.size} <br>
-        Weight: ${item.weight} kg <br>
-        Tier: ${item.tier} <br>
-        Durability: ${item.durability} hp <br>
-        Description: ${item.description} <br>
-                    `;
-                break;
-
-            case 'medicaments':
-                itemDetails += `
-        Type: ${item.type} <br>
-        Size: ${item.size} <br>
-        Weight: ${item.weight} kg <br>
-        Tier: ${item.tier} <br>
-        Durability: ${item.durability} hp <br>
-        Description: ${item.description} <br>
-                    `;
-                break;
-
-            case 'modules':
-                itemDetails += `
-        Type: ${item.type} <br>
-        Size: ${item.size} <br>
-        Weight: ${item.weight} kg <br>
-        Tier: ${item.tier} <br>
-        ${item.magnification ? `Magnification: ${item.magnification}x <br>` : ''}
-        ${item.capacity ? `Capacity: ${item.capacity} <br>` : ''}
-        Durability: ${item.durability} hp <br>
-        Description: ${item.description} <br>
-                    `;
-                break;
-        }
+        itemDetails += window.renderItemDetails(item);
 
         itemModalDescription.innerHTML = itemDetails;
         itemModal.classList.add('show');
@@ -2089,5 +1983,7 @@
 </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script src="/js/item-details.js"></script>
+<script src="/js/theme.js"></script>
 </body>
 </html>

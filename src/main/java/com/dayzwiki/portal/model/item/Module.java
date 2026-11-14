@@ -3,32 +3,23 @@ package com.dayzwiki.portal.model.item;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-@Table(name = "modules")
 @Entity
+@Table(name = "modules")
 @Getter
-public class Module {
+public class Module extends BaseItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
-    private String altName;
-    private String englishName;
-
-    private float weight;
+    private String type;
+    private Float weight;
     private String size;
     private String tier;
-    private int durability;
-    private String type;
-    private float magnification;
-    private int capacity;
-    private String source;
-    private String description;
+    private Integer durability;
+    private Float magnification;
+    private Integer capacity;
+    @Column(columnDefinition = "TEXT")
+    private String usedBy;
 
-    public String getUrlName() {
-        String formattedName = englishName.replace(" ", "_").toLowerCase();
-        return "https://dayzwiki.org/modules/" + formattedName;
+    @Override
+    protected String getSection() {
+        return "modules";
     }
-
 }

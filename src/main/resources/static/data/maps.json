@@ -1,0 +1,667 @@
+{
+  "_sources": "dayz.wiki.gg map, DLC and lore pages; official DayZ 1.30 / Frostline patch notes; BohemiaInteractive/DayZ-Central-Economy events.xml (vehicle limits).",
+  "order": [
+    "chernarus",
+    "livonia",
+    "sakhal",
+    "nasdara"
+  ],
+  "maps": {
+    "chernarus": {
+      "name": "Chernarus",
+      "tagline": "The original. Green hills, a long industrial coast and the most familiar ground in DayZ.",
+      "accent": "#6fae5a",
+      "biome": "Temperate · Coastal",
+      "cover": "/img/maps/chernarus-cover.webp",
+      "map": "/img/maps/chernarus-map.webp",
+      "mapCaption": "In-game tourist (hiking) map of Chernarus",
+      "facts": [
+        [
+          "Area",
+          "~225 km²"
+        ],
+        [
+          "Released",
+          "13 Dec 2018 (DayZ 1.0, PC)"
+        ],
+        [
+          "Access",
+          "Base game"
+        ],
+        [
+          "Setting",
+          "South Zagoria province, Republic of Chernarus"
+        ],
+        [
+          "Inspired by",
+          "The area around Povrly, Czech Republic"
+        ],
+        [
+          "Climate",
+          "Eastern European, temperate"
+        ],
+        [
+          "Mission folder",
+          "dayzOffline.chernarusplus"
+        ]
+      ],
+      "intro": "Chernarus is the first official DayZ map and an updated version of the Chernarus terrain from the original DayZ mod. It covers the north-eastern province of the fictional Republic of Chernarus: rolling forested hills, deep valleys and lush meadows inland, with sprawling industrial cities, highways and railways along the Green Sea coast.",
+      "history": [
+        "Chernarus was created by Bohemia Interactive as the setting of Arma 2 (2009). In 2012 the DayZ mod for Arma 2 turned it into a zombie-survival sandbox, and its success led to the standalone DayZ: early access in December 2013 and the full 1.0 release on PC on 13 December 2018, on the reworked terrain known internally as \"ChernarusPlus\".",
+        "Its landscape is modelled on the Czech Republic, Bohemia Interactive's home country. Elektrozavodsk is based on Povrly, Solnechny on Dobkovice and Berezino on Malšovice.",
+        "In the lore, the Republic of Chernarus is a post-Soviet state on the Green Sea near the Caucasus. Slavic peoples settled the area around the 11th century, the country was united in the 13th century, joined the Russian Empire in 1631 and regained independence when the USSR dissolved in 1991. The capital, Novigrad, lies outside the playable area."
+      ],
+      "features": [
+        [
+          "fa-city",
+          "Industrial coastline",
+          "Five major coastal towns (Chernogorsk, Elektrozavodsk, Solnechny, Berezino and Svetloyarsk) are linked by highways and rail. They are the classic fresh-spawn route."
+        ],
+        [
+          "fa-tree",
+          "Forests and valleys",
+          "Dense forests and ridges hide quiet villages joined by dirt tracks. Good cover, food and water for anyone who heads inland."
+        ],
+        [
+          "fa-chess-rook",
+          "Castles and landmarks",
+          "Several historic castle ruins and man-made landmarks are scattered across the hills."
+        ],
+        [
+          "fa-person-military-rifle",
+          "Military installations",
+          "Bases such as the Tisy military installation in the north hold the highest-tier loot, and the most danger."
+        ],
+        [
+          "fa-ship",
+          "Boats and islands",
+          "The coast and offshore islands make Chernarus the map with the most rubber boats (up to 17)."
+        ]
+      ],
+      "locations": [
+        [
+          "Chernogorsk",
+          "Major coastal city"
+        ],
+        [
+          "Elektrozavodsk",
+          "Major coastal city"
+        ],
+        [
+          "Berezino",
+          "Major coastal city"
+        ],
+        [
+          "Solnechny",
+          "Coastal town"
+        ],
+        [
+          "Svetloyarsk",
+          "Coastal town"
+        ],
+        [
+          "Severograd",
+          "Inland town"
+        ],
+        [
+          "Stary Sobor",
+          "Inland town"
+        ],
+        [
+          "Zelenogorsk",
+          "Inland town"
+        ],
+        [
+          "Novodmitrovsk",
+          "Inland town"
+        ],
+        [
+          "Krasnostav",
+          "Inland town"
+        ],
+        [
+          "Novaya Petrovka",
+          "Inland town"
+        ],
+        [
+          "Tisy",
+          "Military installation"
+        ]
+      ],
+      "wildlife": "Former farm animals and wild species: deer, wild boar, wolves and more.",
+      "gallery": [
+        [
+          "/img/maps/chernarus-1.webp",
+          "Chernogorsk from above"
+        ],
+        [
+          "/img/maps/chernarus-2.webp",
+          "Berezino"
+        ],
+        [
+          "/img/maps/chernarus-3.webp",
+          "Tisy Military Installation artwork"
+        ],
+        [
+          "/img/maps/chernarus-4.webp",
+          "Green Mountain TV broadcast tower"
+        ],
+        [
+          "/img/maps/chernarus-cover.webp",
+          "Railway near Elektrozavodsk"
+        ]
+      ],
+      "vehicles": [
+        [
+          "Olga 24",
+          8
+        ],
+        [
+          "Gunter 2",
+          8
+        ],
+        [
+          "Ada 4x4",
+          8
+        ],
+        [
+          "Sarka 120",
+          8
+        ],
+        [
+          "M1025",
+          3
+        ],
+        [
+          "M3S",
+          8
+        ],
+        [
+          "Rubber Boat",
+          17
+        ],
+        [
+          "Motorbikes (Jana 50 / Bitrak 682)",
+          25
+        ]
+      ],
+      "areaShort": "~225 km²",
+      "baseGame": true,
+      "title": "Chernarus"
+    },
+    "livonia": {
+      "name": "Livonia",
+      "tagline": "A rain-soaked valley of forests, lakes and an old military training ground. Fewer resources, more bears.",
+      "accent": "#4f9df2",
+      "biome": "Temperate · Forest",
+      "cover": "/img/maps/livonia-2.webp",
+      "map": "/img/maps/livonia-map.webp",
+      "mapCaption": "In-game hiking map of Livonia",
+      "facts": [
+        [
+          "Area",
+          "~163 km²"
+        ],
+        [
+          "Released",
+          "3 Dec 2019 (DLC, update 1.06)"
+        ],
+        [
+          "Access",
+          "Base game since update 1.25 (27 May 2024)"
+        ],
+        [
+          "Setting",
+          "Topolin-Nadbór region (Biela Valley), southern Livonia"
+        ],
+        [
+          "Inspired by",
+          "Polish countryside: Polish-speaking signs and towns"
+        ],
+        [
+          "Climate",
+          "Late summer with heavy rain and thunderstorms"
+        ],
+        [
+          "Mission folder",
+          "dayzOffline.enoch"
+        ]
+      ],
+      "intro": "Livonia, also called the Biela Valley, is DayZ's second official map: 163 km² of mixed forests, rolling hills, farmland, winding rivers, lakes and murky swamps in the south of the fictional country of Livonia. Resources are scarcer than on Chernarus, so foraging, hunting and fishing matter more.",
+      "history": [
+        "Livonia was DayZ's first paid DLC, released on 3 December 2019 alongside update 1.06. With update 1.25 on 27 May 2024 it was merged into the base game, so every DayZ owner can now play it. Internally the terrain is called \"Enoch\".",
+        "In the lore, Livonia is a Polish-speaking country in the Baltic region, bordering Russia's Kaliningrad Oblast, Lithuania, Belarus and Poland. Standing stones suggest the land was inhabited long before Chernarus, and Branzów Castle dates from the early medieval period.",
+        "South of the Biela River lies a large pre-outbreak military training zone. Signs there are in both Polish and English, hinting at foreign forces training in the region before the infection spread."
+      ],
+      "features": [
+        [
+          "fa-water",
+          "Biela River and lakes",
+          "The Biela River cuts the map from west to east. Lakes Jantar, Grabinskie, Sitnickie and Wolisko provide water and fishing."
+        ],
+        [
+          "fa-person-military-rifle",
+          "The military ring",
+          "South of the river is a dense belt of bases, watchtowers and barracks: Swarog, Radunin, Gieraltów, Nadbór and Lukow Airfield."
+        ],
+        [
+          "fa-industry",
+          "SIŁA arms factory",
+          "The industrial district of Nadbór, deep in the militarised south."
+        ],
+        [
+          "fa-dungeon",
+          "Underground bunker",
+          "A sealed military bunker with keycard access, storage rooms and PO-X missiles."
+        ],
+        [
+          "fa-paw",
+          "Bears and wolves",
+          "Livonia's wildlife is abundant and dangerous: deer, wolves and brown bears roam the dense forests."
+        ],
+        [
+          "fa-cloud-showers-heavy",
+          "Harsh weather",
+          "Frequent heavy rain and intense thunderstorms make staying dry and warm a constant job."
+        ]
+      ],
+      "locations": [
+        [
+          "Topolin",
+          "District capital (north)"
+        ],
+        [
+          "Nadbór",
+          "Militarised town (south)"
+        ],
+        [
+          "Branzów Castle",
+          "Early medieval ruin near Bielawa"
+        ],
+        [
+          "Lukow Airfield",
+          "Military airfield"
+        ],
+        [
+          "Swarog",
+          "Military base"
+        ],
+        [
+          "Radunin",
+          "Military base"
+        ],
+        [
+          "Gieraltów",
+          "Military base"
+        ],
+        [
+          "Bielawa",
+          "Village by the castle"
+        ]
+      ],
+      "wildlife": "Deer, wolves and brown bears; edible mushrooms and many fishing ponds.",
+      "gallery": [
+        [
+          "/img/maps/livonia-cover.webp",
+          "DayZ Livonia key art"
+        ],
+        [
+          "/img/maps/livonia-1.webp",
+          "Topolin"
+        ],
+        [
+          "/img/maps/livonia-2.webp",
+          "Nadbór from above"
+        ],
+        [
+          "/img/maps/livonia-3.webp",
+          "Livonian forest"
+        ],
+        [
+          "/img/maps/livonia-4.webp",
+          "Underground bunker entrance area"
+        ]
+      ],
+      "vehicles": [
+        [
+          "Olga 24",
+          8
+        ],
+        [
+          "Gunter 2",
+          8
+        ],
+        [
+          "Ada 4x4",
+          8
+        ],
+        [
+          "Sarka 120",
+          8
+        ],
+        [
+          "M1025",
+          3
+        ],
+        [
+          "M3S",
+          8
+        ],
+        [
+          "Rubber Boat",
+          5
+        ],
+        [
+          "Motorbikes (Jana 50 / Bitrak 682)",
+          12
+        ]
+      ],
+      "areaShort": "~163 km²",
+      "baseGame": true,
+      "title": "Livonia"
+    },
+    "sakhal": {
+      "name": "Sakhal",
+      "tagline": "A frozen volcanic archipelago at the edge of the world. Cold kills here faster than bullets.",
+      "accent": "#8fd3ff",
+      "biome": "Arctic · Volcanic",
+      "dlc": "/img/maps/sakhal-4.webp",
+      "cover": "/img/maps/sakhal-3.webp",
+      "map": "/img/maps/sakhal-map.webp",
+      "mapCaption": "Map of the Sakhal archipelago",
+      "facts": [
+        [
+          "Area",
+          "~83 km² island · ~105 km² with ice sheets"
+        ],
+        [
+          "Released",
+          "15 Oct 2024 (DayZ Frostline)"
+        ],
+        [
+          "Access",
+          "Frostline expansion (paid DLC)"
+        ],
+        [
+          "Setting",
+          "Volcanic archipelago in Russia's far east"
+        ],
+        [
+          "Inspired by",
+          "The Kamchatka Peninsula"
+        ],
+        [
+          "Climate",
+          "Late winter: snow, ice and extreme cold"
+        ],
+        [
+          "Mission folder",
+          "dayzOffline.sakhal"
+        ]
+      ],
+      "intro": "Sakhal is a remote, snow-covered volcanic archipelago in Russia's far east and DayZ's smallest official map. Warm clothing and a way to thaw frozen food are mandatory, but being an archipelago, it has plenty of places to fish.",
+      "history": [
+        "DayZ Frostline, the game's first expansion, was announced on 9 May 2024 and released on 15 October 2024. Content creators got early access from 1 October.",
+        "To use development resources efficiently, Sakhal's terrain data is based on Tanoa from Arma 3, reshaped into a frozen island chain inspired by the Kamchatka Peninsula.",
+        "In the lore, survivors arrive on refugee ships from the mainland and wake on Sakhal's black-sand beaches, not knowing whether the archipelago has already been overrun."
+      ],
+      "features": [
+        [
+          "fa-snowflake",
+          "Deep cold",
+          "Snow depth varies with elevation. Fires are needed far more often and warm clothing is essential."
+        ],
+        [
+          "fa-temperature-arrow-up",
+          "Frozen food",
+          "Food is often found frozen and must be thawed by a fire before eating."
+        ],
+        [
+          "fa-skull-crossbones",
+          "Heavy Metal Poisoning",
+          "Eating contaminated snow or drinking unchelated water causes this Sakhal-only illness. Use Chelating Tablets or water springs."
+        ],
+        [
+          "fa-volcano",
+          "Volcano and hot springs",
+          "Volcanic terrain, hot springs, frozen lakes and ice shelves, plus over 400 unique buildings and points of interest."
+        ],
+        [
+          "fa-fish",
+          "Sea life",
+          "Inland lakes freeze, but the coast is rich: steelhead trout, shrimp and pollock. Reindeer roam the island."
+        ]
+      ],
+      "locations": [
+        [
+          "Petropavlovsk-Sakhalskiy",
+          "Major town"
+        ],
+        [
+          "Severomorsk",
+          "Major town"
+        ],
+        [
+          "Aniva",
+          "Town"
+        ],
+        [
+          "Nogovo",
+          "Town"
+        ],
+        [
+          "Rudnogorsk",
+          "Town"
+        ],
+        [
+          "Sakhal airfield",
+          "Airfield"
+        ],
+        [
+          "Sakhalag",
+          "Camp"
+        ],
+        [
+          "Volcano",
+          "Landmark"
+        ]
+      ],
+      "wildlife": "Reindeer, hares and foxes on land; steelhead trout, shrimp and pollock in the sea.",
+      "gallery": [
+        [
+          "/img/maps/sakhal-cover.webp",
+          "The volcano over a frozen harbour"
+        ],
+        [
+          "/img/maps/sakhal-1.webp",
+          "Sakhal airfield"
+        ],
+        [
+          "/img/maps/sakhal-2.webp",
+          "Water spring shelter"
+        ],
+        [
+          "/img/maps/sakhal-3.webp",
+          "Sakhalag"
+        ]
+      ],
+      "vehicles": [
+        [
+          "Olga 24",
+          4
+        ],
+        [
+          "Gunter 2",
+          4
+        ],
+        [
+          "Ada 4x4",
+          4
+        ],
+        [
+          "Sarka 120",
+          4
+        ],
+        [
+          "M3S",
+          4
+        ],
+        [
+          "Rubber Boat",
+          14
+        ],
+        [
+          "Rubber Boat (military colours)",
+          8
+        ],
+        [
+          "Motorbikes (Jana 50 / Bitrak 682)",
+          12
+        ]
+      ],
+      "areaShort": "~105 km²",
+      "baseGame": false,
+      "title": "Sakhal"
+    },
+    "nasdara": {
+      "name": "Nasdara",
+      "tagline": "The largest map yet: a scorched Takistani province of sand, oil and broken cities.",
+      "accent": "#e3a64a",
+      "biome": "Arid · Desert",
+      "isNew": true,
+      "cover": "/img/maps/nasdara-2.webp",
+      "map": "/img/maps/nasdara-3.webp",
+      "mapCaption": "Takistan national map (Nasdara is the western province). The wiki has not published a terrain map yet.",
+      "facts": [
+        [
+          "Area",
+          "~267 km² (largest official map)"
+        ],
+        [
+          "Released",
+          "15 Oct 2026 (DayZ Badlands, update 1.30)"
+        ],
+        [
+          "Access",
+          "Badlands expansion (paid DLC)"
+        ],
+        [
+          "Setting",
+          "Nasdara province, western Takistan"
+        ],
+        [
+          "Inspired by",
+          "Original terrain, not based on any earlier Bohemia map"
+        ],
+        [
+          "Climate",
+          "Arid spring desert: extreme heat and sandstorms"
+        ],
+        [
+          "Mission folder",
+          "dayzOffline.nasdara"
+        ]
+      ],
+      "intro": "Nasdara is a landlocked province of Takistan, west of Chernarus. Sand creeps in from the eastern desert, jagged mountains mark the western border, and in between lie dense Middle-Eastern cities, abandoned Soviet-era bases, historical sites, oil fields and refineries scarred by old proxy wars. Water is the most precious resource.",
+      "history": [
+        "DayZ Badlands was announced on 27 June 2025 as the game's second expansion and released on 15 October 2026 together with update 1.30. Unlike Chernarus, Livonia and Sakhal, Nasdara is not ported from or based on any earlier Bohemia Interactive terrain.",
+        "Takistan first appeared in Arma 2: Operation Arrowhead (2010). In the lore, the Takistani kingdom was founded in 636, overrun by the Mongols in 1219, became a feudatory of the Russian Empire in 1892 and lost its monarchy in a 1988 coup. A war between Soviet-backed socialists and US-backed royalists followed, fuelled by the country's oil and ore, and the socialists won in 1992.",
+        "In Badlands, survivors were left behind with no one coming to pick them up, in a land that seems to have finally had enough of people."
+      ],
+      "features": [
+        [
+          "fa-sun",
+          "Heat and water scarcity",
+          "Extreme heat drains water fast. Heat Stroke is a new condition: wet your clothes, wash your head and stay in the shade."
+        ],
+        [
+          "fa-wind",
+          "Sandstorms",
+          "Rare sandstorms cause Silicosis (no cure, shelter and recover) and Irritated Eyes (wash your face at a water source). Wear a face covering and goggles."
+        ],
+        [
+          "fa-trowel-bricks",
+          "Rebuildable structures",
+          "Broken mud and stone buildings and wells can be rebuilt to regain their use. Badlands also added building materials such as Mortar Mix and Palm Bark."
+        ],
+        [
+          "fa-oil-well",
+          "Oil and old wars",
+          "Oil drills, refineries and abandoned Soviet-era military bases are spread across the province."
+        ],
+        [
+          "fa-tower-broadcast",
+          "Morse code radios",
+          "Radios can play back Morse code, and Morse code leaflets turn up as loot."
+        ],
+        [
+          "fa-motorcycle",
+          "Motorbikes",
+          "The Jana 50 moped and Bitrak 682 enduro arrived with Badlands. Nasdara has the most of them (up to 30)."
+        ],
+        [
+          "fa-dog",
+          "New wildlife",
+          "Dobermanns and German shepherds, desert monitors, mouflon, plus round goby and catfish in the water."
+        ]
+      ],
+      "locations": [],
+      "wildlife": "Dobermann and German shepherd dogs, desert monitor, mouflon; round goby and catfish.",
+      "gallery": [
+        [
+          "/img/maps/nasdara-cover.webp",
+          "DayZ Badlands key art"
+        ],
+        [
+          "/img/maps/nasdara-1.webp",
+          "SCR 16 in the Badlands release trailer"
+        ],
+        [
+          "/img/maps/nasdara-2.webp",
+          "Luger and officer beret (Badlands dev blog)"
+        ],
+        [
+          "/img/maps/nasdara-3.webp",
+          "Takistan national map"
+        ]
+      ],
+      "vehicles": [
+        [
+          "Olga 24",
+          8
+        ],
+        [
+          "Gunter 2",
+          8
+        ],
+        [
+          "Ada 4x4",
+          8
+        ],
+        [
+          "Sarka 120",
+          8
+        ],
+        [
+          "M1025 (desert)",
+          5
+        ],
+        [
+          "M3S",
+          6
+        ],
+        [
+          "Rubber Boat",
+          5
+        ],
+        [
+          "Motorbikes (Jana 50 / Bitrak 682)",
+          30
+        ]
+      ],
+      "areaShort": "~267 km²",
+      "baseGame": false,
+      "title": "Nasdara"
+    }
+  }
+}
