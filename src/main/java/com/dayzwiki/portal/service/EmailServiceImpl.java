@@ -41,7 +41,7 @@ public class EmailServiceImpl implements EmailService {
         verificationService.createVerificationToken(user, token, "CHANGE");
 
         String recipientAddress = user.getEmail();
-        String subject = "Resetting the password to dayzwiki.org";
+        String subject = "Resetting the password to thmirk.com";
         String confirmationUrl = valueProvider.getDayzwikiUrl() + "/reset/password?token=" + token;
 
         String message = "To reset your password, follow the link and enter a new password: ";
@@ -65,7 +65,7 @@ public class EmailServiceImpl implements EmailService {
     protected void sendEmail(String recipientAddress, String subject, String message, String url) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
-        email.setFrom("no-reply@dayzwiki.org");
+        email.setFrom("no-reply@thmirk.com");
         email.setSubject(subject);
         email.setText(String.format("%s %s", message, url));
         try {
