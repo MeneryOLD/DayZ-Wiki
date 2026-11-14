@@ -3,11 +3,9 @@ package com.dayzwiki.portal.service.user;
 import com.dayzwiki.portal.dto.api.item.UserBanner;
 import com.dayzwiki.portal.repository.user.UserBannerRepository;
 import lombok.RequiredArgsConstructor;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,16 +17,8 @@ public class UserBannerService {
 
     public void uploadBanner(MultipartFile file, long userId) throws IOException {
         InputStream inputStream = file.getInputStream();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        Thumbnails.of(inputStream)
-                .size(1920, 300)
-                .outputQuality(1.0)
-                .keepAspectRatio(true)
-                .outputFormat("jpg")
-                .toOutputStream(outputStream);
-
-        byte[] imageBytes = outputStream.toByteArray();
+        // Never upscaled; big photos are reduced to fit, at high JPEG quality.
+        byte[] imageBytes = ImageResizer.toJpeg(inputStream, 2400, 1350);
 
         UserBanner userBanner = userBannerRepository.findByUserId(userId);
         if (userBanner == null) {

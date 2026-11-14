@@ -121,6 +121,6 @@
 
 <th:block th:replace="~{layout :: overlays}"></th:block>
 <th:block th:replace="~{layout :: scripts}"></th:block>
-<script src="/js/range.js"></script>
+<script th:src="@{/js/range.js}" src="/js/range.js"></script>
 </body>
 </html>

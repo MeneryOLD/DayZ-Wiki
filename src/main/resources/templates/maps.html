@@ -35,6 +35,6 @@
 
 <th:block th:replace="~{layout :: overlays}"></th:block>
 <th:block th:replace="~{layout :: scripts}"></th:block>
-<script src="/js/maps.js"></script>
+<script th:src="@{/js/maps.js}" src="/js/maps.js"></script>
 </body>
 </html>

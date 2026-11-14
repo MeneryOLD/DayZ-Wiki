@@ -1,5 +1,8 @@
 package com.dayzwiki.portal.controller;
 
+import org.springframework.http.CacheControl;
+import java.util.concurrent.TimeUnit;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +29,7 @@ public class WikiStatsController {
 
     @GetMapping("/stats")
     @SuppressWarnings("unchecked")
-    public Map<String, Long> getStats() {
+    public ResponseEntity<Map<String, Long>> getStats() {
         List<Object[]> rows = entityManager
                 .createNativeQuery("SELECT source_table, COUNT(*) FROM full_text_search GROUP BY source_table")
                 .getResultList();
@@ -34,7 +37,8 @@ public class WikiStatsController {
         for (Object[] row : rows) {
             counts.put(row[0].toString(), ((Number) row[1]).longValue());
         }
-        return counts;
+        // Loaded by the sidebar on every page; the counts only change when the wiki data is re-imported.
+        return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES).cachePublic()).body(counts);
     }
 
     private static final Set<String> MAPS = Set.of("Chernarus", "Livonia", "Sakhal", "Nasdara");

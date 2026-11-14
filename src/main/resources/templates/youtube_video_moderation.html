@@ -95,6 +95,6 @@
 <div th:replace="~{post/parts :: confirm}"></div>
 <th:block th:replace="~{layout :: overlays}"></th:block>
 <th:block th:replace="~{layout :: scripts}"></th:block>
-<script src="/js/community.js"></script>
+<script th:src="@{/js/community.js}" src="/js/community.js"></script>
 </body>
 </html>

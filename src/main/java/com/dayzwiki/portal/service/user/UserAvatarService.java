@@ -3,11 +3,9 @@ package com.dayzwiki.portal.service.user;
 import com.dayzwiki.portal.dto.api.item.UserAvatar;
 import com.dayzwiki.portal.repository.user.UserAvatarRepository;
 import lombok.RequiredArgsConstructor;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,15 +17,8 @@ public class UserAvatarService {
 
     public void uploadAvatar(MultipartFile file, long userId) throws IOException {
         InputStream inputStream = file.getInputStream();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        Thumbnails.of(inputStream)
-                .size(512, 512)
-                .keepAspectRatio(true)
-                .outputFormat("jpg")
-                .toOutputStream(outputStream);
-
-        byte[] imageBytes = outputStream.toByteArray();
+        // Never upscaled; big photos are reduced to fit, at high JPEG quality.
+        byte[] imageBytes = ImageResizer.toJpeg(inputStream, 640, 640);
 
         UserAvatar userAvatar = userAvatarRepository.findByUserId(userId);
         if (userAvatar == null) {
