@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head(#{title.compare})}"></head>
+<body>
+<div class="app">
+    <aside th:replace="~{layout :: sidebar('compare')}"></aside>
+    <div class="main">
+        <header th:replace="~{layout :: topbar}"></header>
+
+        <main class="content" id="comparePage">
+            <div class="page-head">
+                <div>
+                    <div class="eyebrow"><i class="fa-solid fa-code-compare"></i> DayZ 1.30</div>
+                    <h1 class="page-title" th:text="#{compare.title}">Compare</h1>
+                    <p class="page-sub" th:text="#{compare.lead}">Up to four items from the same section, side by side. The best value in each row is highlighted.</p>
+                </div>
+            </div>
+            <div class="cmp-add">
+                <div class="filter-search">
+                    <i class="fa-solid fa-plus"></i>
+                    <input class="field" id="compareSearch" type="search" autocomplete="off" th:attr="placeholder=#{compare.add},aria-label=#{compare.add}">
+                </div>
+                <div class="search-pop" id="compareHits" hidden></div>
+            </div>
+            <div id="compareOut"></div>
+        </main>
+    </div>
+</div>
+
+<th:block th:replace="~{layout :: overlays}"></th:block>
+<th:block th:replace="~{layout :: scripts}"></th:block>
+</body>
+</html>

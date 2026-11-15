@@ -157,3 +157,23 @@
     .gun-pic { height: 80px; }
     .gun-row { grid-template-columns: 1fr; }
 }
+
+/* ---------- Attachments, magazine and aim spread ---------- */
+.range-build { margin: 4px 0 14px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface-2); }
+.range-build-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.range-build-head b { font-family: var(--font-head); font-size: 17px; text-transform: uppercase; letter-spacing: 0.04em; }
+.range-build .build-slots { margin: 0 0 10px; }
+.range-build .build-slot { background: var(--surface); }
+.mag-bar { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 13px; }
+.mag-bar > i { color: var(--accent); }
+.mag-pips { display: flex; flex-wrap: wrap; gap: 2px; flex: 1; }
+.mag-pips i { width: 5px; height: 14px; border-radius: 2px; background: var(--surface-3); }
+.mag-pips i.on { background: var(--accent); }
+.mag-bar.empty b { color: var(--bad); }
+.mag-bar.empty #reloadBtn { border-color: var(--accent); color: var(--accent); }
+.mag-bar .btn { margin-left: auto; }
+.aim-ring { fill: rgba(255, 138, 61, 0.08); stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.figure { cursor: crosshair; }
+.hit.miss circle { fill: none; stroke: var(--muted); stroke-dasharray: 2 2; }
+.log li.log-miss { opacity: 0.8; }
+.range-build .build-slots { grid-template-columns: 1fr; }

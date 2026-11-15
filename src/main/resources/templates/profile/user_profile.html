@@ -7,94 +7,60 @@
     <div class="main">
         <header th:replace="~{layout :: topbar}"></header>
 
-        <main class="content profile-page" id="profilePage" th:attr="data-user-id=${user.id},data-user-name=${user.name},data-owner=${isOwner}">
-            <section class="profile-hero">
-                <div class="profile-banner">
-                    <img class="profile-banner-img" th:src="@{/profile/get-banner(user_id=${user.id})}" alt="" onerror="this.remove()">
-                    <button th:if="${isOwner}" class="btn btn-s btn-glass profile-banner-edit" id="bannerBtn">
-                        <i class="fa-solid fa-camera"></i> <th:block th:text="#{profile.changeCover}">Change cover</th:block>
-                    </button>
-                </div>
+        <main class="content pf" id="profilePage" th:attr="data-user-id=${user.id},data-user-name=${user.name},data-owner=${isOwner}">
+            <section class="pf-cover" id="pfCover" th:classappend="${hasBanner} ? 'has-img'">
+                <img th:if="${hasBanner}" id="coverImg" th:src="@{/profile/get-banner(user_id=${user.id})}" alt="">
+            </section>
 
-                <div class="profile-id">
-                    <div class="profile-avatar" th:classappend="${isOwner} ? 'editable'">
-                        <img id="avatarImg" th:src="@{/profile/get-avatar(user_id=${user.id})}" th:alt="${user.name}">
-                        <button th:if="${isOwner}" class="profile-avatar-edit" id="avatarBtn" th:attr="aria-label=#{profile.changeAvatar},title=#{profile.changeAvatar}"><i class="fa-solid fa-camera"></i></button>
-                    </div>
-                    <div class="profile-name">
-                        <div class="eyebrow"><i class="fa-solid fa-id-badge"></i> <th:block th:text="#{profile.eyebrow}">Survivor file</th:block></div>
-                        <h1 th:text="${user.name}">name</h1>
-                        <div class="profile-tags">
-                            <span th:each="r : ${roles}" class="role-tag" th:classappend="'role-' + ${#strings.toLowerCase(r)}">
-                                <i th:class="${r == 'ADMIN'} ? 'fa-solid fa-crown' : (${r == 'MODER'} ? 'fa-solid fa-shield-halved' : 'fa-solid fa-user')"></i>
-                                <th:block th:text="${#messages.msg('role.' + r)}">Survivor</th:block>
-                            </span>
-                            <span class="muted small" th:if="${user.createDate != null}">
-                                <i class="fa-regular fa-calendar"></i> <th:block th:text="#{profile.since(${#temporals.format(user.createDate, 'd MMMM yyyy')})}">Member since</th:block>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="profile-actions">
-                        <button class="icon-btn" id="shareProfile" th:attr="title=#{profile.share},aria-label=#{profile.share}"><i class="fa-solid fa-link"></i></button>
-                        <th:block th:if="${isOwner}">
-                            <button class="btn btn-s" id="settingsBtn"><i class="fa-solid fa-gear"></i> <th:block th:text="#{profile.settings}">Settings</th:block></button>
-                            <button class="btn btn-s" id="signOutBtn"><i class="fa-solid fa-right-from-bracket"></i> <th:block th:text="#{top.signout}">Sign out</th:block></button>
-                        </th:block>
-                    </div>
+            <section class="pf-card">
+                <div class="pf-avatar"><img id="avatarImg" th:src="@{/profile/get-avatar(user_id=${user.id})}" th:alt="${user.name}"></div>
+                <h1 th:text="${user.name}">name</h1>
+                <div class="pf-roles">
+                    <span th:each="r : ${roles}" class="role-tag" th:classappend="'role-' + ${#strings.toLowerCase(r)}" th:text="${#messages.msg('role.' + r)}">Survivor</span>
                 </div>
-
-                <div class="profile-stats">
-                    <div><b th:text="${approvedCount}">0</b><span th:text="#{profile.statPosts}">posts</span></div>
-                    <div th:if="${isOwner and pendingCount > 0}"><b th:text="${pendingCount}">0</b><span th:text="#{profile.statPending}">in review</span></div>
-                    <div><b th:text="${daysSurvived}">0</b><span th:text="#{profile.statDays}">days survived</span></div>
-                    <div><b th:text="${bans.size()}">0</b><span th:text="#{profile.statBans}">bans</span></div>
+                <ul class="pf-facts">
+                    <li><b th:text="${approvedCount}">0</b> <th:block th:text="#{profile.statPosts}">posts</th:block></li>
+                    <li><b th:text="${daysSurvived}">0</b> <th:block th:text="#{profile.statDays}">days survived</th:block></li>
+                    <li th:if="${user.createDate != null}" th:text="#{profile.since(${#temporals.format(user.createDate, 'MMM yyyy')})}">Member since</li>
+                    <li th:if="${bans.isEmpty()}" class="ok"><i class="fa-solid fa-shield-heart"></i> <th:block th:text="#{profile.clean}">Clean record</th:block></li>
+                    <li th:if="${!bans.isEmpty()}" class="warn"><i class="fa-solid fa-scale-balanced"></i> <th:block th:text="#{profile.bansN(${bans.size()})}">Bans: 1</th:block></li>
+                </ul>
+                <div class="pf-actions">
+                    <button th:if="${isOwner}" class="btn btn-primary" id="editProfileBtn"><i class="fa-solid fa-pen"></i> <th:block th:text="#{profile.edit}">Edit profile</th:block></button>
+                    <button class="btn" id="shareProfile"><i class="fa-solid fa-link"></i> <th:block th:text="#{profile.shareShort}">Share</th:block></button>
                 </div>
             </section>
 
-            <div class="profile-grid">
-                <section>
-                    <div class="section-head">
-                        <h2 th:text="#{profile.posts}">Posts</h2>
-                        <button th:if="${isOwner}" class="btn btn-s btn-primary" data-compose><i class="fa-solid fa-pen-nib"></i> <th:block th:text="#{posts.write}">Write a post</th:block></button>
-                    </div>
-                    <div class="post-grid post-grid-tight" th:if="${!posts.isEmpty()}">
-                        <th:block th:each="c : ${posts}"><a th:replace="~{post/parts :: card(${c})}"></a></th:block>
-                    </div>
-                    <div class="empty" th:if="${posts.isEmpty()}">
-                        <i class="fa-regular fa-note-sticky"></i>
-                        <th:block th:text="${isOwner} ? #{profile.noPostsOwn} : #{profile.noPosts}">No posts yet.</th:block>
-                    </div>
-                </section>
+            <section class="pf-section">
+                <div class="section-head">
+                    <h2 th:text="#{profile.posts}">Posts</h2>
+                    <button th:if="${isOwner}" class="link-btn" data-compose><i class="fa-solid fa-plus"></i> <th:block th:text="#{posts.write}">Write a post</th:block></button>
+                </div>
+                <div class="post-grid" th:if="${!posts.isEmpty()}">
+                    <th:block th:each="c : ${posts}"><a th:replace="~{post/parts :: card(${c})}"></a></th:block>
+                </div>
+                <div class="empty" th:if="${posts.isEmpty()}">
+                    <i class="fa-regular fa-note-sticky"></i>
+                    <th:block th:text="${isOwner} ? #{profile.noPostsOwn} : #{profile.noPosts}">No posts yet.</th:block>
+                </div>
+            </section>
 
-                <aside class="profile-side">
-                    <section class="panel">
-                        <h2 class="panel-title"><i class="fa-solid fa-scale-balanced"></i> <th:block th:text="#{profile.record}">Record</th:block></h2>
-                        <div class="clean-record" th:if="${bans.isEmpty()}">
-                            <span class="clean-icon"><i class="fa-solid fa-shield-heart"></i></span>
-                            <div><b th:text="#{profile.clean}">Clean record</b><span th:text="#{profile.cleanText}">No bans on this account.</span></div>
+            <section class="pf-section" th:if="${!bans.isEmpty()}">
+                <div class="section-head"><h2 th:text="#{profile.record}">Record</h2></div>
+                <ul class="ban-list">
+                    <li th:each="b : ${bans}" th:classappend="${b.active} ? 'active'">
+                        <div class="ban-top">
+                            <b th:text="${b.banReason}">reason</b>
+                            <span class="badge" th:classappend="${b.active} ? 'ban-on' : 'ban-off'" th:text="${b.active} ? #{profile.banActive} : #{profile.banOver}">active</span>
                         </div>
-                        <ul class="ban-list" th:if="${!bans.isEmpty()}">
-                            <li th:each="b : ${bans}" th:classappend="${b.active} ? 'active'">
-                                <div class="ban-top">
-                                    <b th:text="${b.banReason}">reason</b>
-                                    <span class="badge" th:classappend="${b.active} ? 'ban-on' : 'ban-off'" th:text="${b.active} ? #{profile.banActive} : #{profile.banOver}">active</span>
-                                </div>
-                                <small>
-                                    <th:block th:text="${#temporals.format(b.banDate, 'd MMM yyyy')}">date</th:block>
-                                    <th:block th:if="${b.unbanDate != null}"> → <th:block th:text="${#temporals.format(b.unbanDate, 'd MMM yyyy')}">date</th:block></th:block>
-                                    · <th:block th:text="${b.adminName}">admin</th:block>
-                                </small>
-                            </li>
-                        </ul>
-                    </section>
-                </aside>
-            </div>
-
-            <!-- Owner-only: file inputs and settings -->
-            <th:block th:if="${isOwner}">
-                <input type="file" id="avatarInput" accept="image/jpeg,image/png" hidden>
-                <input type="file" id="bannerInput" accept="image/jpeg,image/png" hidden>
-            </th:block>
+                        <small>
+                            <th:block th:text="${#temporals.format(b.banDate, 'd MMM yyyy')}">date</th:block>
+                            <th:block th:if="${b.unbanDate != null}"> → <th:block th:text="${#temporals.format(b.unbanDate, 'd MMM yyyy')}">date</th:block></th:block>
+                            · <th:block th:text="${b.adminName}">admin</th:block>
+                        </small>
+                    </li>
+                </ul>
+            </section>
         </main>
     </div>
 </div>
@@ -103,14 +69,30 @@
     <div class="dialog-card settings-card">
         <button type="button" class="icon-btn dialog-close" data-close-dialog th:attr="aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
         <div class="settings-nav">
-            <div class="eyebrow"><i class="fa-solid fa-gear"></i> <th:block th:text="#{profile.settings}">Settings</th:block></div>
-            <h2 id="settingsTitle" th:text="#{settings.title}">Account</h2>
-            <button class="settings-tab active" data-settings-tab="email"><i class="fa-solid fa-envelope"></i> <th:block th:text="#{settings.email}">Email</th:block></button>
+            <h2 id="settingsTitle" th:text="#{profile.edit}">Edit profile</h2>
+            <button class="settings-tab active" data-settings-tab="look"><i class="fa-solid fa-image"></i> <th:block th:text="#{settings.look}">Picture &amp; cover</th:block></button>
+            <button class="settings-tab" data-settings-tab="email"><i class="fa-solid fa-envelope"></i> <th:block th:text="#{settings.email}">Email</th:block></button>
             <button class="settings-tab" data-settings-tab="password"><i class="fa-solid fa-key"></i> <th:block th:text="#{settings.password}">Password</th:block></button>
         </div>
         <div class="settings-body">
-            <form class="auth-form" data-settings="email" novalidate>
-                <div class="auth-head"><h3 th:text="#{settings.emailTitle}">Change email</h3><p th:text="#{settings.emailText}">We'll send a confirmation link to the new address. The change takes effect once you open it.</p></div>
+            <div class="auth-form" data-settings="look">
+                <div class="auth-head"><h3 th:text="#{settings.look}">Picture &amp; cover</h3><p th:text="#{settings.lookText}">JPG, PNG, WebP or HEIC. Big photos are resized before upload, so they stay sharp and load fast.</p></div>
+                <button type="button" class="look-cover" id="coverPick" th:classappend="${hasBanner} ? 'has-img'">
+                    <img th:if="${hasBanner}" th:src="@{/profile/get-banner(user_id=${user.id})}" alt="">
+                    <span class="look-hint"><i class="fa-solid fa-camera"></i> <th:block th:text="#{profile.changeCover}">Change cover</th:block></span>
+                </button>
+                <div class="look-row">
+                    <button type="button" class="look-avatar" id="avatarPick">
+                        <img th:src="@{/profile/get-avatar(user_id=${user.id})}" alt="">
+                        <span class="look-hint"><i class="fa-solid fa-camera"></i></span>
+                    </button>
+                    <div><b th:text="#{profile.changeAvatar}">Change profile picture</b><small class="muted" th:text="#{settings.avatarHint}">Square photos look best.</small></div>
+                </div>
+                <input type="file" id="avatarInput" accept="image/*" hidden>
+                <input type="file" id="bannerInput" accept="image/*" hidden>
+            </div>
+            <form class="auth-form" data-settings="email" hidden novalidate>
+                <div class="auth-head"><h3 th:text="#{settings.emailTitle}">Change email</h3><p th:text="#{settings.emailText}">We'll send a confirmation link to the new address.</p></div>
                 <label class="auth-field"><span th:text="#{settings.currentEmail}">Current email</span>
                     <span class="auth-input"><i class="fa-solid fa-at"></i><input name="email" type="email" th:value="${email}" readonly></span>
                 </label>

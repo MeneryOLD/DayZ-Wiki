@@ -153,10 +153,20 @@ public class DemoData {
     @RequiredArgsConstructor
     static class Runner implements ApplicationRunner {
         private final DemoData data;
+        private final javax.sql.DataSource dataSource;
 
         @Override
         public void run(ApplicationArguments args) {
             data.seed();
+            // Real item data from db/seed.sql (MySQL-only statements such as SET NAMES are skipped).
+            java.io.File seed = new java.io.File("db/seed.sql");
+            if (seed.exists()) {
+                org.springframework.jdbc.datasource.init.ResourceDatabasePopulator p =
+                        new org.springframework.jdbc.datasource.init.ResourceDatabasePopulator(new org.springframework.core.io.FileSystemResource(seed));
+                p.setContinueOnError(true);
+                p.setSqlScriptEncoding("UTF-8");
+                p.execute(dataSource);
+            }
         }
     }
 }

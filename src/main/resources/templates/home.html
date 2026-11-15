@@ -37,12 +37,6 @@
                 <a class="home-map" href="/maps/nasdara"><img src="/img/maps/nasdara-2.webp" alt="" loading="lazy"><em th:text="#{home.new}">NEW</em><div><b th:text="#{map.nasdara}">Nasdara</b><span>~267 km² · Badlands</span></div></a>
             </div>
 
-            <div class="panel" id="videoPanel" hidden style="margin-top: 34px;">
-                <div class="section-head" style="margin-top:0"><h2 th:text="#{home.video}">Featured video</h2></div>
-                <div class="video-frame"><iframe id="videoPlayer" th:title="#{home.video}" allowfullscreen loading="lazy"></iframe></div>
-                <p id="videoTitle" class="muted" style="margin:12px 0 0"></p>
-            </div>
-
             <p class="source-note" th:utext="#{home.sources}">
                 Spawn maps and loot tiers come from Bohemia Interactive's official
                 <a href="https://github.com/BohemiaInteractive/DayZ-Central-Economy" target="_blank" rel="noopener">Central Economy files</a>.
@@ -107,13 +101,6 @@
                 if (item && item.image) a.querySelector('.thumb').outerHTML = DZ.thumb(item.image, a.dataset.sec, 'sm');
             }).catch(function () {});
         });
-
-        fetch('/api/v1/youtube/video').then(function (r) { return r.ok ? r.json() : null; }).then(function (v) {
-            if (!v || !v.id || !/^[\w-]{6,20}$/.test(v.id)) return;
-            document.getElementById('videoPlayer').src = 'https://www.youtube-nocookie.com/embed/' + v.id;
-            document.getElementById('videoTitle').textContent = v.name || '';
-            document.getElementById('videoPanel').hidden = false;
-        }).catch(function () {});
     })();
 </script>
 </body>

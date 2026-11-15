@@ -4,6 +4,7 @@ import com.dayzwiki.portal.model.Post;
 import com.dayzwiki.portal.model.user.Role;
 import com.dayzwiki.portal.model.user.User;
 import com.dayzwiki.portal.repository.PostRepository;
+import com.dayzwiki.portal.repository.user.UserBannerRepository;
 import com.dayzwiki.portal.repository.user.UserRepository;
 import com.dayzwiki.portal.service.CurrentUserService;
 import com.dayzwiki.portal.service.PostService;
@@ -32,6 +33,7 @@ public class UserController {
     private final PostRepository postRepository;
     private final PostService postService;
     private final CurrentUserService currentUser;
+    private final UserBannerRepository bannerRepository;
 
     @GetMapping("/@{username}")
     public String handleUserRequest(Model model, @PathVariable String username, Principal principal) {
@@ -60,6 +62,7 @@ public class UserController {
                 .toList());
         model.addAttribute("bans", user.getBans() == null ? List.of() : user.getBans());
         model.addAttribute("email", isOwner ? user.getEmail() : null);
+        model.addAttribute("hasBanner", bannerRepository.existsByUserId(user.getId()));
         model.addAttribute("daysSurvived", user.getCreateDate() == null ? 0
                 : Math.max(0, ChronoUnit.DAYS.between(user.getCreateDate(), LocalDateTime.now())));
         return "profile/user_profile";

@@ -11,6 +11,10 @@
  *   bleeding wound with probability p.blood (bullets always cut unless armor stops it)
  *   worn items over the zone lose hit points, outer layer first: each layer takes what got through the one above it
  *   the zone itself loses ammo.health * f * p.health (legs/feet at 0 = broken legs)
+ *
+ * Attachments (loadout.js): the magazine sets how many shots before a reload; optics, stock and handguard
+ * set the aim spread. With spread on, the shot lands at a random point around the click (normal distribution,
+ * sigma = spread in mrad × distance), so a sloppy build at long range can miss or hit another body part.
  */
 (function () {
     'use strict';
@@ -52,6 +56,8 @@
     let S = null;            // survivor state
     const worn = {};         // slot -> {item, hp}
     let shots = 0, playing = null;
+    const SVG_PER_M = 300;   // the figure is ~1.8 m tall, ~540 SVG units
+    const gun = { slots: {}, picked: {}, sum: null, rounds: null };
 
     // ---------- Helpers ----------
     const weapon = () => D.weapons.find(w => w.name === $('weaponSel').value);
@@ -388,7 +394,7 @@
         D.weapons.forEach(w => { (groups[w.type] = groups[w.type] || []).push(w); });
         $('weaponSel').innerHTML = Object.keys(groups).sort().map(ty => '<optgroup label="' + esc(t(ty)) + '">' +
             groups[ty].map(w => '<option value="' + esc(w.name) + '">' + esc(w.name) + '</option>').join('') + '</optgroup>').join('');
-        $('weaponSel').addEventListener('change', () => { fillAmmo(); savePrefs(); });
+        $('weaponSel').addEventListener('change', () => { fillAmmo(); savePrefs(); buildGun(); });
         $('ammoSel').addEventListener('change', () => { showGun(); savePrefs(); });
         $('distance').addEventListener('input', () => { showGun(); savePrefs(); });
     }
@@ -418,12 +424,98 @@
     function load(key) { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) { return null; } }
 
     // ---------- Figure events ----------
-    function bindFigure() {
-        const zones = $('zones'), tip = $('zoneTip'), wrap = tip.parentElement;
-        zones.addEventListener('click', e => {
-            const z = e.target.closest('path');
-            if (z) fire(z.dataset.zone, svgPoint(e));
+    // ---------- Aim, spread and magazine ----------
+    const spreadOn = () => $('spreadToggle').checked;
+    // 1-sigma spread in SVG units at the current distance
+    const sigma = () => gun.sum ? gun.sum.spread / 1000 * dist() * SVG_PER_M : 0;
+    function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+    function zoneAt(pt) {
+        const p = new DOMPoint(pt.x, pt.y);
+        const hit = [...document.querySelectorAll('#zones path')].find(el => el.isPointInFill(p));
+        return hit ? hit.dataset.zone : null;
+    }
+    function renderMag() {
+        const bar = $('magBar');
+        bar.hidden = gun.rounds === null;
+        if (gun.rounds === null) return;
+        const max = gun.sum.capacity;
+        $('roundsLeft').textContent = gun.rounds;
+        $('roundsMax').textContent = max;
+        $('magPips').innerHTML = max <= 40 ? Array.from({ length: max }, (_, i) => '<i class="' + (i < gun.rounds ? 'on' : '') + '"></i>').join('') : '';
+        bar.classList.toggle('empty', gun.rounds === 0);
+    }
+    function reload() { if (gun.sum && gun.sum.capacity) { gun.rounds = gun.sum.capacity; renderMag(); } }
+
+    function shoot(evt) {
+        if (gun.rounds === 0) { DZ.toast(t('Magazine empty. Press Reload (R).'), false); return; }
+        const aim = svgPoint(evt);
+        let pt = aim;
+        if (spreadOn() && sigma() > 0) {
+            const sg = sigma();
+            pt = { x: Math.round(aim.x + gauss() * sg), y: Math.round(aim.y + gauss() * sg) };
+        }
+        const zone = zoneAt(pt);
+        if (!spreadOn() && !zone) return;          // exact mode: only clicks on the body fire
+        if (gun.rounds !== null) { gun.rounds--; renderMag(); }
+        if (zone) fire(zone, pt);
+        else miss(pt);
+    }
+
+    function miss(pt) {
+        shots++;
+        const li = document.createElement('li');
+        li.className = 'log-miss';
+        li.innerHTML = '<div class="log-head"><b>#' + shots + ' ' + esc(t('Miss')) + '</b><span class="muted small">' + esc(weapon().name) + ' · ' + dist() + ' ' + t('m') + '</span></div>' +
+            '<div class="muted">' + esc(t('The shot went wide. Tighter spread: a scope, a stock, or a shorter distance.')) + '</div>';
+        $('log').prepend(li);
+        const g = $('hits'), c = document.createElementNS(SVGNS, 'g');
+        c.setAttribute('class', 'hit miss');
+        c.innerHTML = '<circle cx="' + pt.x + '" cy="' + pt.y + '" r="4"/><text x="' + (pt.x + 6) + '" y="' + (pt.y - 5) + '">' + shots + '</text>';
+        g.appendChild(c);
+        $('shotCount').textContent = shots + ' ' + DZ.plural(shots, t('shot'), 'выстрела', t('shots'));
+    }
+
+    function aimRing(evt) {
+        const ring = $('aimRing');
+        if (!spreadOn() || !evt) { ring.setAttribute('visibility', 'hidden'); return; }
+        const pt = svgPoint(evt), r = Math.max(3, sigma() * 2);   // ~95% of shots land inside
+        ring.setAttribute('cx', pt.x); ring.setAttribute('cy', pt.y); ring.setAttribute('r', r);
+        ring.setAttribute('visibility', 'visible');
+    }
+
+    async function buildGun(initial) {
+        const w = weapon();
+        const box = $('rangeBuild');
+        let mods = [];
+        try { mods = await DZ.Loadout.load(); } catch (e) { /* attachments are optional */ }
+        if (w !== weapon()) return;                 // weapon changed while loading
+        gun.slots = DZ.Loadout.slotsFor(w.name, mods);
+        let names = DZ.Loadout.saved(w.name);
+        if (initial && initial.length) {
+            names = {};
+            Object.keys(gun.slots).forEach(k => { const m = gun.slots[k].find(x => initial.indexOf(x.name) > -1); if (m) names[k] = m.name; });
+        } else if (!Object.keys(names).length && gun.slots['Magazines']) {
+            names = { Magazines: gun.slots['Magazines'][gun.slots['Magazines'].length - 1].name };   // start with the biggest magazine
+        }
+        gun.picked = DZ.Loadout.restore(gun.slots, names);
+        DZ.Loadout.renderBuilder(box, { name: w.name, englishName: w.name, weight: 0 }, gun.slots, gun.picked, (picked, sum) => {
+            const capChanged = !gun.sum || gun.sum.capacity !== sum.capacity;
+            gun.sum = sum;
+            if (capChanged) gun.rounds = sum.capacity ? sum.capacity : null;
+            renderMag();
         });
+        box.querySelectorAll('.build-chip').forEach(c => { if (/kg/.test(c.textContent)) c.remove(); });   // gun weight isn't in range data
+    }
+
+    // ---------- Figure events ----------
+    function bindFigure() {
+        const fig = $('figure'), zones = $('zones'), tip = $('zoneTip'), wrap = tip.parentElement;
+        const ring = document.createElementNS(SVGNS, 'circle');
+        ring.id = 'aimRing'; ring.setAttribute('class', 'aim-ring'); ring.setAttribute('visibility', 'hidden'); ring.setAttribute('pointer-events', 'none');
+        fig.appendChild(ring);
+        fig.addEventListener('click', shoot);
+        fig.addEventListener('mousemove', aimRing);
+        fig.addEventListener('mouseleave', () => aimRing(null));
         zones.addEventListener('mousemove', e => {
             const z = e.target.closest('path');
             if (!z) { tip.hidden = true; return; }
@@ -438,6 +530,10 @@
                 (p.p.items.length ? '<div class="muted">' + p.p.items.map(s => esc(worn[s].item.name)).join(' + ') + '</div>' : '');
         });
         zones.addEventListener('mouseleave', () => { tip.hidden = true; });
+        $('reloadBtn').addEventListener('click', reload);
+        document.addEventListener('keydown', e => { if ((e.key === 'r' || e.key === 'R' || e.key === 'к' || e.key === 'К') && !/input|select|textarea/i.test(e.target.tagName)) reload(); });
+        $('spreadToggle').addEventListener('change', () => { try { localStorage.setItem('dz-range-spread', $('spreadToggle').checked ? '1' : '0'); } catch (e) { /* ignore */ } });
+        try { if (localStorage.getItem('dz-range-spread') === '0') $('spreadToggle').checked = false; } catch (e) { /* ignore */ }
     }
 
     function bindButtons() {
@@ -446,7 +542,7 @@
         $('repairAll').addEventListener('click', () => { Object.values(worn).forEach(w => { w.hp = w.item.hp; }); render(); DZ.toast && DZ.toast(t('Gear repaired to pristine')); });
         $('resetBtn').addEventListener('click', () => {
             setPlaying(false); S = freshSurvivor(); shots = 0;
-            $('log').innerHTML = ''; $('hits').innerHTML = '';
+            $('log').innerHTML = ''; $('hits').innerHTML = ''; reload();
             render();
         });
         $('playBtn').addEventListener('click', () => { if (S.state !== 'dead') setPlaying(!playing); });
@@ -500,10 +596,14 @@
         buildHow();
 
         const prefs = load('dz-range-gun');
-        $('weaponSel').value = prefs && D.weapons.some(w => w.name === prefs.w) ? prefs.w : 'KA-M';
+        const q = new URLSearchParams(location.search);
+        const fromUrl = q.get('w') && D.weapons.find(w => w.name.toLowerCase() === q.get('w').toLowerCase());
+        $('weaponSel').value = fromUrl ? fromUrl.name : prefs && D.weapons.some(w => w.name === prefs.w) ? prefs.w : 'KA-M';
         if (!$('weaponSel').value) $('weaponSel').selectedIndex = 0;
         fillAmmo();
-        if (prefs) {
+        buildGun(fromUrl && q.get('att') ? q.get('att').split('|') : null);
+        if (fromUrl) history.replaceState(null, '', location.pathname);
+        if (prefs && !fromUrl) {
             if ([...$('ammoSel').options].some(o => o.value === prefs.a)) $('ammoSel').value = prefs.a;
             if (prefs.d) $('distance').value = prefs.d;
             showGun();

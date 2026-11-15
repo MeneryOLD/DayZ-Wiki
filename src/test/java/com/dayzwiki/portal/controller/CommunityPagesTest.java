@@ -92,9 +92,9 @@ class CommunityPagesTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Base in the woods near Dubky")))
                 .andExpect(content().string(not(containsString("Is the new motorbike"))))
-                .andExpect(content().string(not(containsString("id=\"settingsBtn\""))));
+                .andExpect(content().string(not(containsString("id=\"editProfileBtn\""))));
         mvc.perform(get("/@Bandit_Kolya").with(KOLYA))
-                .andExpect(content().string(containsString("id=\"settingsBtn\"")))
+                .andExpect(content().string(containsString("id=\"editProfileBtn\"")))
                 .andExpect(content().string(containsString("Is the new motorbike")))
                 .andExpect(content().string(containsString("kolya@example.com")));
         mvc.perform(get("/@medic.anna"))
@@ -156,5 +156,19 @@ class CommunityPagesTest {
         mvc.perform(get("/profile/get-avatar").param("user_id", String.valueOf(annaId)))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "image/jpeg"));
+    }
+
+    @Test
+    void homeAndComparePagesRender() throws Exception {
+        mvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("id=\"themeToggle\"")))
+                .andExpect(content().string(containsString("id=\"drawerCompare\"")));
+        mvc.perform(get("/compare"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("id=\"compareOut\"")));
+        mvc.perform(get("/range"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("id=\"spreadToggle\"")));
     }
 }

@@ -444,6 +444,8 @@
         $('#drawerBookmark').innerHTML = '<i class="fa-regular fa-bookmark"></i>';
         openLayer('drawer');
         $('#drawerBody').scrollTop = 0;
+        // Extra sections added by other scripts (weapon builder, compare button state).
+        (window.DZ.itemHooks || []).forEach(fn => { try { fn(item, $('#drawerBody')); } catch (e) { /* keep the drawer usable */ } });
     }
     async function openItemUrl(url) {
         try {

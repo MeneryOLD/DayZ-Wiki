@@ -665,3 +665,57 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; letter-spacing: 0.
     .toasts { left: 12px; right: 12px; }
     .toast { min-width: 0; max-width: none; }
 }
+
+/* ---------- Compare ---------- */
+#drawerCompare.on { color: var(--accent); background: var(--accent-soft); }
+.nav-link em.compare-count { font-style: normal; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; display: inline-grid; place-items: center; background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+.compare-tray {
+    position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 55; display: flex; align-items: center; gap: 12px;
+    padding: 8px 8px 8px 18px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line-2); box-shadow: var(--shadow);
+    font-size: 14px; font-weight: 600; animation: rise 0.25s ease; white-space: nowrap;
+}
+.compare-tray > i { color: var(--accent); }
+.compare-tray .btn { border-radius: 999px; }
+.cmp-add { position: relative; max-width: 460px; margin-bottom: 18px; }
+.cmp-add .filter-search { max-width: none; }
+.cmp-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.cmp { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+.cmp th, .cmp td { padding: 12px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.cmp tbody tr:last-child th, .cmp tbody tr:last-child td { border-bottom: 0; }
+.cmp tbody th { width: 180px; color: var(--muted); font-weight: 500; position: sticky; left: 0; background: var(--surface); }
+.cmp td { font-family: var(--font-mono); font-size: 13px; }
+.cmp td.best { color: var(--good); font-weight: 600; background: rgba(60, 200, 168, 0.07); }
+.cmp thead th { vertical-align: bottom; background: var(--surface-2); }
+.cmp-sec { font-family: var(--font-head); font-size: 20px; text-transform: uppercase; position: sticky; left: 0; }
+.cmp-sec small { display: block; font-family: var(--font); font-size: 12px; color: var(--muted); text-transform: none; font-weight: 500; }
+.cmp-item { position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 150px; }
+.cmp-item .thumb-md { height: 100px; }
+.cmp-item a { font-family: var(--font-head); font-size: 19px; text-transform: uppercase; line-height: 1.1; }
+.cmp-item a:hover { color: var(--accent); }
+.cmp-item .icon-btn { position: absolute; top: -4px; right: -8px; width: 30px; height: 30px; }
+.cmp-note { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.best-dot { width: 10px; height: 10px; border-radius: 3px; background: var(--good); }
+
+/* ---------- Weapon builder ---------- */
+.build { margin: 4px 0 18px; }
+.build-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 12px; }
+.build-slot { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); min-width: 0; }
+.build-ico { width: 30px; height: 30px; border-radius: 9px; flex: none; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-size: 13px; }
+.build-main { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.build-main small { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.build-main .field { height: 30px; padding: 0 6px; border: 0; background: none; font-size: 13px; width: 100%; min-width: 0; }
+.build-main .field:focus { box-shadow: none; }
+.build-sum { display: flex; flex-wrap: wrap; gap: 6px; }
+.build-chip { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 8px; font-size: 12.5px; font-weight: 600; background: var(--surface-3); color: var(--text-2); }
+.build-chip i { color: var(--accent); font-size: 11px; }
+.build-chip.warn { background: rgba(242, 193, 78, 0.12); color: var(--warn); }
+.build-chip.warn i { color: var(--warn); }
+.build-chip.link { background: var(--accent); color: var(--accent-ink); }
+.build-chip.link i { color: var(--accent-ink); }
+
+@media (max-width: 520px) {
+    .toast { min-width: 0; max-width: none; }
+    .build-slots { grid-template-columns: 1fr; }
+    .compare-tray { bottom: 12px; font-size: 13px; padding-left: 14px; }
+    .cmp tbody th { width: 110px; }
+}

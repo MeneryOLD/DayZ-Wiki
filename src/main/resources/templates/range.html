@@ -42,6 +42,20 @@
                     </div>
                     <div class="ammo-strip" id="ammoStats"></div>
 
+                    <div class="range-build">
+                        <div class="range-build-head">
+                            <b th:text="#{range.attachments}">Attachments</b>
+                            <label class="switch" th:title="#{range.spreadHint}"><input type="checkbox" id="spreadToggle" checked><span class="switch-ui"></span><span th:text="#{range.spread}">Aim spread</span></label>
+                        </div>
+                        <div id="rangeBuild"><div class="skeleton" style="height:60px"></div></div>
+                        <div class="mag-bar" id="magBar" hidden>
+                            <i class="fa-solid fa-layer-group"></i>
+                            <span class="mag-pips" id="magPips"></span>
+                            <b><span id="roundsLeft">0</span>/<span id="roundsMax">0</span></b>
+                            <button class="btn btn-s" id="reloadBtn"><i class="fa-solid fa-rotate"></i> <th:block th:text="#{range.reload}">Reload</th:block></button>
+                        </div>
+                    </div>
+
                     <div class="figure-wrap">
                         <svg class="figure" id="figure" viewBox="0 0 300 600" role="img" th:attr="aria-label=#{range.figure}">
                             <defs>
@@ -67,7 +81,7 @@
                         <div class="zone-tip" id="zoneTip" hidden></div>
                         <div class="state-banner" id="stateBanner" hidden></div>
                     </div>
-                    <p class="muted small center" th:text="#{range.clickHint}">Click a body part to fire one shot. Hover to preview the damage.</p>
+                    <p class="muted small center" th:text="#{range.clickHint2}">Click to fire. With aim spread on, the ring shows where the shot can land.</p>
                 </section>
 
                 <!-- Status -->

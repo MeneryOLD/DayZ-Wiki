@@ -16,4 +16,9 @@ public class MainController {
         return "search_page";
     }
 
+    @GetMapping("/compare")
+    public String getComparePage() {
+        return "compare";
+    }
+
 }

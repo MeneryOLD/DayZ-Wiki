@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/reset/password", "/confirm/email", "/error",
                                 "/search/**", "/profile/**", "/api/v1/**", "/armors/**", "/weapons/**",
                                 "/medication/**", "/modules/**", "/foods/**", "/ammunition/**", "/cars/**",
-                                "/diseases/**", "/explosives/**", "/img/**", "/js/**", "/css/**", "/data/**", "/maps/**", "/range").permitAll()
+                                "/diseases/**", "/explosives/**", "/img/**", "/js/**", "/css/**", "/data/**", "/maps/**", "/range", "/compare").permitAll()
                         // Reading posts and profiles is public; writing still needs an account (checked in the controllers).
                         .requestMatchers(HttpMethod.GET, "/posts", "/posts/*", "/posts/images/*", "/@*").permitAll()
                         .requestMatchers("/moder/**").hasAnyRole("MODER", "ADMIN")

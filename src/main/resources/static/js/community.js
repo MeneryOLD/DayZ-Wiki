@@ -13,7 +13,7 @@
     // ---------- Dialog helpers ----------
     function openDialog(d) {
         d.hidden = false;
-        const f = d.querySelector('input:not([type=hidden]):not([readonly]):not([hidden]), textarea');
+        const f = d.querySelector('input:not([type=hidden]):not([readonly]):not([hidden]):not([type=file]), textarea');
         if (f) setTimeout(() => f.focus(), 40);
     }
     function closeDialog(d) { d.hidden = true; if (d.onclose) d.onclose(); }
@@ -291,56 +291,88 @@
     }
 
     // ---------- Profile ----------
+    /**
+     * Decode any image the browser can read (JPEG, PNG, WebP, AVIF, HEIC on Safari…) and re-encode it as a
+     * JPEG no bigger than maxW×maxH. The server then always receives a small, clean JPEG, so uploads don't fail
+     * on exotic formats or huge camera photos.
+     */
+    async function toJpeg(file, maxW, maxH) {
+        let src;
+        try { src = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+        catch (e) {
+            src = await new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = URL.createObjectURL(file); });
+        }
+        const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight;
+        const k = Math.min(1, maxW / w, maxH / h);
+        const c = document.createElement('canvas');
+        c.width = Math.round(w * k); c.height = Math.round(h * k);
+        const g = c.getContext('2d');
+        g.fillStyle = '#1d222b'; g.fillRect(0, 0, c.width, c.height);
+        g.imageSmoothingQuality = 'high';
+        g.drawImage(src, 0, 0, c.width, c.height);
+        return new Promise((ok, bad) => c.toBlob(b => b ? ok(b) : bad(new Error('encode')), 'image/jpeg', 0.92));
+    }
+
     const profile = $('#profilePage');
     if (profile) {
         $('#shareProfile').addEventListener('click', () => copyLink(location.origin + '/@' + encodeURIComponent(profile.dataset.userName)));
 
         if (profile.dataset.owner === 'true') {
-            const upload = async (input, field, url, onDone) => {
-                const f = input.files[0];
-                input.value = '';
-                if (!f) return;
-                if (!/^image\/(jpeg|png)$/.test(f.type) || f.size > MAX_BYTES) { toast(t('Choose a JPG or PNG image up to 8 MB.'), false); return; }
-                const fd = new FormData();
-                fd.append(field, f);
-                onDone(URL.createObjectURL(f), true);
-                try {
-                    const r = await fetch(url, { method: 'POST', body: fd });
-                    if (!r.ok) throw new Error(await errorText(r, t('Upload failed. Try another image.')));
-                    toast(field === 'avatar' ? t('Profile picture updated.') : t('Cover updated.'));
-                    onDone(null, false);
-                } catch (err) { toast(err.message || t('Upload failed. Try another image.'), false); location.reload(); }
-            };
-            const avatarInput = $('#avatarInput'), bannerInput = $('#bannerInput');
-            $('#avatarBtn').addEventListener('click', () => avatarInput.click());
-            $('#bannerBtn').addEventListener('click', () => bannerInput.click());
-            avatarInput.addEventListener('change', () => upload(avatarInput, 'avatar', '/profile/upload-avatar', (src, busy) => {
-                const box = $('.profile-avatar');
-                box.classList.toggle('busy', busy);
-                if (src) $('#avatarImg').src = src;
-                if (!busy) $$('img[src*="get-avatar?user_id=' + profile.dataset.userId + '"]').forEach(i => { i.src = i.src.split('&')[0] + '&v=' + Date.now(); });
-            }));
-            bannerInput.addEventListener('change', () => upload(bannerInput, 'banner', '/profile/upload-banner', src => {
-                if (!src) return;
-                let img = $('.profile-banner-img');
-                if (!img) { img = document.createElement('img'); img.className = 'profile-banner-img'; img.alt = ''; $('.profile-banner').prepend(img); }
-                img.src = src;
-            }));
-
-            $('#signOutBtn').addEventListener('click', async () => {
-                try { await fetch('/api/v1/auth/logout', { method: 'POST' }); } catch (e) { /* ignore */ }
-                document.cookie = 'dayzwiki_user_token=; Max-Age=0; path=/';
-                location.href = '/';
-            });
-
             const settings = $('#settingsDialog');
+            const avatarInput = $('#avatarInput'), bannerInput = $('#bannerInput');
+
+            // Shows the new picture right away; on failure puts the previous one back (no page reload).
+            async function upload(file, kind) {
+                if (!file || !/^image\//.test(file.type || 'image/')) { toast(t('Choose an image file.'), false); return; }
+                const box = kind === 'avatar' ? $('#avatarPick') : $('#coverPick');
+                box.classList.add('busy');
+                let blob;
+                try { blob = await toJpeg(file, kind === 'avatar' ? 640 : 2400, kind === 'avatar' ? 640 : 1350); }
+                catch (e) { box.classList.remove('busy'); toast(t('This image could not be read. Try a JPG or PNG.'), false); return; }
+                const preview = URL.createObjectURL(blob);
+                const targets = kind === 'avatar'
+                    ? [$('#avatarImg'), $('img', box)]
+                    : [ensureCover(), ensureImg(box)];
+                const before = targets.map(i => i.getAttribute('src'));
+                targets.forEach(i => { i.src = preview; });
+                const fd = new FormData();
+                fd.append(kind === 'avatar' ? 'avatar' : 'banner', blob, kind + '.jpg');
+                try {
+                    const r = await fetch(kind === 'avatar' ? '/profile/upload-avatar' : '/profile/upload-banner', { method: 'POST', body: fd });
+                    if (!r.ok) throw new Error(await errorText(r, t('Upload failed. Try another image.')));
+                    toast(kind === 'avatar' ? t('Profile picture updated.') : t('Cover updated.'));
+                    if (kind === 'avatar') {
+                        $$('img[src*="get-avatar?user_id=' + profile.dataset.userId + '"]').forEach(i => { i.src = '/profile/get-avatar?user_id=' + profile.dataset.userId + '&v=' + Date.now(); });
+                    } else {
+                        $('#pfCover').classList.add('has-img'); box.classList.add('has-img');
+                    }
+                } catch (err) {
+                    targets.forEach((i, n) => { if (before[n]) i.src = before[n]; else i.remove(); });
+                    toast(err.message || t('Upload failed. Try another image.'), false);
+                } finally { box.classList.remove('busy'); }
+            }
+            function ensureImg(parent) {
+                let img = $('img', parent);
+                if (!img) { img = document.createElement('img'); img.alt = ''; parent.prepend(img); }
+                return img;
+            }
+            function ensureCover() {
+                const img = ensureImg($('#pfCover'));
+                img.id = 'coverImg';
+                return img;
+            }
+            $('#avatarPick').addEventListener('click', () => avatarInput.click());
+            $('#coverPick').addEventListener('click', () => bannerInput.click());
+            avatarInput.addEventListener('change', () => { const f = avatarInput.files[0]; avatarInput.value = ''; upload(f, 'avatar'); });
+            bannerInput.addEventListener('change', () => { const f = bannerInput.files[0]; bannerInput.value = ''; upload(f, 'cover'); });
+
             const tab = name => {
                 $$('[data-settings-tab]', settings).forEach(b => b.classList.toggle('active', b.dataset.settingsTab === name));
                 $$('[data-settings]', settings).forEach(f => { f.hidden = f.dataset.settings !== name; });
-                const first = $('[data-settings="' + name + '"] input:not([readonly])', settings);
+                const first = $('[data-settings="' + name + '"] input:not([readonly]):not([type=file])', settings);
                 if (first) setTimeout(() => first.focus(), 30);
             };
-            $('#settingsBtn').addEventListener('click', () => { openDialog(settings); tab('email'); });
+            $('#editProfileBtn').addEventListener('click', () => { openDialog(settings); tab('look'); });
             $$('[data-settings-tab]', settings).forEach(b => b.addEventListener('click', () => tab(b.dataset.settingsTab)));
             DZ.initPasswordToggles(settings);
             const pwForm = $('[data-settings="password"]', settings);

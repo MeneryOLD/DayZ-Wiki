@@ -38,6 +38,7 @@
 
         <a href="/maps" class="nav-link" th:classappend="${active == 'maps'} ? 'active'"><i class="fa-solid fa-map-location-dot"></i><span th:text="#{nav.maps}">Maps</span><em>4</em></a>
         <a href="/range" class="nav-link" th:classappend="${active == 'range'} ? 'active'"><i class="fa-solid fa-bullseye"></i><span th:text="#{nav.range}">Shooting Range</span></a>
+        <a href="/compare" class="nav-link" th:classappend="${active == 'compare'} ? 'active'"><i class="fa-solid fa-code-compare"></i><span th:text="#{nav.compare}">Compare</span><em class="compare-count" data-compare-count hidden></em></a>
 
         <div class="nav-group" th:text="#{nav.arsenal}">Arsenal</div>
         <a href="/weapons" class="nav-link" th:classappend="${active == 'weapons'} ? 'active'"><i class="fa-solid fa-gun"></i><span th:text="#{section.weapons}">Weapons</span><em data-count="weapons"></em></a>
@@ -100,6 +101,7 @@
                 <h2 id="drawerTitle"></h2>
             </div>
             <div class="drawer-actions">
+                <button class="icon-btn" id="drawerCompare" th:attr="title=#{drawer.compare},aria-label=#{drawer.compare}"><i class="fa-solid fa-code-compare"></i></button>
                 <button class="icon-btn" id="drawerBookmark" th:attr="title=#{drawer.bookmark},aria-label=#{drawer.bookmark}"><i class="fa-regular fa-bookmark"></i></button>
                 <button class="icon-btn" id="drawerLink" th:attr="title=#{drawer.link},aria-label=#{drawer.link}"><i class="fa-solid fa-link"></i></button>
                 <button class="icon-btn" id="drawerClose" th:attr="title=#{drawer.close},aria-label=#{drawer.close}"><i class="fa-solid fa-xmark"></i></button>
@@ -200,6 +202,12 @@
         </div>
     </div>
 
+    <div class="compare-tray" id="compareTray" hidden>
+        <i class="fa-solid fa-code-compare"></i>
+        <span id="compareTrayText"></span>
+        <a class="btn btn-primary" href="/compare" th:text="#{compare.open}">Compare</a>
+        <button class="icon-btn" id="compareClear" th:attr="aria-label=#{compare.clear},title=#{compare.clear}"><i class="fa-solid fa-xmark"></i></button>
+    </div>
     <div class="toasts" id="toasts" aria-live="polite"></div>
 </th:block>
 
@@ -207,6 +215,8 @@
     <script th:src="@{/js/i18n.js}" src="/js/i18n.js"></script>
     <script th:src="@{/js/item-details.js}" src="/js/item-details.js"></script>
     <script th:src="@{/js/app.js}" src="/js/app.js"></script>
+    <script th:src="@{/js/loadout.js}" src="/js/loadout.js"></script>
+    <script th:src="@{/js/compare.js}" src="/js/compare.js"></script>
 </th:block>
 
 </body>
